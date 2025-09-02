@@ -1,3 +1,6 @@
 # Not all Python
 # * linguist-vendored
 # *.py linguist-vendored=false
+
+# Ignore all HTML files in GitHub language stats
+*.html linguist-vendored=true
