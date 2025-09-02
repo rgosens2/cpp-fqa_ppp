@@ -1,0 +1,13 @@
+*.pyc
+//*.html
+*.exe
+_out_.txt
+*~
+.*.swp
+**/.DS_Store
+.vscode/
+*.pyc
+*.pyo
+__pycache__/
+
+

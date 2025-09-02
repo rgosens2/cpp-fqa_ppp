@@ -1,0 +1,28 @@
+/* Light mode */
+@media (prefers-color-scheme: light) {
+    body { font-family: arial; color: black; background: white }
+    h2   { color: black; background-color: #ddeeff }
+    h1   { color: black; background-color: #ddeeff }
+    h5   { background-color: #eeeeee }
+    pre  { background-color: #eeeeee }
+    .part{ color: gray }
+    .FQA { background-color: blue; color: gold }
+    .FAQ { background-color: gold; color: blue }
+    .corr{ color: red }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    body { font-family: arial; color: white; background: black }
+    h2   { color: white; background-color: #333333 }
+    h1   { color: white; background-color: #333333 }
+    h5   { color: white; background-color: #222222 }
+    pre  { color: white; background-color: #222222 }
+    .part{ color: gray }
+    .FQA { background-color: blue; color: gold }
+    .FAQ { background-color: gold; color: blue }
+    .corr{ color: red }
+    a:link { color: #69f; }
+    a:visited { color: #a57bed; }
+    a:active { color: #ff6e6e; }
+}

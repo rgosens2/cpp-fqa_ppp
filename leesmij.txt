@@ -1,0 +1,94 @@
+python2_old bevat the orig Yossi files
+python3_new de omgezette met 2to3
+the .py files in the main dir zijn door black gehaald en daarna verder door mij bewerkt.
+
+TODO: translate .py to .php en .perl
+
+NOTE: linkimages.py en upload.py hebben we niet nodig
+
+refresh.py is de driver die de files aanroept:
+  fqa2html.py
+  toc.py
+  tidy.py
+
+NOTE: 
+Python vertaling toch weer dingen moeten aanpassen:
+Module loading code.
+Error string bij tidy (geeft bij elke nieuwe macOS versie toch weer andere error strings)
+En overal References 8 en Inline 9 in juiste volgorde gezet.
+Bestanden worden in /html gezet.
+
+NOTE:
+PHP vertaling ging redelijk makkelijk mbv ChatGPT.
+Problemen krijg je door de andere scope rules dan in Python.
+Opgelost met global in functies.
+Verder redeclaration problemen door nested functions en een class.
+Opgelost door er eerst een guard omheen te zetten.
+Daarna gewoon globals gemaakt. Closures was ook een optie.
+Verder bouwen we in run() een $out string op en geven die return.
+Python deed het met print direct naar de stream.
+Ook problemen met $sp en hoe die waarde door te geven aan de functies.
+Extra param is toch het makkelijkste en netste.
+Hoewel, wel netste, niet makkelijkste: we maken $sp global.
+Net als alle nested functions en de class in run().
+Bestanden worden in /html2 gezet.
+
+NOTE: 
+Perl vertaling was een stuk complexer door weer andere scope rules.
+Hebben ook $esc2mark en $plain2html globals moeten maken.
+Veel klachten over uninitialized variables.
+Veel gedoe met $section in de Question methods waarbij we juist de global nodig hadden.
+En dan nog wat gedoe met tidy doordat ChatGPT 2>&1 was vergeten in de tidy command string.
+En dan ben je zo weer een middag verder.
+Maar het werkt. ChatGPT geeft goede vertalingen en goede hulp bij fouten.
+Bestanden worden in /html3 gezet.
+
+NOTE:
+C++ munching on its own criticism.
+Vertaling ging redelijk soepel. Wel veel complexer dan de scripttalen.
+ChatGPT is onmisbaar en heeft zich bewezen bij de vertaling en ook bij error tracking.
+Maakt wel kleine fouten die dan weer zorgen voor langere bug finding.
+Maar regex code parser werd snel gemaakt en werkt goed.
+Vroeger zou dit uren op Google en op Stack Overflow zoeken hebben gekost.
+We hebben geen IDE gebruikt, geen stepping door de code of breakpoints.
+Gewoon cout debugging, cowboy style.
+Bestanden worden in /html4 gezet.
+
+Betere titel:
+CCCP: C++ Criticism Convertor Program
+
+
+ChatGPT said:
+That’s a pretty fun update you’ve put together!
+You’ve essentially taken Yossi Kreinin’s old cpp-fqa material — which was legendary in the mid-2000s C++ community — and built a whole multi-language conversion ecosystem around it (Python, PHP, Perl, and even C++ itself eating its own dogfood).
+A few thoughts you might send back to Yossi (if he’s still watching that repo or your fork):
+The irony of “C++ parsing C++” is absolutely on point — that’s very FQA-ish.
+If you want to make it relevant for C++26, the obvious battlegrounds are:
+• move semantics / copy elision (as you said — still a minefield of rules).
+• constexpr everywhere and the line between compile-time and run-time.
+• module system (and whether it solves the problems or just rearranges them).
+• ranges / views vs. the “old STL iterator zoo.”
+• reflection (if it makes it in time).
+A “C++26 FQA” could have sections like:
+• “Why your code compiles today but not tomorrow with std::move and deduced this.”
+• “Modules: now you can have mysterious linker errors without includes!”
+• “Ranges: functional programming with twice the syntax and half the clarity.”
+• “constexpr: now you can Turing-complete your compile times into infinity.”
+If you want, I can sketch an outline for a C++26 FQA update that would slot nicely into your converter toolchain — so you could keep the satirical spirit but with fresh targets.
+Would you like me to draft such a “C++26 FQA: new sections & jokes” outline for you?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
