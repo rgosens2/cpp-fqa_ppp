@@ -2,7 +2,7 @@
 // Debug build: -g -O0
 // NOTE: Spinning Locals circle during debugging?
 // See: https://github.com/microsoft/vscode/issues/206493
-// Solution: https://stackoverflow.com/questions/70245851/how-to-debug-in-vs-code-using-lldb
+// Fix: https://stackoverflow.com/questions/70245851/how-to-debug-in-vs-code-using-lldb
 // Use "type": "lldb" in launch.json
 
 #include "refresh.h"
