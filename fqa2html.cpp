@@ -295,15 +295,15 @@ std::string read_paragraph() {
 }
 
 // Append a paragraph to the output
-void print_paragraph(const std::string &p) {
+void print_paragraph(const std::string& p) {
     out += "<p>\n" + p + "\n</p>\n\n";
 }
 
-void print_heading(const std::string &faq_page) {
+void print_heading(const std::string& faq_page) {
     // single page: just print h1
     if (!sp.empty()) {
         // TEST:
-        std::cout << "We get here with sp = " << sp << "\n";
+        std::cout << "We get here with sp=" << sp << " and faq_page=" << faq_page << "\n";
         out += "<h1>" + replace_html_ent(title) + "</h1>\n";
         return;
     }
@@ -540,9 +540,9 @@ std::string run(const std::string& arg, const std::string& sp) {
         // TEST:
         //std::cout << "Calling replace_faq\n";
         qs[i]->replace_faq(n);
-        for (auto &para : qs[i]->faq) print_paragraph(para);
+        for (auto& para : qs[i]->faq) print_paragraph(para);
         qs[i]->replace_fqa();
-        for (auto &para : qs[i]->fqa) print_paragraph(para);
+        for (auto& para : qs[i]->fqa) print_paragraph(para);
     }
 
     if (sp.empty()) out += end_of_doc;
@@ -624,7 +624,7 @@ The single page version does not include most "metadata" sections such as [http:
 </ul>`
 )";
 
-void f2h_singlepage(const std::string &outname) {
+void f2h_singlepage(const std::string& outname) {
     // open output file
     std::ofstream outf(outname);
     if (!outf.is_open()) {
@@ -664,11 +664,11 @@ void f2h_singlepage(const std::string &outname) {
     std::remove(tmpfile.c_str());
 
     // define helper functions
-    auto sec_ancor = [&outf](const std::string &secfname) {
+    auto sec_ancor = [&outf](const std::string& secfname) {
         outf << "<a id=\"fqa-" << secfname.substr(0, secfname.size() - 4) << "\"></a>";
     };
 
-    auto sec_with_toc = [&outf, &outname, &sec_ancor](const std::string &filename, const std::string &name) {
+    auto sec_with_toc = [&outf, &outname, &sec_ancor](const std::string& filename, const std::string& name) {
         sec_ancor(filename);
         std::string tmpfile = "sec-with-toc.tmp.html";
         {
@@ -686,7 +686,7 @@ void f2h_singlepage(const std::string &outname) {
     // now build the content
     sec_with_toc("defective.fqa", "defect");
 
-    for (auto &pair : secindex) {
+    for (auto& pair : secindex) {
         std::string sec = pair.first;
         std::string title = pair.second;
         sec_ancor(sec + ".fqa");
@@ -710,7 +710,7 @@ void f2h_singlepage(const std::string &outname) {
 //         }
 //         ///////////
 //         run(argv[1]);
-//     } catch (const std::exception &e) {
+//     } catch (const std::exception& e) {
 //         std::cerr << "Error: " << e.what() << std::endl;
 //         return 1;
 //     }
