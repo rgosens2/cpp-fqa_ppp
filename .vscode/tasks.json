@@ -9,7 +9,6 @@
         "-std=c++17",
         "-O0",
         "-g",
-        "-v",
         "refresh.cpp",
         "fqa2html.cpp",
         "toc.cpp",

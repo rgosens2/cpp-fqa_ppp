@@ -1,4 +1,10 @@
 // Build command: g++ -std=c++17 refresh.cpp fqa2html.cpp toc.cpp tidy.cpp -o refresh
+// Debug build: -g -O0
+// NOTE: Spinning Locals circle during debugging?
+// See: https://github.com/microsoft/vscode/issues/206493
+// Solution: https://stackoverflow.com/questions/70245851/how-to-debug-in-vs-code-using-lldb
+// Use "type": "lldb" in launch.json
+
 #include "refresh.h"
 
 #include <iostream>
