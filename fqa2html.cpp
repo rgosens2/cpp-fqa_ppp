@@ -39,7 +39,7 @@ std::string style2 = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.cs
 
 std::string ga = "";
 
-std::string end_of_doc;
+const std::string end_of_doc = create_end_of_doc();
 
 std::regex re_link(R"(\[http:([^ ]+) ([^\]]+)\])");
 std::regex re_int(R"(\[(\d+)\.(\d+) ([^\]]+)\])");
@@ -423,11 +423,7 @@ std::string run(const std::string& arg, const std::string& sp) {
     if (pos != std::string::npos) fqa_page.replace(pos, 4, ".html");
 
     // helper
-    if (end_of_doc.empty())
-        // create end of document HTML
-        // This is the footer with copyright and date
-        // It is created only once, not for every page.
-        end_of_doc = create_end_of_doc();
+    // end_of_doc is now a const and initialized at startup
 
     // TEST:
     //std::cout << "In run\n";
