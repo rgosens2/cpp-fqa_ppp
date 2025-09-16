@@ -2,7 +2,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug",
+      "name": "Debug (cppdbg)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/refresh",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "MIMode": "lldb",
+      "externalConsole": false,
+      "targetArchitecture": "arm64"
+    },
+    {
+      "name": "Debug (lldb)",
       "type": "lldb",
       "request": "launch",
       "program": "${workspaceFolder}/refresh",
