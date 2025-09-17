@@ -46,17 +46,17 @@ std::regex re_int(R"(\[(\d+)\.(\d+) ([^\]]+)\])");
 std::regex re_corr(R"(\[corr\.(\d+) ([^\]]+)\])");
 
 std::map<char, std::vector<std::string>> esc2mark = {
-  {'/', {"<i>", "</i>"}},
-  {'|', {"<code>", "</code>"}},
-  {'@', {"<pre>", "</pre>"}}
+    {'/', {"<i>", "</i>"}},
+    {'|', {"<code>", "</code>"}},
+    {'@', {"<pre>", "</pre>"}}
 };
 
 std::map<char, std::string> plain2html = {
-  {'"', "&quot;"},
-  {'\'', "&#39;"},
-  {'&', "&amp;"},
-  {'<', "&lt;"},
-  {'>', "&gt;"}
+    {'"', "&quot;"},
+    {'\'', "&#39;"},
+    {'&', "&amp;"},
+    {'<', "&lt;"},
+    {'>', "&gt;"}
 };
 
 std::map<int, std::string> num2sec = {
