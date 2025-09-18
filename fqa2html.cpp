@@ -600,28 +600,28 @@ The single page version does not include most "metadata" sections such as [http:
 <li>C++ Q&amp;A, structured similarly to C++ FAQ Lite, with links to the original FAQ answers</li>
 <li style="list-style-type: none;">
 <ul>
-<li><a href="%(sp)s#fqa-picture">Big Picture Issues</a></li>
-<li><a href="%(sp)s#fqa-class">Classes and objects</a></li>
-<li><a href="%(sp)s#fqa-ref">References</a></li>
-<li><a href="%(sp)s#fqa-inline">Inline functions</a></li>
-<li><a href="%(sp)s#fqa-ctors">Constructors</a></li>
-<li><a href="%(sp)s#fqa-dtor">Destructors</a></li>
-<li><a href="%(sp)s#fqa-assign">Assignment operators</a></li>
-<li><a href="%(sp)s#fqa-operator">Operator overloading</a></li>
-<li><a href="%(sp)s#fqa-friend">Friends</a></li>
-<li><a href="%(sp)s#fqa-io">Input/output via <code>&lt;iostream&gt;</code> and <code>&lt;cstdio&gt;</code></a></li>
-<li><a href="%(sp)s#fqa-heap">Freestore management</a></li>
-<li><a href="%(sp)s#fqa-exceptions">Exceptions</a></li>
-<li><a href="%(sp)s#fqa-const">Const correctness</a></li>
-<li><a href="%(sp)s#fqa-inheritance-basics">Inheritance - basics</a></li>
-<li><a href="%(sp)s#fqa-inheritance-virtual">Inheritance - <code>virtual</code> functions</a></li>
-<li><a href="%(sp)s#fqa-inheritance-proper">Inheritance - proper inheritance and substitutability</a></li>
-<li><a href="%(sp)s#fqa-inheritance-abstract">Inheritance - abstract base classes</a></li>
-<li><a href="%(sp)s#fqa-inheritance-mother">Inheritance - what your mother never told you</a></li>
-<li><a href="%(sp)s#fqa-inheritance-multiple">Inheritance - multiple and <code>virtual</code> inheritance</a></li>
-<li><a href="%(sp)s#fqa-mixing">How to mix C and C++</a></li>
-<li><a href="%(sp)s#fqa-function">Pointers to member functions</a></li>
-<li><a href="%(sp)s#fqa-templates">Templates</a></li>
+<li><a href="%(sp)s#fqa-picture">[6] Big Picture Issues</a></li>
+<li><a href="%(sp)s#fqa-class">[7] Classes and objects</a></li>
+<li><a href="%(sp)s#fqa-ref">[8] References</a></li>
+<li><a href="%(sp)s#fqa-inline">[9] Inline functions</a></li>
+<li><a href="%(sp)s#fqa-ctors">[10] Constructors</a></li>
+<li><a href="%(sp)s#fqa-dtor">[11] Destructors</a></li>
+<li><a href="%(sp)s#fqa-assign">[12] Assignment operators</a></li>
+<li><a href="%(sp)s#fqa-operator">[13] Operator overloading</a></li>
+<li><a href="%(sp)s#fqa-friend">[14] Friends</a></li>
+<li><a href="%(sp)s#fqa-io">[15] Input/output via <code>&lt;iostream&gt;</code> and <code>&lt;cstdio&gt;</code></a></li>
+<li><a href="%(sp)s#fqa-heap">[16] Freestore management</a></li>
+<li><a href="%(sp)s#fqa-exceptions">[17] Exceptions</a></li>
+<li><a href="%(sp)s#fqa-const">[18] Const correctness</a></li>
+<li><a href="%(sp)s#fqa-inheritance-basics">[19] Inheritance - basics</a></li>
+<li><a href="%(sp)s#fqa-inheritance-virtual">[20] Inheritance - <code>virtual</code> functions</a></li>
+<li><a href="%(sp)s#fqa-inheritance-proper">[21] Inheritance - proper inheritance and substitutability</a></li>
+<li><a href="%(sp)s#fqa-inheritance-abstract">[22] Inheritance - abstract base classes</a></li>
+<li><a href="%(sp)s#fqa-inheritance-mother">[23] Inheritance - what your mother never told you</a></li>
+<li><a href="%(sp)s#fqa-inheritance-multiple">[25] Inheritance - multiple and <code>virtual</code> inheritance</a></li>
+<li><a href="%(sp)s#fqa-mixing">[32] How to mix C and C++</a></li>
+<li><a href="%(sp)s#fqa-function">[33] Pointers to member functions</a></li>
+<li><a href="%(sp)s#fqa-templates">[35] Templates</a></li>
 </ul>
 </li>
 <li><a href="%(sp)s#fqa-web-vs-fqa">`FQA errors`</a> found by readers</li>
