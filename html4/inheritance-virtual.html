@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Inheritance -- virtual functions</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/virtual-functions.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/virtual-functions.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This page is about <code>virtual</code> functions - a rare example of a C++ feature which is neither a part of C nor completely self-defeating.
@@ -27,7 +27,7 @@ This page is about <code>virtual</code> functions - a rare example of a C++ feat
 <a id="fqa-20.1"></a>
 <h2>[20.1] What is a &quot;<code>virtual</code> member function&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-20.1">FAQ:</a></b> The most important thing about C++ if you look from an OO perspective.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/virtual-functions.html#faq-20.1">FAQ:</a></b> The most important thing about C++ if you look from an OO perspective.
 </p>
 
 <p>
@@ -89,7 +89,7 @@ Of course not using C++ for code characterized by complicated structure and dyna
 <a id="fqa-20.2"></a>
 <h2>[20.2] How can C++ achieve dynamic binding yet also static typing?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-20.2">FAQ:</a></b> <i>Static typing</i> means that when a function (<code>virtual</code> or other) is called, the compiler checks that the function
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/virtual-functions.html#faq-20.2">FAQ:</a></b> <i>Static typing</i> means that when a function (<code>virtual</code> or other) is called, the compiler checks that the function
 call is valid according to the statically defined interfaces.
 </p>
 
@@ -135,7 +135,7 @@ Their hidden motives include the need to rationalize the <a href="inline.html#fq
 <a id="fqa-20.3"></a>
 <h2>[20.3] What&#39;s the difference between how <code>virtual</code> and non-<code>virtual</code> member functions are called?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-20.3">FAQ:</a></b> non-<code>virtual</code> functions are resolved at compile time. <code>virtual</code> functions are resolved at run time.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/virtual-functions.html#faq-20.3">FAQ:</a></b> non-<code>virtual</code> functions are resolved at compile time. <code>virtual</code> functions are resolved at run time.
 </p>
 
 <p>
@@ -198,7 +198,7 @@ to fast code using SIMD instructions of the host processor, without creating <a 
 <a id="fqa-20.4"></a>
 <h2>[20.4] What happens in the hardware when I call a <code>virtual</code> function? How many layers of indirection are there? How much overhead is there?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-20.4">FAQ:</a></b> There&#39;s a lot of code listings explaining the previous answer in detail.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/virtual-functions.html#faq-20.4">FAQ:</a></b> There&#39;s a lot of code listings explaining the previous answer in detail.
 </p>
 
 <p>
@@ -227,7 +227,7 @@ little gain.
 <a id="fqa-20.5"></a>
 <h2>[20.5] How can a member function in my derived class call the same function from its base class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-20.5">FAQ:</a></b> For some a reason, a pretty low-level discussion follows. Name mangling, &quot;call-by-name&quot; vs &quot;call-by-slot-number&quot;, code listings
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/virtual-functions.html#faq-20.5">FAQ:</a></b> For some a reason, a pretty low-level discussion follows. Name mangling, &quot;call-by-name&quot; vs &quot;call-by-slot-number&quot;, code listings
                                           with double underscores...
 </p>
 
@@ -245,7 +245,7 @@ I think you can do that in every OO language. It&#39;s pretty natural.
 <a id="fqa-20.6"></a>
 <h2>[20.6] I have a heterogeneous list of objects, and my code needs to do class-specific things to the objects. Seems like this ought to use dynamic binding but I can&#39;t figure it out. What should I do?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-20.6">FAQ:</a></b> &quot;It&#39;s surprisingly easy&quot;, says the FAQ. This statement is followed by a surprisingly long answer.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/virtual-functions.html#faq-20.6">FAQ:</a></b> &quot;It&#39;s surprisingly easy&quot;, says the FAQ. This statement is followed by a surprisingly long answer.
 </p>
 
 <p>
@@ -274,7 +274,7 @@ Off-topic: the STL way of saying <code>foreach p in shapes</code> is pretty ugly
 <a id="fqa-20.7"></a>
 <h2>[20.7] When should my destructor be <code>virtual</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-20.7">FAQ:</a></b> The rule of thumb is - when you have a <code>virtual</code> function. Strictly speaking, you need it when you want someone to be
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/virtual-functions.html#faq-20.7">FAQ:</a></b> The rule of thumb is - when you have a <code>virtual</code> function. Strictly speaking, you need it when you want someone to be
 able to derive classes from your class, create objects with <code>new</code>, and <code>delete</code> them via pointers to a base class.
 </p>
 
@@ -288,7 +288,7 @@ if only to suppress compiler warnings. Too bad the C++ compiler doesn&#39;t use 
 <a id="fqa-20.8"></a>
 <h2>[20.8] What is a &quot;<code>virtual</code> constructor&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-20.8">FAQ:</a></b> It&#39;s an idiom allowing you to have a pointer to a base class and use it to create objects of the right derived class.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/virtual-functions.html#faq-20.8">FAQ:</a></b> It&#39;s an idiom allowing you to have a pointer to a base class and use it to create objects of the right derived class.
 You can implement it by providing <code>virtual</code> functions like these:
 </p>
 
@@ -342,7 +342,7 @@ to work (like STL), and/or is based on the microscopic details of overload resol
 
 <hr>
 <small class="part">Copyright &copy; 2007-2025 <a href="http://yosefk.com">Yossi Kreinin</a><br>
-<code>revised 17 September 2025</code></small>
+<code>revised 18 September 2025</code></small>
 
 </body>
 </html>

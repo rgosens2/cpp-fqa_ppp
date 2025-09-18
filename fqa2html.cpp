@@ -33,7 +33,9 @@ int section;
 std::string site = std::getenv("FQA_SITE") ? std::getenv("FQA_SITE") : "";
 
 // in October 2007, parashift.com disappeared from the DNS
-std::string faq_site = "http://www.parashift.com/c++-faq-lite";
+//std::string faq_site = "http://www.parashift.com/c++-faq-lite";
+std::string faq_site = "http://www.dietmar-kuehl.de/mirror/c++-faq";
+//std::string faq_site = "http://www.ensta.fr/~diam/c++/online/c++-faq-lite";
 
 std::string style2 = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">";
 
@@ -470,30 +472,31 @@ std::string run(const std::string& arg, const std::string& sp) {
         // We can now keep using this naive parser.
         section = std::stoi(fqa_line.substr(sec_pos + 10)); // 'section': is 10 chars
     }
-    std::string faq_page_attr;
+    //std::string faq_page;
     size_t page_pos = fqa_line.find("'faq-page':'");
     if (page_pos != std::string::npos) {
         size_t start = page_pos + 12;
         size_t end = fqa_line.find("'", start);
-        faq_page_attr = fqa_line.substr(start, end - start);
+        faq_page = fqa_line.substr(start, end - start);
     }
     */
 
     // Simple parser above works OK but let's use some nifty regex parser
     // that can handle multiple spaces.
     auto parsed = parseLine(fqa_line);
-    if (!parsed["section"].empty())
+    if (!parsed["section"].empty()) {
       section = std::stoi(parsed["section"]);
-    std::string faq_page_attr = parsed["faq-page"];
+    }
+    faq_page = parsed["faq-page"];
 
     // TEST:
-    //std::cout << "Section: " << section << "\nFAQ page: " << faq_page_attr << "\n";
+    //std::cout << "Section: " << section << "\nFAQ page: " << faq_page << "\n";
 
     // TEST:
     //std::cout << "In run\n";
 
-    if (!faq_page_attr.empty()) {
-        print_heading(faq_page_attr);
+    if (!faq_page.empty()) {
+        print_heading(faq_page);
     } else {
         print_heading("");
         while (true) {

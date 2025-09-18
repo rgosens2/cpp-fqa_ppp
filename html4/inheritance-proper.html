@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Inheritance -- proper inheritance and substitutability</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/proper-inheritance.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This section is about using inheritance such that the code really works, not just compiles. Unlike most &quot;OO&quot;-related sections in the FAQ, much of the material is applicable to decent OO systems and not only to C++.
@@ -31,7 +31,7 @@ This section is about using inheritance such that the code really works, not jus
 <a id="fqa-21.1"></a>
 <h2>[21.1] Should I hide member functions that were public in my base class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.1">FAQ:</a></b> No, no, don&#39;t even think about it, <i>don&#39;t do that</i>, no. Your desire is probably the result of &quot;muddy thinking&quot;.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.1">FAQ:</a></b> No, no, don&#39;t even think about it, <i>don&#39;t do that</i>, no. Your desire is probably the result of &quot;muddy thinking&quot;.
 </p>
 
 <p>
@@ -65,7 +65,7 @@ overly hysterical about this practice, the polarity of its answer (&quot;no&quot
 <a id="fqa-21.2"></a>
 <h2>[21.2] Converting <code>Derived* -&gt; Base*</code> works OK; why doesn&#39;t <code>Derived** -&gt; Base**</code> work?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.2">FAQ:</a></b> Because it shouldn&#39;t. Let&#39;s pretend it does work and see what happens.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.2">FAQ:</a></b> Because it shouldn&#39;t. Let&#39;s pretend it does work and see what happens.
 </p>
 
 <p>
@@ -126,7 +126,7 @@ you&#39;re just one step away from a quite noticeable increase in your productiv
 <a id="fqa-21.3"></a>
 <h2>[21.3] Is a parking-lot-of-<code>Car</code> a kind-of parking-lot-of-<code>Vehicle</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.3">FAQ:</a></b> No, because a <code>Plane</code> is one kind of <code>Vehicle</code>, and you don&#39;t want someone to park it at a cars&#39; parking lot.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.3">FAQ:</a></b> No, because a <code>Plane</code> is one kind of <code>Vehicle</code>, and you don&#39;t want someone to park it at a cars&#39; parking lot.
 </p>
 
 <p>
@@ -146,7 +146,7 @@ you know what I mean.
 <a id="fqa-21.4"></a>
 <h2>[21.4] Is an array of <code>Derived</code> a kind-of array of <code>Base</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.4">FAQ:</a></b> No. Think of the array as an implementation of a parking lot, and you&#39;ll see that the answer follows from <a href="inheritance-proper.html#fqa-21.3">the previous
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.4">FAQ:</a></b> No. Think of the array as an implementation of a parking lot, and you&#39;ll see that the answer follows from <a href="inheritance-proper.html#fqa-21.3">the previous
 FAQ</a>.
 </p>
 
@@ -195,7 +195,7 @@ The consequences of this axiom wouldn&#39;t be that bad if the features C++ <i>d
 <a id="fqa-21.5"></a>
 <h2>[21.5] Does array-of-Derived is-not-a-kind-of array-of-Base mean arrays are bad?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.5">FAQ:</a></b> Yes, arrays are <a href="picture.html#fqa-6.15">evil</a>. Normally you should use <code>std::vector</code> instead of arrays. But if you are an enlightened OO
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.5">FAQ:</a></b> Yes, arrays are <a href="picture.html#fqa-6.15">evil</a>. Normally you should use <code>std::vector</code> instead of arrays. But if you are an enlightened OO
 specialist and so is everyone likely to maintain your code, and you fully understand the interaction of &quot;kind-of&quot;
 and arrays, you may use them.
 </p>
@@ -215,7 +215,7 @@ Seriously, this is one weird question with a strange answer we have here.
 <a id="fqa-21.6"></a>
 <h2>[21.6] Is a <code>Circle</code> a kind-of an <code>Ellipse</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.6">FAQ:</a></b> Sometimes it is, most frequently it isn&#39;t. For example, if an <code>Ellipse</code> lets you change the size in a way
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.6">FAQ:</a></b> Sometimes it is, most frequently it isn&#39;t. For example, if an <code>Ellipse</code> lets you change the size in a way
 making it asymmetrical, it&#39;s not a <code>Circle</code>.
 </p>
 
@@ -257,7 +257,7 @@ One family of &quot;positive&quot; examples (where inheritance is likely to be p
 <a id="fqa-21.7"></a>
 <h2>[21.7] Are there other options to the &quot;<code>Circle</code> is/isnot kind-of <code>Ellipse</code>&quot; dilemma?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.7">FAQ:</a></b> Well, you need to get rid of <i>some</i> of your original claims to get back to consistency. Either <code>Ellipse</code> has no
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.7">FAQ:</a></b> Well, you need to get rid of <i>some</i> of your original claims to get back to consistency. Either <code>Ellipse</code> has no
 <code>setSize</code> function which can make a circular <code>Ellipse</code> object non-circular, or there&#39;s no inheritance which makes
 it possible to call such a function on a <code>Circle</code> object, or you can even choose to live with the fact that some
 of your <code>Circle</code> objects will become non-circular (and have the code working with <code>Circle</code> objects deal with it).
@@ -301,7 +301,7 @@ The fact that you can&#39;t do it in a portable way with C++ inheritance probabl
 <a id="fqa-21.8"></a>
 <h2>[21.8] But I have a Ph.D. in Mathematics, and I&#39;m sure a Circle is a kind of an Ellipse! Does this mean Marshall Cline is stupid? Or that C++ is stupid? Or that OO is stupid?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.8">FAQ:</a></b> It means a different thing: your intuition is wrong in the sense that it leads you to make wrong decisions about
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.8">FAQ:</a></b> It means a different thing: your intuition is wrong in the sense that it leads you to make wrong decisions about
  inheritance. The right way to think about &quot;kind-of&quot; is this: B is a kind of A if you can always substitute a B for an A.
 </p>
 
@@ -347,7 +347,7 @@ Of course the Circle/Ellipse problem is <i>not</i> an example of &quot;making pr
 <a id="fqa-21.9"></a>
 <h2>[21.9] Perhaps <code>Ellipse</code> should inherit from <code>Circle</code> then?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.9">FAQ:</a></b> Probably not. For example, what would the <code>radius()</code> accessor do, and how would it be compatible with an assumption
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.9">FAQ:</a></b> Probably not. For example, what would the <code>radius()</code> accessor do, and how would it be compatible with an assumption
  that is most likely a part of the <code>Circle</code> protocol that you can use <code>radius()</code> to compute the <code>area()</code>?
 </p>
 
@@ -384,7 +384,7 @@ And if your inheritance does not guarantee substitutability, then the compiler w
 <a id="fqa-21.10"></a>
 <h2>[21.10] But my problem doesn&#39;t have anything to do with circles and ellipses, so what good is that silly example to me?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.10">FAQ:</a></b> But you see, <i>all</i> examples of improper inheritance are basically equivalent to the <code>Circle</code>/<code>Ellipse</code>
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.10">FAQ:</a></b> But you see, <i>all</i> examples of improper inheritance are basically equivalent to the <code>Circle</code>/<code>Ellipse</code>
   case. Inheritance is bad when a base class provides functionality which a derived class can&#39;t provide
   (in the <code>Ellipse</code> case, that&#39;s asymmetrical resizing). The problem with inheritance in such cases is that
 it comes without substitutability, breaking a basic assumption shared by programmers using the classes
@@ -409,7 +409,7 @@ or writing tests checking that your code behaves correctly at run time? You be t
 <a id="fqa-21.11"></a>
 <h2>[21.11] How could &quot;it depend&quot;??!? Aren&#39;t terms like &quot;Circle&quot; and &quot;Ellipse&quot; defined mathematically?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.11">FAQ:</a></b> They are, but the <i>classes</i> <code>Circle</code> and <code>Ellipse</code> have a <i>different</i> definition - the C++ code
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.11">FAQ:</a></b> They are, but the <i>classes</i> <code>Circle</code> and <code>Ellipse</code> have a <i>different</i> definition - the C++ code
 defining the classes. In your program, that&#39;s the definition of <code>Circle</code> and <code>Ellipse</code>, and that&#39;s
 what you have to look at to validate your inheritance. If you keep thinking about the mathematical connotations,
 let&#39;s replace the class names with <code>Foo</code> and <code>Bar</code> for the moment; that&#39;s all the same for the compiler.
@@ -451,7 +451,7 @@ On the bright side, it is probably possible to define a good <code>Circle</code>
 <a id="fqa-21.12"></a>
 <h2>[21.12] If <code>SortedList</code> has <i>exactly</i> the same public interface as <code>List</code>, is <code>SortedList</code> a kind-of <code>List</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-21.12">FAQ:</a></b> It&#39;s quite unlikely. For instance, consider <code>List::insert</code>. Is it defined to insert the element
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/proper-inheritance.html#faq-21.12">FAQ:</a></b> It&#39;s quite unlikely. For instance, consider <code>List::insert</code>. Is it defined to insert the element
    to the end of the list? If it is, there&#39;s no good way to implement it in <code>SortedList</code>, because
    the insertion to the end will usually make the list unsorted.
 </p>
@@ -482,7 +482,7 @@ You can simulate this behavior in C++ by writing lots of code. Namely, the base 
 
 <hr>
 <small class="part">Copyright &copy; 2007-2025 <a href="http://yosefk.com">Yossi Kreinin</a><br>
-<code>revised 17 September 2025</code></small>
+<code>revised 18 September 2025</code></small>
 
 </body>
 </html>

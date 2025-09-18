@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>References</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/references.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/references.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This page is about C++ references - a duplicate language feature introduced in order to <a href="ref.html#fqa-8.3">support other duplicate features</a>.
@@ -26,7 +26,7 @@ This page is about C++ references - a duplicate language feature introduced in o
 <a id="fqa-8.1"></a>
 <h2>[8.1] What is a reference?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-8.1">FAQ:</a></b> It&#39;s an alias for an object - another name by which it can be called. The implementation is frequently identical to that of pointers. But don&#39;t think of references as pointers - a reference <i>is</i> the object.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/references.html#faq-8.1">FAQ:</a></b> It&#39;s an alias for an object - another name by which it can be called. The implementation is frequently identical to that of pointers. But don&#39;t think of references as pointers - a reference <i>is</i> the object.
 </p>
 
 <p>
@@ -53,7 +53,7 @@ or just another name for it, how can that happen? Names of destroyed objects are
 <a id="fqa-8.2"></a>
 <h2>[8.2] What happens if you assign to a reference?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-8.2">FAQ:</a></b> A reference <i>is</i> the object, so of course you assign to the referent object.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/references.html#faq-8.2">FAQ:</a></b> A reference <i>is</i> the object, so of course you assign to the referent object.
 </p>
 
 <p>
@@ -64,7 +64,7 @@ or just another name for it, how can that happen? Names of destroyed objects are
 <a id="fqa-8.3"></a>
 <h2>[8.3] What happens if you return a reference?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-8.3">FAQ:</a></b> You can assign to the return value of a function. This is useful for operator overloading, as in <code>array[index] = value;</code> where array is an object of a class with overloaded <code>operator[]</code> returning a reference.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/references.html#faq-8.3">FAQ:</a></b> You can assign to the return value of a function. This is useful for operator overloading, as in <code>array[index] = value;</code> where array is an object of a class with overloaded <code>operator[]</code> returning a reference.
 </p>
 
 <p>
@@ -91,7 +91,7 @@ C++ introduces duplicate facilities in order to introduce other duplicate facili
 <a id="fqa-8.4"></a>
 <h2>[8.4] What does <code>object.method1().method2()</code> mean?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-8.4">FAQ:</a></b> This is called method chaining. <code>method1</code> returns a reference to an object of a class having <code>method2</code>. This is used in iostream - <code>cout &lt;&lt; a &lt;&lt; endl</code> is method chaining (the method is <code>operator&lt;&lt;</code>). A &quot;slick&quot; way to use method chaining is to simulate &quot;named parameters&quot;: <code>a.setWidth(x).setHeight(y)</code>).
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/references.html#faq-8.4">FAQ:</a></b> This is called method chaining. <code>method1</code> returns a reference to an object of a class having <code>method2</code>. This is used in iostream - <code>cout &lt;&lt; a &lt;&lt; endl</code> is method chaining (the method is <code>operator&lt;&lt;</code>). A &quot;slick&quot; way to use method chaining is to simulate &quot;named parameters&quot;: <code>a.setWidth(x).setHeight(y)</code>).
 </p>
 
 <p>
@@ -114,7 +114,7 @@ The &quot;implementation&quot; of named arguments using method chaining is a par
 <a id="fqa-8.5"></a>
 <h2>[8.5] How can you reseat a reference to make it refer to a different object?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-8.5">FAQ:</a></b> You can&#39;t. The reference <i>is</i> the object.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/references.html#faq-8.5">FAQ:</a></b> You can&#39;t. The reference <i>is</i> the object.
 </p>
 
 <p>
@@ -129,7 +129,7 @@ One has to work around this extremely rarely, but the need can emerge, especiall
 <a id="fqa-8.6"></a>
 <h2>[8.6] When should I use references, and when should I use pointers?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-8.6">FAQ:</a></b>  Use references unless you can&#39;t, especially in interfaces. In particular, references can&#39;t point to <code>NULL</code>, so you can&#39;t have a &quot;sentinel reference&quot;. C programmers may dislike the fact that you can&#39;t tell whether a modified value is local or a reference to something else. But this is a form of <i>information hiding</i>, which is good because you should program in the language of a problem rather than the machine.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/references.html#faq-8.6">FAQ:</a></b>  Use references unless you can&#39;t, especially in interfaces. In particular, references can&#39;t point to <code>NULL</code>, so you can&#39;t have a &quot;sentinel reference&quot;. C programmers may dislike the fact that you can&#39;t tell whether a modified value is local or a reference to something else. But this is a form of <i>information hiding</i>, which is good because you should program in the language of a problem rather than the machine.
 </p>
 
 <p>
@@ -179,7 +179,7 @@ But this, in turn, <i>doesn&#39;t</i> invalidate the argument &quot;pointers are
 <a id="fqa-8.7"></a>
 <h2>[8.7] What is a handle to an object? Is it a pointer? Is it a reference? Is it a pointer-to-a-pointer? What is it?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-8.7">FAQ:</a></b> A &quot;handle&quot; is something identifying and giving access to an object. The term is meant to be vague, omitting implementation details (a handle can be a pointer or an index into an array or a database key, etc.). Handles are often encapsulated in smart pointer classes.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/references.html#faq-8.7">FAQ:</a></b> A &quot;handle&quot; is something identifying and giving access to an object. The term is meant to be vague, omitting implementation details (a handle can be a pointer or an index into an array or a database key, etc.). Handles are often encapsulated in smart pointer classes.
 </p>
 
 <p>
@@ -211,7 +211,7 @@ When implementing &quot;heavy&quot; classes (unlike, for example, simple objects
 
 <hr>
 <small class="part">Copyright &copy; 2007-2025 <a href="http://yosefk.com">Yossi Kreinin</a><br>
-<code>revised 17 September 2025</code></small>
+<code>revised 18 September 2025</code></small>
 
 </body>
 </html>

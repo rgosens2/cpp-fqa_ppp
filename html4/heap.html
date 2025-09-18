@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Freestore management</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/freestore-mgmt.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This page is about one of the most hard, boring and dangerous things C++ forces you to do manually - killing your objects at the right time. One dirty job, that.
@@ -47,7 +47,7 @@ This page is about one of the most hard, boring and dangerous things C++ forces 
 <a id="fqa-16.1"></a>
 <h2>[16.1] Does <code>delete p</code> delete the pointer <code>p</code>, or the pointed-to-data <code>*p</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.1">FAQ:</a></b> That would be <code>*p</code>. The keyword should have been <code>delete_whatever_is_pointed_by</code>. Similarly, <code>free</code> should have
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.1">FAQ:</a></b> That would be <code>*p</code>. The keyword should have been <code>delete_whatever_is_pointed_by</code>. Similarly, <code>free</code> should have
 been called <code>free_whatever_is_pointed_by</code>.
 </p>
 
@@ -84,7 +84,7 @@ is it?
 <a id="fqa-16.2"></a>
 <h2>[16.2] Is it safe to <code>delete</code> the same pointer twice?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.2">FAQ:</a></b> It isn&#39;t. Don&#39;t do that. Your program may crash or corrupt its own data. If it works in a test, it doesn&#39;t mean
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.2">FAQ:</a></b> It isn&#39;t. Don&#39;t do that. Your program may crash or corrupt its own data. If it works in a test, it doesn&#39;t mean
 it always works. Don&#39;t do that.
 </p>
 
@@ -113,7 +113,7 @@ management is not one of its stated goals, is it? It&#39;s nice not to do someth
 <a id="fqa-16.3"></a>
 <h2>[16.3] Can I <code>free()</code> pointers allocated with <code>new</code>? Can I <code>delete</code> pointers allocated with <code>malloc()</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.3">FAQ:</a></b> You can&#39;t. Don&#39;t do that. Your program may crash or corrupt its own data. If it works in a test, it doesn&#39;t mean
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.3">FAQ:</a></b> You can&#39;t. Don&#39;t do that. Your program may crash or corrupt its own data. If it works in a test, it doesn&#39;t mean
 it always works. Don&#39;t do that.
 </p>
 
@@ -127,7 +127,7 @@ How can you count on something like this to work reliably?
 <a id="fqa-16.4"></a>
 <h2>[16.4] Why should I use <code>new</code> instead of trustworthy old <code>malloc()</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.4">FAQ:</a></b> <code>new/delete</code> call the constructor/destructor; <code>new</code> is type safe, <code>malloc</code> is not; <code>new</code> can be overridden by
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.4">FAQ:</a></b> <code>new/delete</code> call the constructor/destructor; <code>new</code> is type safe, <code>malloc</code> is not; <code>new</code> can be overridden by
 a class.
 </p>
 
@@ -154,7 +154,7 @@ get in your way too much. And if they do overload <code>new</code>, you can alwa
 <a id="fqa-16.5"></a>
 <h2>[16.5] Can I use <code>realloc()</code> on pointers allocated via <code>new</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.5">FAQ:</a></b> Guess what - you can&#39;t. <code>realloc</code> may end up copying memory, and C++ objects don&#39;t like to have their memory
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.5">FAQ:</a></b> Guess what - you can&#39;t. <code>realloc</code> may end up copying memory, and C++ objects don&#39;t like to have their memory
 copied without getting notified. They like to have their copy constructors and <code>operator=</code> handle the copying.
 </p>
 
@@ -194,7 +194,7 @@ but it actually is legal.
 <a id="fqa-16.6"></a>
 <h2>[16.6] Do I need to check for <code>NULL</code> after <code>p = new Fred()</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.6">FAQ:</a></b> No, that would be bad. <code>new</code> throws an exception, so you don&#39;t have to insert tests all over the place.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.6">FAQ:</a></b> No, that would be bad. <code>new</code> throws an exception, so you don&#39;t have to insert tests all over the place.
 Unless you&#39;re using an old compiler (you can still work around it and have an exception thrown).
 </p>
 
@@ -231,7 +231,7 @@ making the handling of that aspect explicit and clear.
 <a id="fqa-16.7"></a>
 <h2>[16.7] How can I convince my (older) compiler to automatically check <code>new</code> to see if it returns <code>NULL</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.7">FAQ:</a></b> You can pass a callback function throwing an exception to <code>std::set_new_handler</code>. This will work, except for
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.7">FAQ:</a></b> You can pass a callback function throwing an exception to <code>std::set_new_handler</code>. This will work, except for
  global variables calling <code>new</code> before you set your handler. There is no way to make sure your handler is set first -
  even if you set it in the constructor of a global variable, that variable is not necessarily the first one to be constructed.
 </p>
@@ -257,7 +257,7 @@ and now I&#39;m really puzzled. Are you absolutely sure you want <code>new</code
 <a id="fqa-16.8"></a>
 <h2>[16.8] Do I need to check for <code>NULL</code> before <code>delete p</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.8">FAQ:</a></b> <code>delete</code> already does that, so no, you shouldn&#39;t! <i>You could get the test wrong</i>, and you&#39;ll spend time testing
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.8">FAQ:</a></b> <code>delete</code> already does that, so no, you shouldn&#39;t! <i>You could get the test wrong</i>, and you&#39;ll spend time testing
  both execution paths <i>as required by testing methodologies</i>.
 </p>
 
@@ -281,7 +281,7 @@ Pretty inconsistent with the spirit of the language. Which is why I was very sur
 <a id="fqa-16.9"></a>
 <h2>[16.9] What are the two steps that happen when I say <code>delete p</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.9">FAQ:</a></b> When <code>p</code> is a <code>T*</code>, the first step is <code>p-&gt;~T();</code>, and the second is <code>operator delete(p);</code>.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.9">FAQ:</a></b> When <code>p</code> is a <code>T*</code>, the first step is <code>p-&gt;~T();</code>, and the second is <code>operator delete(p);</code>.
 </p>
 
 <p>
@@ -301,7 +301,7 @@ Which is why C++ code is recompiled all the time.
 <a id="fqa-16.10"></a>
 <h2>[16.10] In <code>p = new Fred()</code>, does the <code>Fred</code> memory &quot;leak&quot; if the <code>Fred</code> constructor throws an exception?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.10">FAQ:</a></b> No, because the compiler effectively generates a <code>try/catch</code> block around the constructor call, and when exceptions
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.10">FAQ:</a></b> No, because the compiler effectively generates a <code>try/catch</code> block around the constructor call, and when exceptions
   are thrown, the <code>catch</code> part deallocates the memory and rethrows the exception.
 </p>
 
@@ -319,7 +319,7 @@ increase the size of your code even when you don&#39;t use them. One good thing 
 <a id="fqa-16.11"></a>
 <h2>[16.11] How do I allocate / unallocate an array of things?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.11">FAQ:</a></b> You allocate it with <code>p = new T[N]</code> and deallocate with <code>delete[] p</code>. Using <code>delete p</code> is an error.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.11">FAQ:</a></b> You allocate it with <code>p = new T[N]</code> and deallocate with <code>delete[] p</code>. Using <code>delete p</code> is an error.
 </p>
 
 <p>
@@ -332,7 +332,7 @@ increase the size of your code even when you don&#39;t use them. One good thing 
 <a id="fqa-16.12"></a>
 <h2>[16.12] What if I forget the <code>[]</code> when deleting array allocated via <code>new T[n]</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.12">FAQ:</a></b> You&#39;ll infect your program with an incurable disease. It will do something like corrupt its data and die.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.12">FAQ:</a></b> You&#39;ll infect your program with an incurable disease. It will do something like corrupt its data and die.
 </p>
 
 <p>
@@ -365,7 +365,7 @@ The bottom line is this: C++ stores the number of objects in a block <i>once</i>
 <a id="fqa-16.13"></a>
 <h2>[16.13] Can I drop the <code>[]</code> when deleting array of some built-in type (<code>char</code>, <code>int</code>, etc)?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.13">FAQ:</a></b> No you can&#39;t. You may think that you can, because <code>int</code> has a trivial destructor. But it&#39;s not just about
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.13">FAQ:</a></b> No you can&#39;t. You may think that you can, because <code>int</code> has a trivial destructor. But it&#39;s not just about
   destructors. For example, what if someone replaces <code>operator new[]</code> and <code>operator delete[]</code> in a way
   incompatible with mismatching <code>new/delete[]</code> calls?
 </p>
@@ -386,7 +386,7 @@ make it <a href="heap.html#fqa-16.1">zero</a>, may be a reason to switch to a di
 <a id="fqa-16.14"></a>
 <h2>[16.14] After <code>p = new Fred[n]</code>, how does the compiler know there are <code>n</code> objects to be destructed during <code>delete[] p</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.14">FAQ:</a></b> Sing along: &quot;It&#39;s a kind of magic...&quot;
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.14">FAQ:</a></b> Sing along: &quot;It&#39;s a kind of magic...&quot;
 </p>
 
 <p>
@@ -415,7 +415,7 @@ The answer is of course <i>modularity</i>. Translation:
 <a id="fqa-16.15"></a>
 <h2>[16.15] Is it legal (and moral) for a member function to say <code>delete this</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.15">FAQ:</a></b> You can do this, as long as you are sure the object is allocated with <code>new</code>, and the pointer is not used for anything
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.15">FAQ:</a></b> You can do this, as long as you are sure the object is allocated with <code>new</code>, and the pointer is not used for anything
   at all after <code>delete this</code>.
 </p>
 
@@ -436,7 +436,7 @@ Why do you want to do it anyway? If you want to impress people, why not do some 
 <a id="fqa-16.16"></a>
 <h2>[16.16] How do I allocate multidimensional arrays using <code>new</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.16">FAQ:</a></b> The answer is very long with 3 large code listings.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.16">FAQ:</a></b> The answer is very long with 3 large code listings.
 </p>
 
 <p>
@@ -458,7 +458,7 @@ With the second way you get more natural-looking indexing, but worse performance
 <a id="fqa-16.17"></a>
 <h2>[16.17] But the previous FAQ&#39;s code is SOOOO tricky and error prone! Isn&#39;t there a simpler way?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.17">FAQ:</a></b> Sure it is! You can define a <code>Matrix</code> class and have it do all the dirty work. Which is good, as should be obvious
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.17">FAQ:</a></b> Sure it is! You can define a <code>Matrix</code> class and have it do all the dirty work. Which is good, as should be obvious
 to anyone familiar with <i>Star Trek 2</i> (a reference follows).
 </p>
 
@@ -491,7 +491,7 @@ Data representation is very important. Too bad so many people believe that the o
 <a id="fqa-16.18"></a>
 <h2>[16.18] But the above <code>Matrix</code> class is specific to <code>Fred</code>! Isn&#39;t there a way to make it generic?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.18">FAQ:</a></b> Of course! You can use templates!
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.18">FAQ:</a></b> Of course! You can use templates!
 </p>
 
 <p>
@@ -502,7 +502,7 @@ Data representation is very important. Too bad so many people believe that the o
 <a id="fqa-16.19"></a>
 <h2>[16.19] What&#39;s another way to build a <code>Matrix</code> template?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.19">FAQ:</a></b> You can use <code>std::vector</code> instead of bare pointers!
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.19">FAQ:</a></b> You can use <code>std::vector</code> instead of bare pointers!
 </p>
 
 <p>
@@ -529,7 +529,7 @@ That&#39;s what C++ is all about: the development of your ethical judgment. Ever
 <a id="fqa-16.20"></a>
 <h2>[16.20] Does C++ have arrays whose length can be specified at run-time?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.20">FAQ:</a></b> That would be yes - there&#39;s <code>std::vector</code>.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.20">FAQ:</a></b> That would be yes - there&#39;s <code>std::vector</code>.
 </p>
 
 <p>
@@ -576,7 +576,7 @@ The built-in C++ arrays are inherited from C without changes
 <a id="fqa-16.21"></a>
 <h2>[16.21] How can I force objects of my class to always be created via <code>new</code> rather than as locals or global/<code>static</code> objects?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.21">FAQ:</a></b> You can define the constructors <code>private</code> and provide <code>public</code> functions which return pointers to objects allocated
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.21">FAQ:</a></b> You can define the constructors <code>private</code> and provide <code>public</code> functions which return pointers to objects allocated
   with <code>new</code>. Which goes by the fancy name of &quot;The Named Constructor Idiom&quot;.
 </p>
 
@@ -603,7 +603,7 @@ Idioms make the world move. Especially the Design Pattern Idiom. Or the Idiom De
 <a id="fqa-16.22"></a>
 <h2>[16.22] How do I do simple reference counting?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.22">FAQ:</a></b> Two large code listings are given (a quote from these listings: <code>// DO NOT CHANGE THE ORDER OF THESE STATEMENTS!</code>), followed by a bold
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.22">FAQ:</a></b> Two large code listings are given (a quote from these listings: <code>// DO NOT CHANGE THE ORDER OF THESE STATEMENTS!</code>), followed by a bold
   claim that now you have a way to do simple reference counting.
 </p>
 
@@ -636,7 +636,7 @@ Well, the code doesn&#39;t compile as fast as it would with built-in garbage col
 <a id="fqa-16.23"></a>
 <h2>[16.23] How do I provide reference counting with copy-on-write semantics?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.23">FAQ:</a></b> You can have your class keep all the data in a structure pointed by a member pointer <code>_data</code>, and then each method
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.23">FAQ:</a></b> You can have your class keep all the data in a structure pointed by a member pointer <code>_data</code>, and then each method
    that wants to modify the object has to check the reference count, and if the data is shared by several objects,
    the data must be cloned before the modification.
 </p>
@@ -678,7 +678,7 @@ Clarification: I&#39;m not saying that meta-programming is likely to be the solu
 <a id="fqa-16.24"></a>
 <h2>[16.24] How do I provide reference counting with copy-on-write semantics for a hierarchy of classes?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.24">FAQ:</a></b> You do it by writing a lot of code! Like this:
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.24">FAQ:</a></b> You do it by writing a lot of code! Like this:
 </p>
 
 <pre>
@@ -722,7 +722,7 @@ Seriously, I&#39;m not going to discuss the nightmare that is the FAQ&#39;s prop
 <a id="fqa-16.25"></a>
 <h2>[16.25] Can you absolutely prevent people from subverting the reference counting mechanism, and if so, <i>should</i> you?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.25">FAQ:</a></b> You can&#39;t, and you <i>usually</i> shouldn&#39;t.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.25">FAQ:</a></b> You can&#39;t, and you <i>usually</i> shouldn&#39;t.
   (Yes, that&#39;s pretty much what the FAQ says: sometimes you <i>should</i> do what you <i>can&#39;t</i>. Just what does &quot;should&quot; mean in its warped universe?)
 </p>
 
@@ -756,7 +756,7 @@ You can absolutely prevent people from subverting the reference counting mechani
 <a id="fqa-16.26"></a>
 <h2>[16.26] Can I use a garbage collector in C++?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.26">FAQ:</a></b> Sure you can. Let&#39;s compare it to smart pointer techniques. Garbage collection is not as portable, but typically
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.26">FAQ:</a></b> Sure you can. Let&#39;s compare it to smart pointer techniques. Garbage collection is not as portable, but typically
   more efficient, and it can handle cyclic references, and it works better with others&#39; libraries because
   you don&#39;t need to explicitly change the pointers from dumb to smart or anything like it. However, sometimes objects
   can leak - a C++ garbage collector <a href="class.html#fqa-7.2">can't</a> tell a pointer from a random bit sequence that just happens to look like
@@ -796,7 +796,7 @@ C++ does not feel pain. It can&#39;t be reasoned with. Starting a fight is a big
 <a id="fqa-16.27"></a>
 <h2>[16.27] What are the two kinds of garbage collectors for C++?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.27">FAQ:</a></b> There are <i>conservative</i> and <i>hybrid</i> garbage collectors. The conservative ones just look for bit sequences
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.27">FAQ:</a></b> There are <i>conservative</i> and <i>hybrid</i> garbage collectors. The conservative ones just look for bit sequences
   looking like pointers. The hybrid ones require the programmer to specify some layout information explicitly
   in the code (but they still traverse the call stack conservatively when they look for pointers).
 </p>
@@ -843,7 +843,7 @@ That is, not only does
 <a id="fqa-16.28"></a>
 <h2>[16.28] Where can I get more info on garbage collectors for C++?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-16.28">FAQ:</a></b> <a href="http://www.iecc.com/gclist/GC-faq.html">Here</a>.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/freestore-mgmt.html#faq-16.28">FAQ:</a></b> <a href="http://www.iecc.com/gclist/GC-faq.html">Here</a>.
 </p>
 
 <p>
@@ -859,7 +859,7 @@ That is, not only does
 
 <hr>
 <small class="part">Copyright &copy; 2007-2025 <a href="http://yosefk.com">Yossi Kreinin</a><br>
-<code>revised 17 September 2025</code></small>
+<code>revised 18 September 2025</code></small>
 
 </body>
 </html>

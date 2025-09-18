@@ -11,7 +11,8 @@
       "cwd": "${workspaceFolder}",
       "MIMode": "lldb",
       "externalConsole": false,
-      "targetArchitecture": "arm64"
+      "targetArchitecture": "arm64",
+      "preLaunchTask": "build"
     },
     {
       "name": "Debug (lldb)",
@@ -19,7 +20,8 @@
       "request": "launch",
       "program": "${workspaceFolder}/refresh",
       "args": [],
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "build"
     }
   ]
 }

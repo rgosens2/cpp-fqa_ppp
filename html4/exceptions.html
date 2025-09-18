@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Exceptions and error handling</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/exceptions.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This page is about C++ exceptions - an error handling facility which may be worse than dereferencing a null pointer upon error.
@@ -30,7 +30,7 @@ This page is about C++ exceptions - an error handling facility which may be wors
 <a id="fqa-17.1"></a>
 <h2>[17.1] What are some ways <code>try / catch / throw</code> can improve software quality?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.1">FAQ:</a></b> You&#39;ll have less <code>if</code> statements in your code: you won&#39;t have to check for errors
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.1">FAQ:</a></b> You&#39;ll have less <code>if</code> statements in your code: you won&#39;t have to check for errors
 each time you call a function. Conditional statements are known to contain
 more bugs than other statements. With less <code>if</code> tests, you&#39;ll ship a better product, faster.
 </p>
@@ -92,7 +92,7 @@ C++ calls &quot;classes&quot; is <a href="class.html#fqa-7.1">unlikely</a> to gi
 <a id="fqa-17.2"></a>
 <h2>[17.2] How can I handle a constructor that fails?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.2">FAQ:</a></b> As you&#39;d guess from the location of this question in the FAQ, the answer is &quot;by throwing an exception&quot;. Alternatively,
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.2">FAQ:</a></b> As you&#39;d guess from the location of this question in the FAQ, the answer is &quot;by throwing an exception&quot;. Alternatively,
 you can mark the object as a &quot;zombie&quot; by using some kind of validity flag. You can then check that flag in the
 calling code and maybe in the member functions of the object. The latter solution tends to &quot;get ugly&quot;.
 </p>
@@ -114,7 +114,7 @@ them a filename in the constructor.
 <a id="fqa-17.3"></a>
 <h2>[17.3] How can I handle a destructor that fails?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.3">FAQ:</a></b> Actually you can&#39;t - not beyond logging the problem to a file or the like. In particular, <i>do not</i> throw an exception.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.3">FAQ:</a></b> Actually you can&#39;t - not beyond logging the problem to a file or the like. In particular, <i>do not</i> throw an exception.
 The problem is that destructors are called when exceptions are thrown so that functions propagating errors to their
 callers can clean up resources. Your destructor can also be called in such a situation. And when an exception is already
 thrown, throwing another one will result in a call to <code>terminate()</code>, killing your process. Because you see, what else could C++ do?
@@ -146,7 +146,7 @@ doing more than nothing: like constructors and operators, they can&#39;t handle 
 <a id="fqa-17.4"></a>
 <h2>[17.4] How should I handle resources if my constructors may throw exceptions?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.4">FAQ:</a></b> Well, the destructor of your class will not get called, but the destructors of the successfully constructed
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.4">FAQ:</a></b> Well, the destructor of your class will not get called, but the destructors of the successfully constructed
 sub-objects will get called. Conclusion: you should have all the resources allocated by your constructors
 assigned to sub-objects. For example, if you call <code>new</code> in a constructor, don&#39;t use a bare member pointer to hold
 the result - use a smart pointer, like <code>std::auto_ptr</code>. You can also define your own smart pointer classes to
@@ -191,7 +191,7 @@ becomes unmanageable.
 <a id="fqa-17.5"></a>
 <h2>[17.5] How do I change the string-length of an array of <code>char</code> to prevent memory leaks even if/when someone throws an exception?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.5">FAQ:</a></b> If you want to work with strings, use something like <code>std::string</code> instead of <code>char*</code>. Otherwise, there&#39;s lots
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.5">FAQ:</a></b> If you want to work with strings, use something like <code>std::string</code> instead of <code>char*</code>. Otherwise, there&#39;s lots
 of exceptions to catch, and lots of code to manage memory.
 </p>
 
@@ -210,7 +210,7 @@ configure your compiler to disable exceptions.
 <a id="fqa-17.6"></a>
 <h2>[17.6] What should I throw?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.6">FAQ:</a></b> C++ allows you to throw objects of arbitrary types; however, you probably shouldn&#39;t throw objects of built-in
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.6">FAQ:</a></b> C++ allows you to throw objects of arbitrary types; however, you probably shouldn&#39;t throw objects of built-in
 types. For example, you can derive all your exception classes from <code>std::exception</code>, and throw temporary objects
 of your classes.
 </p>
@@ -235,7 +235,7 @@ bizarre rule? Apparently nothing, except for an illusion of &quot;generality&quo
 <a id="fqa-17.7"></a>
 <h2>[17.7] What does <code>throw;</code> (without an exception object after the <code>throw</code> keyword) mean? Where would I use it?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.7">FAQ:</a></b> It means &quot;throw the last caught exception&quot;. It may be handy to catch an exception object, add some context information
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.7">FAQ:</a></b> It means &quot;throw the last caught exception&quot;. It may be handy to catch an exception object, add some context information
 and rethrow it; this way you get something like a stack trace. This feature also allows you to factor out several exception
 handlers into a function called from a <code>catch(...)</code> block. Inside the function, you list the handlers for various special
 cases and prefix them with <code>try { throw; }</code>.
@@ -260,7 +260,7 @@ duplicating the information that&#39;s already there.
 <a id="fqa-17.8"></a>
 <h2>[17.8] How do I throw polymorphically?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.8">FAQ:</a></b> Suppose you have a <code>BaseEx</code> exception class and a <code>DerivedEx</code> exception class, which is inherited from <code>BaseEx</code>.
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.8">FAQ:</a></b> Suppose you have a <code>BaseEx</code> exception class and a <code>DerivedEx</code> exception class, which is inherited from <code>BaseEx</code>.
 Than the following code might not work as you expect:
 </p>
 
@@ -315,7 +315,7 @@ all of C++ behaves this way except for <code>virtual</code>, <code>dynamic_cast<
 <a id="fqa-17.9"></a>
 <h2>[17.9] When I throw this object, how many times will it be copied?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.9">FAQ:</a></b> Zero or more. There&#39;s no universal answer. The compiler has to make sure a thrown object provides a copy constructor,
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.9">FAQ:</a></b> Zero or more. There&#39;s no universal answer. The compiler has to make sure a thrown object provides a copy constructor,
 even if it doesn&#39;t actually copy anything.
 </p>
 
@@ -331,7 +331,7 @@ any fake answer that suits your emotional needs.
 <a id="fqa-17.10"></a>
 <h2>[17.10] Exception handling seems to make my life more difficult; clearly <i>I&#39;m</i> not the problem, am I??</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.10">FAQ:</a></b> <i>Of course</i> you can be the problem!
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.10">FAQ:</a></b> <i>Of course</i> you can be the problem!
 </p>
 
 <p>
@@ -409,7 +409,7 @@ which C++ doesn&#39;t. </li>
 <a id="fqa-17.11"></a>
 <h2>[17.11] I have too many try blocks; what can I do about it?</h2>
 <p>
-<b class="FAQ"><a href="http://www.parashift.com/c++-faq-lite/#faq-17.11">FAQ:</a></b> Maybe you have a &quot;return codes mindset&quot; even though syntactically you use exceptions. There are many special cases
+<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/exceptions.html#faq-17.11">FAQ:</a></b> Maybe you have a &quot;return codes mindset&quot; even though syntactically you use exceptions. There are many special cases
 of this problem in which you can organize the code differently to reduce the amount of try blocks (the FAQ lists several cases).
 If you can&#39;t solve the problem yourself, get a mentor.
 </p>
@@ -420,7 +420,7 @@ If you can&#39;t solve the problem yourself, get a mentor.
 
 <hr>
 <small class="part">Copyright &copy; 2007-2025 <a href="http://yosefk.com">Yossi Kreinin</a><br>
-<code>revised 17 September 2025</code></small>
+<code>revised 18 September 2025</code></small>
 
 </body>
 </html>
