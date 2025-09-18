@@ -303,6 +303,11 @@ void print_paragraph(const std::string& p) {
 }
 
 void print_heading(const std::string& faq_page) {
+    // add [section number] to title
+    if (section != 0) {
+        title = "[" + std::to_string(section) + "] " + title;
+    }
+
     // single page: just print h1
     if (!sp.empty()) {
         // TEST:
@@ -486,7 +491,9 @@ std::string run(const std::string& arg, const std::string& sp) {
     // that can handle multiple spaces.
     auto parsed = parseLine(fqa_line);
     if (!parsed["section"].empty()) {
-      section = std::stoi(parsed["section"]);
+        section = std::stoi(parsed["section"]);
+    } else {
+        section = 0;
     }
     faq_page = parsed["faq-page"];
 
@@ -692,7 +699,7 @@ void f2h_singlepage(const std::string& outname) {
 
     for (auto& pair : secindex) {
         std::string sec = pair.first;
-        std::string title = pair.second;
+        //std::string title = "QQQ";//pair.second;
         sec_ancor(sec + ".fqa");
         run_to(sec + ".fqa", outf, outname);
     }

@@ -753,7 +753,7 @@ One more problem with automatically generated functions (such as constructors an
    the private parts of a class triggers recompilation... Which brings us back to square 1.
 </p>
 
-<a id="fqa-picture"></a><h1>Big Picture Issues</h1>
+<a id="fqa-picture"></a><h1>[6] Big Picture Issues</h1>
 <p>
 This part deals with the Big (and somewhat Sad) Picture.
 </p>
@@ -1276,7 +1276,7 @@ When people claim that C++ is object-oriented and therefore &quot;good&quot;, it
 Instead, we&#39;ll use the opportunity to point out that at the time of writing (2007), &quot;FQA&quot; appears to be a less popular acronym than &quot;FAQ&quot;: a Google search yields a few results, but a Wikipedia search does not. Still, changing &quot;FQA&quot; to something else in this document is not an option: it&#39;s all over the place.
 </p>
 
-<a id="fqa-class"></a><h1>Classes and objects</h1>
+<a id="fqa-class"></a><h1>[7] Classes and objects</h1>
 <p>
 One of the stated goals of C++ is support for object-oriented programming. This page introduces C++ classes and outlines the tactics they use to defeat their purpose.
 </p>
@@ -1543,7 +1543,7 @@ By the way, <a href="fqa.html#fqa-7.5">the forward-declaration-of-struct thing</
   functions most of the time.
 </p>
 
-<a id="fqa-ref"></a><h1>References</h1>
+<a id="fqa-ref"></a><h1>[8] References</h1>
 <p>
 This page is about C++ references - a duplicate language feature introduced in order to <a href="fqa.html#fqa-8.3">support other duplicate features</a>.
 </p>
@@ -1744,7 +1744,7 @@ The C handle technique is also way better than the &quot;smart pointer&quot; tri
 When implementing &quot;heavy&quot; classes (unlike, for example, simple objects representing values like points in a 2-dimensional space), using C-style handles is typically much better than pointers or references to objects of C++ classes. Which is quite surprising considering the fact that supporting OO at the language level is one of the main motivations behind C++.
 </p>
 
-<a id="fqa-inline"></a><h1>Inline functions</h1>
+<a id="fqa-inline"></a><h1>[9] Inline functions</h1>
 <p>
 Inline functions are a pet feature of <a href="fqa.html#fqa-10.9">people</a> who think they care about performance, but don&#39;t bother to measure it.
 </p>
@@ -2054,7 +2054,7 @@ If you don&#39;t care about this sort of discussions, and you find yourself unde
  by the distraction to go out and buy a buzzer to talk back to them.
 </p>
 
-<a id="fqa-ctors"></a><h1>Constructors</h1>
+<a id="fqa-ctors"></a><h1>[10] Constructors</h1>
 <p>
 This section is about constructors, which create C++ objects, as well as a large number of problems.
 </p>
@@ -2590,7 +2590,7 @@ The problem with <code>Foo</code> and <code>Bar</code> is that the C++ grammar i
 It could help the users if the people promoting C++ realized that the consistency of a grammar is not something you &quot;worship&quot;, but a technical property which is far easier to achieve than it is to deal with the consequences of not having it. This example is just one drop in the ocean of such problems. The complexity of the C++ grammar guarantees that compiler error messages will remain cryptic, debuggers will stay ignorant, and IDEs will be unhelpful compared to those available for other languages forever.
 </p>
 
-<a id="fqa-dtor"></a><h1>Destructors</h1>
+<a id="fqa-dtor"></a><h1>[11] Destructors</h1>
 <p>
 Destructors are one of the many pieces of the puzzle that is the C++ <a href="fqa.html#fqa-16.1">memory management</a>.
 </p>
@@ -2963,7 +2963,7 @@ of classes with constructors</i> from pools, <a href="fqa.html#fqa-11.10">use C-
                                                                          discussed throughout the FQA.
 </p>
 
-<a id="fqa-assign"></a><h1>Assignment operators</h1>
+<a id="fqa-assign"></a><h1>[12] Assignment operators</h1>
 <p>
 This section is about <code>operator=</code>. It&#39;s rather strange that of all possible things, people only &quot;frequently ask&quot; about self assignment, but those are the only questions listed in the FAQ.
 </p>
@@ -3073,7 +3073,7 @@ When simplicity &amp; generality are more important than performance, you can us
 references to objects, guaranteeing that used objects won&#39;t get destroyed.
 </p>
 
-<a id="fqa-operator"></a><h1>Operator overloading</h1>
+<a id="fqa-operator"></a><h1>[13] Operator overloading</h1>
 <p>
 This section is about operator overloading - a way to make the code &quot;readable&quot; as long as the reader doesn&#39;t care what the code actually does.
 </p>
@@ -3578,7 +3578,7 @@ The <a href="fqa.html#fqa-13.10">really interesting questions</a> are about the 
 an optimized <code>multiply_and_add_matrices(A,B,C)</code> function.
 </p>
 
-<a id="fqa-friend"></a><h1>Friends</h1>
+<a id="fqa-friend"></a><h1>[14] Friends</h1>
 <p>
 The questions here are about <code>friend</code> declarations. A short answer to them all: you probably don&#39;t need <code>friend</code> declarations.
 </p>
@@ -3731,7 +3731,7 @@ to class hierarchies and stuff.
 The FAQ&#39;s advice may be further simplified if we use the observation that C++ operator overloading is just a pain in the neck.
 </p>
 
-<a id="fqa-io"></a><h1>Input/output via &lt;iostream&gt; and &lt;cstdio&gt;</h1>
+<a id="fqa-io"></a><h1>[15] Input/output via &lt;iostream&gt; and &lt;cstdio&gt;</h1>
 <p>
 This section explains the benefits of <code>iostream</code> - a <i>&quot;type-safe&quot;</i> I/O library (which does not mean it will <i>save</i> keystrokes when you <i>type</i> some code).
 </p>
@@ -4221,7 +4221,7 @@ The lame standard library is another one of those things making using C++ a joy.
 <code>cout</code>/<code>stdout</code>; you don&#39;t need to call any special functions. Many terminals support this.
 </p>
 
-<a id="fqa-heap"></a><h1>Freestore management</h1>
+<a id="fqa-heap"></a><h1>[16] Freestore management</h1>
 <p>
 This page is about one of the most hard, boring and dangerous things C++ forces you to do manually - killing your objects at the right time. One dirty job, that.
 </p>
@@ -5070,7 +5070,7 @@ That is, not only does
 <a href="fqa.html#fqa-16.26">Why</a> do you think you don&#39;t see too many around?
 </p>
 
-<a id="fqa-exceptions"></a><h1>Exceptions and error handling</h1>
+<a id="fqa-exceptions"></a><h1>[17] Exceptions and error handling</h1>
 <p>
 This page is about C++ exceptions - an error handling facility which may be worse than dereferencing a null pointer upon error.
 </p>
@@ -5480,7 +5480,7 @@ If you can&#39;t solve the problem yourself, get a mentor.
 <b class="FQA">FQA:</b> Alternatively, you can stop throwing C++ exceptions so you won&#39;t have to catch them.
 </p>
 
-<a id="fqa-const"></a><h1>Const correctness</h1>
+<a id="fqa-const"></a><h1>[18] Const correctness</h1>
 <p>
 This is about the <code>const</code> keyword, which makes you write your program twice (or more, depending on your luck).
 </p>
@@ -5890,7 +5890,7 @@ neither the vector nor the pointed objects. Why can&#39;t I pass my mutable vect
 to a function that promises not to modify either of those?
 </p>
 
-<a id="fqa-inheritance-basics"></a><h1>Inheritance -- basics</h1>
+<a id="fqa-inheritance-basics"></a><h1>[19] Inheritance -- basics</h1>
 <p>
 This section outlines the C++ &quot;support&quot; for the OO concept of inheritance. Do not confuse C++ and OO.
 </p>
@@ -6137,7 +6137,7 @@ useful built-in type to your language (we already have integers and floats), say
 a dictionary, and then talk about the difference between theory and the real world?
 </p>
 
-<a id="fqa-inheritance-virtual"></a><h1>Inheritance -- virtual functions</h1>
+<a id="fqa-inheritance-virtual"></a><h1>[20] Inheritance -- virtual functions</h1>
 <p>
 This page is about <code>virtual</code> functions - a rare example of a C++ feature which is neither a part of C nor completely self-defeating.
 </p>
@@ -6469,7 +6469,7 @@ copied them from C++. However, other languages rarely encourage design which dep
 to work (like STL), and/or is based on the microscopic details of overload resolution mechanisms (like some of the boost libraries).
 </p>
 
-<a id="fqa-inheritance-proper"></a><h1>Inheritance -- proper inheritance and substitutability</h1>
+<a id="fqa-inheritance-proper"></a><h1>[21] Inheritance -- proper inheritance and substitutability</h1>
 <p>
 This section is about using inheritance such that the code really works, not just compiles. Unlike most &quot;OO&quot;-related sections in the FAQ, much of the material is applicable to decent OO systems and not only to C++.
 </p>
@@ -6941,7 +6941,7 @@ You can simulate this behavior in C++ by writing lots of code. Namely, the base 
    to work spent on compile time error detection.
 </p>
 
-<a id="fqa-inheritance-abstract"></a><h1>Inheritance -- abstract base classes</h1>
+<a id="fqa-inheritance-abstract"></a><h1>[22] Inheritance -- abstract base classes</h1>
 <p>
 C++ abstract base classes are not bad at all by C++ standards. However, they are quite poor by OO standards.
 </p>
@@ -7176,7 +7176,7 @@ Of course this problem exists with all computer languages and, more generally, w
 Well, in C++, the very thin ice is covered with <a href="fqa.html#fqa-13.2">paint</a>, and the water is deep enough to <a href="fqa.html#fqa-35.20">drown</a>.
 </p>
 
-<a id="fqa-inheritance-mother"></a><h1>Inheritance -- what your mother never told you</h1>
+<a id="fqa-inheritance-mother"></a><h1>[23] Inheritance -- what your mother never told you</h1>
 <p>
 Note: section names are copied verbatim from the FAQ. The document is not based on the assumption that it was your mother who told you the other things about inheritance.
 </p>
@@ -7671,7 +7671,7 @@ wreaking havoc in an orderly way). All I&#39;m saying is that non-<code>virtual<
  and largely independent of the rest of the language at first glance, so not using it looks like a good thing.
 </p>
 
-<a id="fqa-inheritance-multiple"></a><h1>Inheritance -- multiple and virtual inheritance</h1>
+<a id="fqa-inheritance-multiple"></a><h1>[25] Inheritance -- multiple and virtual inheritance</h1>
 <p>
 This section is about multiple inheritance. While inheritance and <code>virtual</code> functions are among the most useful (that is, <a href="fqa.html#fqa-20.1">the least useless</a>) C++ features, C++ multiple inheritance is at the other end of the spectrum.
 </p>
@@ -8139,7 +8139,7 @@ Well, <a href="fqa.html#fqa-25.12">why</a> would you use initialization lists?
 <b class="FQA">FQA:</b> Right. But you probably shouldn&#39;t write code that depends on these things. Your colleagues may get annoyed.
 </p>
 
-<a id="fqa-mixing"></a><h1>How to mix C and C++</h1>
+<a id="fqa-mixing"></a><h1>[32] How to mix C and C++</h1>
 <p>
 These questions are about mixing C and C++, which may be harder than you&#39;d expect from the names of those languages, but easier than, say, <a href="fqa.html#fqa-32.1">mixing C++ and C++</a>. Stay tuned.
 </p>
@@ -8515,7 +8515,7 @@ checking the definition of <code>getVec</code>. Not only is it hard to figure ou
 it is hard to even tell what it <i>does</i>, which is not supposed to be typical of high-level languages.
 </p>
 
-<a id="fqa-function"></a><h1>Pointers to member functions</h1>
+<a id="fqa-function"></a><h1>[33] Pointers to member functions</h1>
 <p>
 This is basically about the lack of function objects and closures in C++.
 </p>
@@ -8897,7 +8897,7 @@ Check out the monstrous <a href="http://www.boost.org/doc/html/lambda.html">boos
  is one problem with the lack of closures in C++ discussed <a href="fqa.html#fqa-33.10">above</a>.
 </p>
 
-<a id="fqa-templates"></a><h1>Templates</h1>
+<a id="fqa-templates"></a><h1>[35] Templates</h1>
 <p>
 This page is about C++ templates, one of the largest cannons to aim at your feet that the C++ arsenal has to offer. Templates solve the problems with C macros by creating 2 orders of magnitude more problems.
 </p>
