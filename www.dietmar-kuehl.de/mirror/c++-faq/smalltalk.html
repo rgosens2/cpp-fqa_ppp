@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/smalltalk.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:23 GMT -->
+<head>
+<title>[30] Learning C++ if you already know Smalltalk, C++ FAQ Lite</title>
+<meta name="FILENAME" content="smalltalk.html">
+<meta name="ABSTRACT" content="[30] Learning C++ if you already know Smalltalk, C++ FAQ Lite">
+<meta name="OWNER"    content="cline@parashift.com">
+<meta name="AUTHOR"   content="Marshall Cline, cline@parashift.com">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rev=made href="mailto:cline@parashift.com">
+<style type='text/css'>
+  <!--
+  body       { font-family: arial; color: black; background: white }
+  .CodeBlock { color: black; background-color: #dfdfdf; margin-left: 30px; margin-right: 30px; padding: 5pt }
+  .CodeBlock small tt { font-size: small }
+  .FaqTitle  { color: black; background-color: gold }
+  .Updated   { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #ffff00; border: solid #e0e000 1px; }
+  .New       { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #00ff00; border: solid #00d000 1px; }
+  ul         { margin-bottom: 1px; margin-top: 1px }
+  ol         { margin-bottom: 1px; margin-top: 1px }
+  li         { margin-bottom: 4px; margin-top: 4px }
+  -->
+</style>
+</head>
+<body>
+<h1><a name="top"></a>[30] Learning C++ if you already know Smalltalk<br>
+<small><small>(Part of <a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>, <a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">Copyright&nbsp;&copy; 1991-2006</a>, <a href="http://www.parashift.com/" title="www.parashift.com/" target='_blank'>Marshall Cline</a>, <a href="mailto:cline@parashift.com" title="cline@parashift.com"><tt>cline@parashift.com</tt></a>)</small></small></h1>
+<hr>
+<h3>FAQs in section [30]:</h3>
+<ul>
+<li><a href="smalltalk.html#faq-30.1" title="[30.1] What's the difference between C++ and Smalltalk?">[30.1] What's the difference between C++ and Smalltalk?</a></li>
+<li><a href="smalltalk.html#faq-30.2" title="[30.2] What is &quot;static typing,&quot; and how is it similar/dissimilar to Smalltalk?">[30.2] What is &quot;static typing,&quot; and how is it similar/dissimilar to Smalltalk?</a></li>
+<li><a href="smalltalk.html#faq-30.3" title="[30.3] Which is a better fit for C++: &quot;static typing&quot; or &quot;dynamic typing&quot;?">[30.3] Which is a better fit for C++: &quot;static typing&quot; or &quot;dynamic typing&quot;?</a></li>
+<li><a href="smalltalk.html#faq-30.4" title="[30.4] How do you use inheritance in C++, and is that different from Smalltalk?">[30.4] How do you use inheritance in C++, and is that different from Smalltalk?</a></li>
+<li><a href="smalltalk.html#faq-30.5" title="[30.5] What are the practical consequences of differences in Smalltalk/C++ inheritance?">[30.5] What are the practical consequences of differences in Smalltalk/C++ inheritance?</a></li>
+</ul>
+<p><hr>
+<p><a name="faq-30.1"></a>
+<div class=FaqTitle><h3>[30.1] What's the difference between C++ and Smalltalk?</h3></div>
+<p>Both fully support the OO paradigm.  Neither is categorically and universally
+<a href="big-picture.html#faq-6.5" title="[6.5] Is C++ better than Ada? (or Visual Basic, C, FORTRAN, Pascal, Smalltalk, or any other language?)">&quot;better&quot; than the other<!--rawtext:[6.5]:rawtext--></a>.  But there are
+differences.  The most important differences are:
+<ul>
+<li><a href="smalltalk.html#faq-30.2" title="[30.2] What is &quot;static typing,&quot; and how is it similar/dissimilar to Smalltalk?">Static typing <em>vs.</em> dynamic
+typing<!--rawtext:[30.2]:rawtext--></a></li>
+<li><a href="smalltalk.html#faq-30.5" title="[30.5] What are the practical consequences of differences in Smalltalk/C++ inheritance?">Whether inheritance must be used only for
+subtyping<!--rawtext:[30.5]:rawtext--></a></li>
+<li><a href="value-vs-ref-semantics.html" title="[31] Reference and value semantics">Value <em>vs.</em> reference
+semantics<!--rawtext:[31]:rawtext--></a></li>
+</ul>
+<p><em>Note:</em> Many new C++ programmers come from a Smalltalk background.  If
+that's you, this section will tell you the most important things you need know
+to make your transition.  Please don't get the notion that either language is
+somehow <a href="big-picture.html#faq-6.5" title="[6.5] Is C++ better than Ada? (or Visual Basic, C, FORTRAN, Pascal, Smalltalk, or any other language?)">&quot;inferior&quot; or &quot;bad&quot;<!--rawtext:[6.5]:rawtext--></a>, or that this section
+is promoting one language over the other (I am not a language bigot; I serve on
+both the ANSI C++ and ANSI Smalltalk <a href="big-picture.html#faq-6.12" title="[6.12] Is C++ standardized?">standardization
+committees<!--rawtext:[6.12]:rawtext--></a>).  Instead, this section is designed to help
+you understand (and embrace!) the differences.
+<p><small>[&nbsp;<a href="#top" title="Top of section [30] Learning C++ if you already know Smalltalk">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [30] Learning C++ if you already know Smalltalk">Bottom</a> |&nbsp;<a href="newbie.html" title="[29] Newbie Questions / Answers">Previous&nbsp;section</a> |&nbsp;<a href="value-vs-ref-semantics.html" title="[31] Reference and value semantics">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-30.2"></a>
+<div class=FaqTitle><h3>[30.2] What is &quot;static typing,&quot; and how is it similar/dissimilar to Smalltalk?</h3></div>
+<p>Static typing says the compiler checks the type safety of every operation
+<em>statically</em> (at compile-time), rather than to generate code which will
+check things at run-time.  For example, with static typing, the signature
+matching for function arguments is checked at compile time, not at run-time.
+An improper match is flagged as an error by the compiler, not by the run-time
+system.
+<p>In OO code, the most common &quot;typing mismatch&quot; is invoking a member function
+against an object which isn't prepared to handle the operation.  E.g., if
+<tt>class</tt> <tt>Fred</tt> has member function <nobr><tt>f()</tt></nobr> but not <nobr><tt>g()</tt></nobr>, and <tt>fred</tt> is an
+instance of <tt>class</tt> <tt>Fred</tt>, then <nobr><tt>fred.f()</tt></nobr> is legal and <nobr><tt>fred.g()</tt></nobr>
+is illegal.  C++ (statically typed) catches the error at compile time, and
+Smalltalk (dynamically typed) catches the error at run-time.  (Technically
+speaking, C++ is like Pascal &#151;<em>pseudo</em> statically typed&#151; since pointer
+casts and unions can be used to violate the typing system; which reminds me:
+use <a href="coding-standards.html#faq-27.11" title="[27.11] Why do people worry so much about pointer casts and/or reference casts?">pointer casts<!--rawtext:[27.11]:rawtext--></a> and unions only as often as you use <tt>goto</tt>s).
+<p><small>[&nbsp;<a href="#top" title="Top of section [30] Learning C++ if you already know Smalltalk">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [30] Learning C++ if you already know Smalltalk">Bottom</a> |&nbsp;<a href="newbie.html" title="[29] Newbie Questions / Answers">Previous&nbsp;section</a> |&nbsp;<a href="value-vs-ref-semantics.html" title="[31] Reference and value semantics">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-30.3"></a>
+<div class=FaqTitle><h3>[30.3] Which is a better fit for C++: &quot;static typing&quot; or &quot;dynamic typing&quot;?</h3></div>
+<p>[For context, please read
+<a href="smalltalk.html#faq-30.2" title="[30.2] What is &quot;static typing,&quot; and how is it similar/dissimilar to Smalltalk?">the previous FAQ<!--rawtext:[30.2]:rawtext--></a>].
+<p>If you want to use C++ most effectively, use it as a statically typed language.
+<p>C++ is flexible enough that you can (via pointer casts, unions, and
+<nobr><tt>#define</tt></nobr> macros) make it &quot;look&quot; like Smalltalk.  But don't.  Which
+reminds me: <a href="big-picture.html#faq-6.16" title="[6.16] Will I sometimes use any so-called &quot;evil&quot; constructs?">try to<!--rawtext:[6.16]:rawtext--></a> avoid
+<nobr><tt>#define</tt></nobr>: it is <a href="big-picture.html#faq-6.15" title="[6.15] What does the FAQ mean by &quot;such and such is evil&quot;?">evil<!--rawtext:[6.15]:rawtext--></a> in 4 different ways:
+<a href="inline-functions.html#faq-9.5" title="[9.5] Why should I use inline functions instead of plain old #define macros?">evil#1<!--rawtext:[9.5]:rawtext--></a>, <a href="misc-technical-issues.html#faq-39.4" title="[39.4] What should be done with macros that contain if?">evil#2<!--rawtext:[39.4]:rawtext--></a>,
+<a href="misc-technical-issues.html#faq-39.5" title="[39.5] What should be done with macros that have multiple lines?">evil#3<!--rawtext:[39.5]:rawtext--></a>, and
+<a href="misc-technical-issues.html#faq-39.6" title="[39.6] What should be done with macros that need to paste two tokens together?">evil#4<!--rawtext:[39.6]:rawtext--></a>.
+<p>There are places where pointer casts and unions are necessary and even
+wholesome, but they should be used carefully and sparingly.  A pointer cast
+tells the compiler to believe you.  An incorrect pointer cast might corrupt
+your heap, scribble into memory owned by other objects, call nonexistent
+member functions, and cause general failures.  <a href="coding-standards.html#faq-27.11" title="[27.11] Why do people worry so much about pointer casts and/or reference casts?">It's not a
+pretty sight<!--rawtext:[27.11]:rawtext--></a>.  If you avoid these and related constructs, you can make
+your C++ code both safer and faster, since anything that can be checked at
+compile time is something that doesn't have to be done at run-time.
+<p>If you're interested in using a pointer cast, use the new style pointer casts.
+The most common example of these is to change old-style pointer casts such as
+<nobr><tt>(X*)p</tt></nobr> into new-style dynamic casts such as <nobr><tt>dynamic_cast&lt;X*&gt;(p)</tt></nobr>,
+where <tt>p</tt> is a pointer and <tt>X</tt> is a type.  In addition to <tt>dynamic_cast</tt>,
+there is <tt>static_cast</tt> and <tt>const_cast</tt>, but <tt>dynamic_cast</tt> is the one that
+simulates most of the advantages of dynamic typing (the other is the <nobr><tt>typeid()</tt></nobr>
+construct; for example, <nobr><tt>typeid(*p).name()</tt></nobr> will return the name of the
+type of <nobr><tt>*p</tt></nobr>).
+<p><small>[&nbsp;<a href="#top" title="Top of section [30] Learning C++ if you already know Smalltalk">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [30] Learning C++ if you already know Smalltalk">Bottom</a> |&nbsp;<a href="newbie.html" title="[29] Newbie Questions / Answers">Previous&nbsp;section</a> |&nbsp;<a href="value-vs-ref-semantics.html" title="[31] Reference and value semantics">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-30.4"></a>
+<div class=FaqTitle><h3>[30.4] How do you use inheritance in C++, and is that different from Smalltalk?</h3></div>
+<p>Some people believe that the purpose of inheritance is code reuse.  In C++,
+this is wrong.  Stated plainly, &quot;inheritance is not <em>for</em> code reuse.&quot;
+<p>The purpose of inheritance in C++ is to express interface compliance
+(subtyping), not to get code reuse.  In C++, code reuse usually comes via
+composition rather than via inheritance.  In other words, inheritance is mainly
+a specification technique rather than an implementation technique.
+<p>This is a major difference with Smalltalk, where there is only one form of
+inheritance (C++ provides <tt>private</tt> inheritance to mean &quot;share the code but
+don't conform to the interface&quot;, and <tt>public</tt> inheritance to mean &quot;kind-of&quot;).
+The Smalltalk language proper (as opposed to coding practice) allows you to
+have the <em>effect</em> of &quot;hiding&quot; an inherited method by providing an
+override that calls the &quot;does not understand&quot; method.  Furthermore Smalltalk
+allows a conceptual &quot;is-a&quot; relationship to exist <em>apart</em> from the
+inheritance hierarchy (subtypes don't have to be derived classes; e.g., you can make
+something that is-a <tt>Stack</tt> yet doesn't inherit from <tt>class</tt> <tt>Stack</tt>).
+<p>In contrast, C++ is more restrictive about inheritance: there's no way to make
+a &quot;conceptual is-a&quot; relationship without using inheritance (the C++ work-around
+is to separate interface from implementation via <a href="abcs.html#faq-22.3" title="[22.3] What is an ABC?">ABCs<!--rawtext:[22.3]:rawtext--></a>).
+The C++ compiler exploits the added semantic information associated with public
+inheritance to provide static typing.
+<p><small>[&nbsp;<a href="#top" title="Top of section [30] Learning C++ if you already know Smalltalk">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [30] Learning C++ if you already know Smalltalk">Bottom</a> |&nbsp;<a href="newbie.html" title="[29] Newbie Questions / Answers">Previous&nbsp;section</a> |&nbsp;<a href="value-vs-ref-semantics.html" title="[31] Reference and value semantics">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-30.5"></a>
+<div class=FaqTitle><h3>[30.5] What are the practical consequences of differences in Smalltalk/C++ inheritance?</h3></div>
+<p>[For context, please read <a href="smalltalk.html#faq-30.4" title="[30.4] How do you use inheritance in C++, and is that different from Smalltalk?">the previous FAQ<!--rawtext:[30.4]:rawtext--></a>].
+<p>Smalltalk lets you make a subtype that isn't a derived class, and allows you to make
+a derived class that isn't a subtype.  This allows Smalltalk programmers to be very
+carefree in putting data (bits, representation, data structure) into a class
+(e.g., you might put a linked list into <tt>class</tt> <tt>Stack</tt>).  After all, if
+someone wants an array-based-<tt>Stack</tt>, they don't have to inherit from <tt>Stack</tt>;
+they could inherit such a class from <tt>Array</tt> if desired, even though an
+<tt>ArrayBasedStack</tt> is <em>not</em> a kind-of <tt>Array</tt>!
+<p>In C++, you can't be nearly as carefree.  Only mechanism (member function
+code), but not representation (data bits) can be overridden in derived classes.
+Therefore you're usually better off <em>not</em> putting the data structure in a
+class.  This leads to a stronger reliance on <a href="abcs.html#faq-22.3" title="[22.3] What is an ABC?">abstract base
+classes<!--rawtext:[22.3]:rawtext--></a>.
+<p>I like to think of the difference between an ATV and a
+<a href="http://www.maserati.it/" title="www.maserati.it" target='_blank'>Maserati</a>.  An ATV (all terrain vehicle)
+is more fun, since you can &quot;play around&quot; by driving through fields, streams,
+sidewalks, and the like.  A Maserati, on the other hand, gets you there
+faster, but it forces you to stay on the road.  My advice to C++ programmers
+is simple: stay on the road.  Even if you're one of those people who like the
+&quot;expressive freedom&quot; to drive through the bushes, don't do it in C++; it's not
+a good fit.
+<p><small>[&nbsp;<a href="#top" title="Top of section [30] Learning C++ if you already know Smalltalk">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [30] Learning C++ if you already know Smalltalk">Bottom</a> |&nbsp;<a href="newbie.html" title="[29] Newbie Questions / Answers">Previous&nbsp;section</a> |&nbsp;<a href="value-vs-ref-semantics.html" title="[31] Reference and value semantics">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="bottom"></a>
+<a href="mailto:cline@parashift.com" title="cline@parashift.com"><img src="mbox.gif" height=26 width=89 alt="E-Mail">&nbsp;E-mail the author</a><br>
+[&nbsp;<a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>
+|&nbsp;<a href="index-2.html#table-of-contents" title="Table of contents">Table&nbsp;of&nbsp;contents</a>
+|&nbsp;<a href="subject-index.html" title="Subject index; 5111 links to 3243 topics">Subject&nbsp;index</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.1" title="[1.1] Author">About&nbsp;the&nbsp;author</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">&copy;</a>
+|&nbsp;<a href="on-line-availability.html#faq-2.2" title="[2.2] What happened to the one-click-download option?">Download&nbsp;your&nbsp;own&nbsp;copy</a>&nbsp;]<br>
+<small>Revised Mar 1, 2006</small>
+</body>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/smalltalk.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:23 GMT -->
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/value-vs-ref-semantics.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:23 GMT -->
+<head>
+<title>[31] Reference and value semantics, C++ FAQ Lite</title>
+<meta name="FILENAME" content="value-vs-ref-semantics.html">
+<meta name="ABSTRACT" content="[31] Reference and value semantics, C++ FAQ Lite">
+<meta name="OWNER"    content="cline@parashift.com">
+<meta name="AUTHOR"   content="Marshall Cline, cline@parashift.com">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rev=made href="mailto:cline@parashift.com">
+<style type='text/css'>
+  <!--
+  body       { font-family: arial; color: black; background: white }
+  .CodeBlock { color: black; background-color: #dfdfdf; margin-left: 30px; margin-right: 30px; padding: 5pt }
+  .CodeBlock small tt { font-size: small }
+  .FaqTitle  { color: black; background-color: gold }
+  .Updated   { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #ffff00; border: solid #e0e000 1px; }
+  .New       { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #00ff00; border: solid #00d000 1px; }
+  ul         { margin-bottom: 1px; margin-top: 1px }
+  ol         { margin-bottom: 1px; margin-top: 1px }
+  li         { margin-bottom: 4px; margin-top: 4px }
+  -->
+</style>
+</head>
+<body>
+<h1><a name="top"></a>[31] Reference and value semantics<br>
+<small><small>(Part of <a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>, <a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">Copyright&nbsp;&copy; 1991-2006</a>, <a href="http://www.parashift.com/" title="www.parashift.com/" target='_blank'>Marshall Cline</a>, <a href="mailto:cline@parashift.com" title="cline@parashift.com"><tt>cline@parashift.com</tt></a>)</small></small></h1>
+<hr>
+<h3>FAQs in section [31]:</h3>
+<ul>
+<li><a href="value-vs-ref-semantics.html#faq-31.1" title="[31.1] What is value and/or reference semantics, and which is best in C++?">[31.1] What is value and/or reference semantics, and which is best in C++?</a></li>
+<li><a href="value-vs-ref-semantics.html#faq-31.2" title="[31.2] What is &quot;virtual data,&quot; and how-can / why-would I use it in C++?">[31.2] What is &quot;<tt>virtual</tt> data,&quot; and how-can / why-would I use it in C++?</a></li>
+<li><a href="value-vs-ref-semantics.html#faq-31.3" title="[31.3] What's the difference between virtual data and dynamic data?">[31.3] What's the difference between <tt>virtual</tt> data and dynamic data?</a></li>
+<li><a href="value-vs-ref-semantics.html#faq-31.4" title="[31.4] Should I normally use pointers to freestore allocated objects for my data members, or should I use &quot;composition&quot;?">[31.4] Should I normally use pointers to freestore allocated objects for my data members, or should I use &quot;composition&quot;?</a></li>
+<li><a href="value-vs-ref-semantics.html#faq-31.5" title="[31.5] What are relative costs of the 3 performance hits associated with allocating member objects from the freestore?">[31.5] What are relative costs of the 3 performance hits associated with allocating member objects from the freestore?</a></li>
+<li><a href="value-vs-ref-semantics.html#faq-31.6" title="[31.6] Are &quot;inline virtual&quot; member functions ever actually &quot;inlined&quot;?">[31.6] Are &quot;<tt>inline</tt> <tt>virtual</tt>&quot; member functions ever actually &quot;inlined&quot;?</a></li>
+<li><a href="value-vs-ref-semantics.html#faq-31.7" title="[31.7] Sounds like I should never use reference semantics, right?">[31.7] Sounds like I should never use reference semantics, right?</a></li>
+<li><a href="value-vs-ref-semantics.html#faq-31.8" title="[31.8] Does the poor performance of reference semantics mean I should pass-by-value?">[31.8] Does the poor performance of reference semantics mean I should pass-by-value?</a></li>
+</ul>
+<p><hr>
+<p><a name="faq-31.1"></a>
+<div class=FaqTitle><h3>[31.1] What is value and/or reference semantics, and which is best in C++?</h3></div>
+<p>With reference semantics, assignment is a pointer-copy (i.e., a
+<em>reference</em>).  Value (or &quot;copy&quot;) semantics mean assignment copies the
+value, not just the pointer.  C++ gives you the choice: use the assignment
+<tt>operator</tt> to copy the value (copy/value semantics), or use a pointer-copy to
+copy a pointer (reference semantics).  C++ allows you to override the
+assignment <tt>operator</tt> to do anything your heart desires, however the default
+(and most common) choice is to copy the <em>value.</em>
+<p>Pros of reference semantics: flexibility and dynamic binding (you get dynamic
+binding in C++ only when you pass by pointer or pass by reference, not when you
+pass by value).
+<p>Pros of value semantics: speed.  &quot;Speed&quot; seems like an odd benefit for a
+feature that requires an object (<em>vs.</em> a pointer) to be copied, but the fact of
+the matter is that one usually accesses an object more than one copies the
+object, so the cost of the occasional copies is (usually) more than offset by
+the benefit of having an actual object rather than a pointer to an object.
+<p>There are three cases when you have an actual object as opposed to a pointer to
+an object: local objects, global/<tt>static</tt> objects, and fully contained member
+objects in a class.  The most important of these is the last (&quot;composition&quot;).
+<p>More info about copy-vs-reference semantics is given in the next FAQs.  Please
+read them all to get a balanced perspective.  The first few have intentionally
+been slanted toward value semantics, so if you only read the first few of the
+following FAQs, you'll get a warped perspective.
+<p>Assignment has other issues (e.g., shallow <em>vs.</em> deep copy) which are not covered
+here.
+<p><small>[&nbsp;<a href="#top" title="Top of section [31] Reference and value semantics">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [31] Reference and value semantics">Bottom</a> |&nbsp;<a href="smalltalk.html" title="[30] Learning C++ if you already know Smalltalk">Previous&nbsp;section</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-31.2"></a>
+<div class=FaqTitle><h3>[31.2] What is &quot;<tt>virtual</tt> data,&quot; and how-can / why-would I use it in C++?</h3></div>
+<p><tt>virtual</tt> data allows a derived class to change the exact class of a base
+class's member object.  <tt>virtual</tt> data isn't strictly &quot;supported&quot; by C++,
+however it can be simulated in C++.  It ain't pretty, but it works.
+<p>To simulate <tt>virtual</tt> data in C++, the base class must have a pointer to the
+member object, and the derived class must provide a <tt>new</tt> object to be
+pointed to by the base class's pointer.  The base class would also have one
+or more normal constructors that provide their own referent (again via <tt>new</tt>),
+and the base class's destructor would <tt>delete</tt> the referent.
+<p>For example, <tt>class</tt> <tt>Stack</tt> might have an Array member object (using a
+pointer), and derived <tt>class</tt> <tt>StretchableStack</tt> might override the base
+class member data from <tt>Array</tt> to <tt>StretchableArray</tt>.  For this to work,
+<tt>StretchableArray</tt> would have to inherit from <tt>Array</tt>, so <tt>Stack</tt> would have an
+<nobr><tt>Array*</tt></nobr>.  <tt>Stack</tt>'s normal constructors would initialize this <nobr><tt>Array*</tt></nobr> with a
+<nobr><tt>new Array</tt></nobr>, but <tt>Stack</tt> would also have a (possibly <tt>protected</tt>)
+constructor that would accept an <nobr><tt>Array*</tt></nobr> from a derived class.
+<tt>StretchableStack</tt>'s constructor would provide a <nobr><tt>new StretchableArray</tt></nobr>
+to this special constructor.
+<p>Pros:
+<ul>
+<li>Easier implementation of <tt>StretchableStack</tt>
+(most of the code is inherited)</li>
+<li>Users can pass a <tt>StretchableStack</tt> as a kind-of <tt>Stack</tt></li>
+</ul>
+<p>Cons:
+<ul>
+<li>Adds an extra layer of indirection to access the <tt>Array</tt></li>
+<li>Adds some extra freestore allocation overhead
+(both <tt>new</tt> and <tt>delete</tt>)</li>
+<li>Adds some extra dynamic binding overhead
+(reason given in next FAQ)</li>
+</ul>
+<p>In other words, we succeeded at making <em>our</em> job easier as the
+implementer of <tt>StretchableStack</tt>, but all our users <a href="value-vs-ref-semantics.html#faq-31.5" title="[31.5] What are relative costs of the 3 performance hits associated with allocating member objects from the freestore?">pay
+for it<!--rawtext:[31.5]:rawtext--></a>.  Unfortunately the extra overhead was imposed on both users of
+<tt>StretchableStack</tt> <em>and</em> on users of <tt>Stack</tt>.
+<p><em>Please</em> read the rest of this section.  (<em>You will not get a balanced
+perspective without the others.</em>)
+<p><small>[&nbsp;<a href="#top" title="Top of section [31] Reference and value semantics">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [31] Reference and value semantics">Bottom</a> |&nbsp;<a href="smalltalk.html" title="[30] Learning C++ if you already know Smalltalk">Previous&nbsp;section</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-31.3"></a>
+<div class=FaqTitle><h3>[31.3] What's the difference between <tt>virtual</tt> data and dynamic data?</h3></div>
+<p>The easiest way to see the distinction is by an analogy with <a href="virtual-functions.html" title="[20] Inheritance -- virtual functions">virtual
+functions<!--rawtext:[20]:rawtext--></a>: A <tt>virtual</tt> member function means the
+declaration (signature) must stay the same in derived classes, but the definition
+(body) can be overridden.  The overriddenness of an inherited member function
+is a static property of the derived class; it doesn't change dynamically throughout
+the life of any particular object, nor is it possible for distinct objects of
+the derived class to have distinct definitions of the member function.
+<p>Now go back and re-read the previous paragraph, but make these substitutions:
+<ul>
+<li>&quot;member function&quot; <big>&#8594;</big> &quot;member object&quot;</li>
+<li>&quot;signature&quot; <big>&#8594;</big> &quot;type&quot;</li>
+<li>&quot;body&quot; <big>&#8594;</big> &quot;exact class&quot;</li>
+</ul>
+<p>After this, you'll have a working definition of <tt>virtual</tt> data.
+<p>Another way to look at this is to distinguish &quot;per-object&quot; member functions
+from &quot;dynamic&quot; member functions.  A &quot;per-object&quot; member function is a member
+function that is potentially different in any given instance of an object, and
+could be implemented by burying a function pointer in the object; this pointer
+could be <tt>const</tt>, since the pointer will never be changed throughout the
+object's life.  A &quot;dynamic&quot; member function is a member function that will
+change dynamically over time; this could also be implemented by a function
+pointer, but the function pointer would not be const.
+<p>Extending the analogy, this gives us three distinct concepts for data members:
+<ul>
+<li><tt>virtual</tt> data: the definition (<tt>class</tt>) of the member object is
+overridable in derived classes provided its declaration (&quot;type&quot;) remains the same,
+and this overriddenness is a static property of the derived class</li>
+<li>per-object-data: any given object of a class can instantiate a
+different conformal (same type) member object upon initialization (usually a
+&quot;wrapper&quot; object), and the exact class of the member object is a static
+property of the object that wraps it</li>
+<li>dynamic-data: the member object's exact class can change
+dynamically over time</li>
+</ul>
+<p>The reason they all look so much the same is that none of this is &quot;supported&quot;
+in C++.  It's all merely &quot;allowed,&quot; and in this case, the mechanism for faking
+each of these is the same: a pointer to a (probably abstract) base class.  In
+a language that made these &quot;first class&quot; abstraction mechanisms, the difference
+would be more striking, since they'd each have a different syntactic variant.
+<p><small>[&nbsp;<a href="#top" title="Top of section [31] Reference and value semantics">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [31] Reference and value semantics">Bottom</a> |&nbsp;<a href="smalltalk.html" title="[30] Learning C++ if you already know Smalltalk">Previous&nbsp;section</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-31.4"></a>
+<div class=FaqTitle><h3>[31.4] Should I normally use pointers to freestore allocated objects for my data members, or should I use &quot;composition&quot;?</h3></div>
+<p>Composition.
+<p>Your member objects should normally be &quot;contained&quot; in the composite object (but
+not always; &quot;wrapper&quot; objects are a good example of where you want a
+pointer/reference; also the N-to-1-uses-a relationship needs something like a
+pointer/reference).
+<p>There are three reasons why fully contained member objects (&quot;composition&quot;) has
+better performance than pointers to freestore-allocated member objects:
+<ul>
+<li>Extra layer of indirection every time you need to access the member
+object</li>
+<li>Extra freestore allocations (<tt>new</tt> in constructor, <tt>delete</tt> in
+destructor)</li>
+<li>Extra dynamic binding (reason given below)</li>
+</ul>
+<p><small>[&nbsp;<a href="#top" title="Top of section [31] Reference and value semantics">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [31] Reference and value semantics">Bottom</a> |&nbsp;<a href="smalltalk.html" title="[30] Learning C++ if you already know Smalltalk">Previous&nbsp;section</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-31.5"></a>
+<div class=FaqTitle><h3>[31.5] What are relative costs of the 3 performance hits associated with allocating member objects from the freestore?</h3></div>
+<p>The three performance hits are enumerated in the previous FAQ:
+<ul>
+<li>By itself, an extra layer of indirection is small
+potatoes</li>
+<li>Freestore allocations can be a performance issue (the performance of
+the typical implementation of <nobr><tt>malloc()</tt></nobr> degrades when there are many
+allocations; OO software can easily become &quot;freestore bound&quot; unless you're
+careful)</li>
+<li>The extra dynamic binding comes from having a pointer rather than an
+object.  Whenever the C++ compiler can know an object's <em>exact</em> class,
+<a href="virtual-functions.html" title="[20] Inheritance -- virtual functions"><tt>virtual</tt><!--rawtext:[20]:rawtext--></a> function calls can be
+<em>statically</em> bound, which allows inlining.  Inlining allows zillions
+(would you believe half a dozen :-) optimization opportunities such as
+procedural integration, register lifetime issues, etc.  The C++ compiler can
+know an object's exact class in three circumstances: local variables,
+global/<tt>static</tt> variables, and fully-contained member objects</li>
+</ul>
+<p>Thus fully-contained member objects allow significant optimizations that
+wouldn't be possible under the &quot;member objects-by-pointer&quot; approach.  This is
+the main reason that languages which enforce reference-semantics have
+&quot;inherent&quot; performance challenges.
+<p><em>Note: Please read the next three FAQs to get a balanced perspective!</em>
+<p><small>[&nbsp;<a href="#top" title="Top of section [31] Reference and value semantics">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [31] Reference and value semantics">Bottom</a> |&nbsp;<a href="smalltalk.html" title="[30] Learning C++ if you already know Smalltalk">Previous&nbsp;section</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-31.6"></a>
+<div class=FaqTitle><h3>[31.6] Are &quot;<tt>inline</tt> <tt>virtual</tt>&quot; member functions ever actually &quot;inlined&quot;?</h3></div>
+<p>Occasionally...
+<p>When the object is referenced via a pointer or a reference, a call to a
+<a href="virtual-functions.html" title="[20] Inheritance -- virtual functions"><tt>virtual</tt><!--rawtext:[20]:rawtext--></a> function cannot be inlined, since the
+call must be resolved dynamically.  Reason: the compiler can't know which
+actual code to call until run-time (i.e., dynamically), since the code may be
+from a derived class that was created after the caller was compiled.
+<p>Therefore the only time an <tt>inline</tt> <tt>virtual</tt> call can be inlined is when the
+compiler knows the &quot;exact class&quot; of the object which is the target of the
+<tt>virtual</tt> function call.  This can happen only when the compiler has an actual
+object rather than a pointer or reference to an object.  I.e., either with a
+local object, a global/<tt>static</tt> object, or a fully contained object inside a
+composite.
+<p>Note that the difference between inlining and non-inlining is normally
+<em>much</em> more significant than the difference between a regular function
+call and a <tt>virtual</tt> function call.  For example, the difference between a
+regular function call and a <tt>virtual</tt> function call is often just two extra
+memory references, but the difference between an <tt>inline</tt> function and a
+non-<tt>inline</tt> function can be as much as an order of magnitude (for zillions of
+calls to insignificant member functions, loss of inlining <tt>virtual</tt> functions
+can result in 25X speed degradation!  [Doug Lea, &quot;Customization in C++,&quot; proc
+Usenix C++ 1990]).
+<p>A practical consequence of this insight: don't get bogged down in the endless
+debates (or sales tactics!) of compiler/language vendors who compare the cost
+of a <tt>virtual</tt> function call on their language/compiler with the same on
+another language/compiler.  Such comparisons are largely meaningless when
+compared with the ability of the language/compiler to &quot;<tt>inline</tt> expand&quot; member
+function calls.  I.e., many language implementation vendors make a big stink
+about how good their dispatch strategy is, but if these implementations don't
+<em>inline</em> member function calls, the overall system performance would be
+poor, since it is inlining &#151;<em>not</em> dispatching&#151; that has the greatest
+performance impact.
+<p><em>Note: Please read the next two FAQs to see the other side of this coin!</em>
+<p><small>[&nbsp;<a href="#top" title="Top of section [31] Reference and value semantics">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [31] Reference and value semantics">Bottom</a> |&nbsp;<a href="smalltalk.html" title="[30] Learning C++ if you already know Smalltalk">Previous&nbsp;section</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-31.7"></a>
+<div class=FaqTitle><h3>[31.7] Sounds like I should never use reference semantics, right?</h3></div>
+<p>Wrong.
+<p>Reference semantics are A Good Thing.  We can't live without pointers.  We just
+don't want our software to be One Gigantic Rats Nest Of Pointers.  In C++, you can
+pick and choose where you want reference semantics (pointers/references) and
+where you'd like value semantics (where objects physically contain other
+objects etc).  In a large system, there should be a balance.  However if you
+implement absolutely <em>everything</em> as a pointer, you'll get enormous speed
+hits.
+<p>Objects near the problem skin are larger than higher level objects.  The
+<em>identity</em> of these &quot;problem space&quot; abstractions is usually more
+important than their &quot;value.&quot; Thus reference semantics should be used for
+problem-space objects.
+<p>Note that these problem space objects are normally at a higher level of
+abstraction than the solution space objects, so the problem space objects
+normally have a relatively lower frequency of interaction.  Therefore C++ gives
+us an <em>ideal</em> situation: we choose reference semantics for objects that
+need unique identity or that are too large to copy, and we can choose value
+semantics for the others.  Thus the highest frequency objects will end up with
+value semantics, since we install flexibility where it doesn't hurt us (only),
+and we install performance where we need it most!
+<p>These are some of the many issues the come into play with real OO design.
+OO/C++ mastery takes time and high quality training.  If you want a powerful
+tool, you've got to invest.
+<p><em>Don't stop now!  Read the next FAQ too!!</em>
+<p><small>[&nbsp;<a href="#top" title="Top of section [31] Reference and value semantics">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [31] Reference and value semantics">Bottom</a> |&nbsp;<a href="smalltalk.html" title="[30] Learning C++ if you already know Smalltalk">Previous&nbsp;section</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-31.8"></a>
+<div class=FaqTitle><h3>[31.8] Does the poor performance of reference semantics mean I should pass-by-value?</h3></div>
+<p>Nope.
+<p>The previous FAQ were talking about <em>member objects,</em> not parameters.
+Generally, objects that are part of an inheritance hierarchy should be passed
+by reference or by pointer, <em>not</em> by value, since only then do you get
+the (desired) dynamic binding (pass-by-value doesn't mix with inheritance,
+since larger derived class objects get <a href="virtual-functions.html#faq-20.8" title="[20.8] What is a &quot;virtual constructor&quot;?">sliced<!--rawtext:[20.8]:rawtext--></a> when
+passed by value as a base class object).
+<p>Unless compelling reasons are given to the contrary, member objects should be
+by value and parameters should be by reference.  The discussion in the previous
+few FAQs indicates some of the &quot;compelling reasons&quot; for when member objects
+should be by reference.
+<p><small>[&nbsp;<a href="#top" title="Top of section [31] Reference and value semantics">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [31] Reference and value semantics">Bottom</a> |&nbsp;<a href="smalltalk.html" title="[30] Learning C++ if you already know Smalltalk">Previous&nbsp;section</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="bottom"></a>
+<a href="mailto:cline@parashift.com" title="cline@parashift.com"><img src="mbox.gif" height=26 width=89 alt="E-Mail">&nbsp;E-mail the author</a><br>
+[&nbsp;<a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>
+|&nbsp;<a href="index-2.html#table-of-contents" title="Table of contents">Table&nbsp;of&nbsp;contents</a>
+|&nbsp;<a href="subject-index.html" title="Subject index; 5111 links to 3243 topics">Subject&nbsp;index</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.1" title="[1.1] Author">About&nbsp;the&nbsp;author</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">&copy;</a>
+|&nbsp;<a href="on-line-availability.html#faq-2.2" title="[2.2] What happened to the one-click-download option?">Download&nbsp;your&nbsp;own&nbsp;copy</a>&nbsp;]<br>
+<small>Revised Mar 1, 2006</small>
+</body>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/value-vs-ref-semantics.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:23 GMT -->
+</html>

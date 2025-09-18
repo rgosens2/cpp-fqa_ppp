@@ -1,0 +1,789 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/pointers-to-members.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:23 GMT -->
+<head>
+<title>[33] Pointers to member functions, C++ FAQ Lite</title>
+<meta name="FILENAME" content="pointers-to-members.html">
+<meta name="ABSTRACT" content="[33] Pointers to member functions, C++ FAQ Lite">
+<meta name="OWNER"    content="cline@parashift.com">
+<meta name="AUTHOR"   content="Marshall Cline, cline@parashift.com">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rev=made href="mailto:cline@parashift.com">
+<style type='text/css'>
+  <!--
+  body       { font-family: arial; color: black; background: white }
+  .CodeBlock { color: black; background-color: #dfdfdf; margin-left: 30px; margin-right: 30px; padding: 5pt }
+  .CodeBlock small tt { font-size: small }
+  .FaqTitle  { color: black; background-color: gold }
+  .Updated   { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #ffff00; border: solid #e0e000 1px; }
+  .New       { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #00ff00; border: solid #00d000 1px; }
+  ul         { margin-bottom: 1px; margin-top: 1px }
+  ol         { margin-bottom: 1px; margin-top: 1px }
+  li         { margin-bottom: 4px; margin-top: 4px }
+  -->
+</style>
+</head>
+<body>
+<h1><a name="top"></a>[33] Pointers to member functions<br>
+<small><small>(Part of <a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>, <a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">Copyright&nbsp;&copy; 1991-2006</a>, <a href="http://www.parashift.com/" title="www.parashift.com/" target='_blank'>Marshall Cline</a>, <a href="mailto:cline@parashift.com" title="cline@parashift.com"><tt>cline@parashift.com</tt></a>)</small></small></h1>
+<hr>
+<h3>FAQs in section [33]:</h3>
+<ul>
+<li><a href="pointers-to-members.html#faq-33.1" title="[33.1] Is the type of &quot;pointer-to-member-function&quot; different from &quot;pointer-to-function&quot;?">[33.1] Is the type of &quot;pointer-to-member-function&quot; different from &quot;pointer-to-function&quot;?</a></li>
+<li><a href="pointers-to-members.html#faq-33.2" title="[33.2] How do I pass a pointer-to-member-function to a signal handler, X event callback, system call that starts a thread/task, etc?">[33.2] How do I pass a pointer-to-member-function to a signal handler, X event callback, system call that starts a thread/task, etc?</a></li>
+<li><a href="pointers-to-members.html#faq-33.3" title="[33.3] Why do I keep getting compile errors (type mismatch) when I try to use a member function as an interrupt service routine?">[33.3] Why do I keep getting compile errors (type mismatch) when I try to use a member function as an interrupt service routine?</a></li>
+<li><a href="pointers-to-members.html#faq-33.4" title="[33.4] Why am I having trouble taking the address of a C++ function?">[33.4] Why am I having trouble taking the address of a C++ function?</a></li>
+<li><a href="pointers-to-members.html#faq-33.5" title="[33.5] How can I avoid syntax errors when calling a member function using a pointer-to-member-function?">[33.5] How can I avoid syntax errors when calling a member function using a pointer-to-member-function?</a></li>
+<li><a href="pointers-to-members.html#faq-33.6" title="[33.6] How do I create and use an array of pointer-to-member-function?">[33.6] How do I create and use an array of pointer-to-member-function?</a></li>
+<li><a href="pointers-to-members.html#faq-33.7" title="[33.7] Can I convert a pointer-to-member-function to a void*?">[33.7] Can I convert a pointer-to-member-function to a <nobr><tt>void*</tt></nobr>?</a></li>
+<li><a href="pointers-to-members.html#faq-33.8" title="[33.8] Can I convert a pointer-to-function to a void*?">[33.8] Can I convert a pointer-to-function to a <nobr><tt>void*</tt></nobr>?</a></li>
+<li><a href="pointers-to-members.html#faq-33.9" title="[33.9] I need something like function-pointers, but with more flexibility and/or thread-safety; is there another way?">[33.9] I need something like function-pointers, but with more flexibility and/or thread-safety; is there another way?</a></li>
+<li><a href="pointers-to-members.html#faq-33.10" title="[33.10] What the heck is a functionoid, and why would I use one?">[33.10] What the heck is a functionoid, and why would I use one?</a></li>
+<li><a href="pointers-to-members.html#faq-33.11" title="[33.11] Can you make functionoids faster than normal function calls?">[33.11] Can you make functionoids faster than normal function calls?</a></li>
+</ul>
+<p><hr>
+<p><a name="faq-33.1"></a>
+<div class=FaqTitle><h3>[33.1] Is the type of &quot;pointer-to-member-function&quot; different from &quot;pointer-to-function&quot;?</h3></div>
+<p>Yep.
+<p>Consider the following function:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;int&nbsp;f(char&nbsp;a,&nbsp;float&nbsp;b);
+</tt>
+</div>
+<p>The type of this function is different depending on whether it is an ordinary
+function or a non-<tt>static</tt> member function of some class:
+<ul>
+<li>Its type is &quot;<nobr><tt>int (*)(char,float)</tt></nobr>&quot; if an ordinary
+function</li>
+<li>Its type is &quot;<nobr><tt>int (Fred::*)(char,float)</tt></nobr>&quot; if a non-<tt>static</tt>
+member function of <tt>class</tt> <tt>Fred</tt></li>
+</ul>
+<p>Note: if it's a <tt>static</tt> member function of <tt>class</tt> <tt>Fred</tt>, its type is the
+same as if it were an ordinary function: &quot;<nobr><tt>int (*)(char,float)</tt></nobr>&quot;.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.2"></a>
+<div class=FaqTitle><h3>[33.2] How do I pass a pointer-to-member-function to a signal handler, X event callback, system call that starts a thread/task, etc?</h3></div>
+<p>Don't.
+<p>Because a member function is meaningless without an object to invoke it on, you
+can't do this directly (if The X Window System was rewritten in C++, it would
+probably pass references to <em>objects</em> around, not just pointers to
+functions; naturally the objects would embody the required function and
+probably a whole lot more).
+<p>As a patch for existing software, use a top-level (non-member) function as a
+wrapper which takes an object obtained through some other technique.
+Depending on the routine you're calling, this &quot;other technique&quot; might be
+trivial or might require a little work on your part.  The system call that
+starts a thread, for example, might require you to pass a function pointer
+along with a <nobr><tt>void*</tt></nobr>, so you can pass the object pointer in the
+<nobr><tt>void*</tt></nobr>.  Many real-time operating systems do something similar for the
+function that starts a new task.  Worst case you could store the object
+pointer in a global variable; this might be required for Unix signal handlers
+(but globals are, in general, undesired).  In any case, the top-level function
+would call the desired member function on the object.
+<p>Here's an example of the worst case (using a global).  Suppose you want to
+call <nobr><tt>Fred::memberFn()</tt></nobr> on interrupt:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Fred&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;void&nbsp;memberFn();<br>
+&nbsp;&nbsp;&nbsp;static&nbsp;void&nbsp;staticMemberFn();&nbsp;&nbsp;</tt><em><small>//&nbsp;A&nbsp;<tt>static</tt>&nbsp;member&nbsp;function&nbsp;can&nbsp;<b>usually</b>&nbsp;handle&nbsp;it</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;</tt><em><small>//&nbsp;Wrapper&nbsp;function&nbsp;uses&nbsp;a&nbsp;global&nbsp;to&nbsp;remember&nbsp;the&nbsp;object:</small></em><tt><br>
+&nbsp;Fred*&nbsp;object_which_will_handle_signal;<br>
+&nbsp;<br>
+&nbsp;void&nbsp;Fred_memberFn_wrapper()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;object_which_will_handle_signal-&gt;memberFn();<br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;int&nbsp;main()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>/*&nbsp;<nobr><tt>signal(SIGINT,&nbsp;Fred::memberFn);</tt></nobr>&nbsp;*/</small></em><tt>&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;Can&nbsp;NOT&nbsp;do&nbsp;this</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;signal(SIGINT,&nbsp;Fred_memberFn_wrapper);&nbsp;&nbsp;</tt><em><small>//&nbsp;OK</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;signal(SIGINT,&nbsp;Fred::staticMemberFn);&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;OK&nbsp;<b>usually;</b>&nbsp;see&nbsp;below</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Note: <tt>static</tt> member functions do not require an actual object to be
+invoked, so pointers-to-<tt>static</tt>-member-functions are
+<em>usually</em> type-compatible with regular pointers-to-functions.  However,
+although it probably works on most compilers, it actually would have to be an
+<nobr><tt>extern &quot;C&quot;</tt></nobr> non-member function to be correct, since &quot;C linkage&quot;
+doesn't only cover things like name mangling, but also calling conventions,
+which might be different between C and C++.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.3"></a>
+<div class=FaqTitle><h3>[33.3] Why do I keep getting compile errors (type mismatch) when I try to use a member function as an interrupt service routine?</h3></div>
+<p>This is a special case of the previous two questions, therefore read the
+previous two answers first.
+<p>Non-<tt>static</tt> member functions have a hidden parameter that corresponds to the
+<tt>this</tt> pointer.  The <tt>this</tt> pointer points to the instance data for the
+object.  The interrupt hardware/firmware in the system is not capable of
+providing the <tt>this</tt> pointer argument.  You must use &quot;normal&quot; functions (non
+class members) or <tt>static</tt> member functions as interrupt service routines.
+<p>One possible solution is to use a <tt>static</tt> member as the interrupt service
+routine and have that function look somewhere to find the instance/member pair
+that should be called on interrupt.  Thus the effect is that a member function
+is invoked on an interrupt, but for technical reasons you need to call an
+intermediate function first.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.4"></a>
+<div class=FaqTitle><h3>[33.4] Why am I having trouble taking the address of a C++ function?</h3></div>
+<p>Short answer: if you're trying to store it into (or pass it as) a
+pointer-to-function, then that's the problem &#151; this is a corollary to the
+previous FAQ.
+<p>Long answer: In C++, member functions have an implicit parameter which points
+to the object (the <tt>this</tt> pointer inside the member function).  Normal C
+functions can be thought of as having a different calling convention from
+member functions, so the types of their pointers (pointer-to-member-function <em>vs.</em>
+pointer-to-function) are different and incompatible.  C++ introduces a new type
+of pointer, called a pointer-to-member, which can be invoked only by providing
+an object.
+<p>NOTE: do <em>not</em> attempt to &quot;cast&quot; a pointer-to-member-function into a
+pointer-to-function; the result is undefined and probably disastrous.  E.g., a
+pointer-to-member-function is <em>not</em> required to contain the machine
+address of the appropriate function.  As was said in the last example, if you
+have a pointer to a regular C function, use either a top-level (non-member)
+function, or a <tt>static</tt> (class) member function.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.5"></a>
+<div class=FaqTitle><h3>[33.5] How can I avoid syntax errors when calling a member function using a pointer-to-member-function?</h3></div>
+<p>Do <em>both</em> a <tt>typedef</tt> <em>and</em> a <nobr><tt>#define</tt></nobr> macro.
+<p><b>Step 1:</b> create a <tt>typedef</tt>:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Fred&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;f(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;g(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;h(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;i(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;</tt><em><small>//&nbsp;<tt>FredMemFn</tt>&nbsp;points&nbsp;to&nbsp;a&nbsp;member&nbsp;of&nbsp;<tt>Fred</tt>&nbsp;that&nbsp;takes&nbsp;<nobr><tt>(char,float)</tt></nobr></small></em><tt><br>
+&nbsp;typedef&nbsp;&nbsp;int&nbsp;(Fred::*FredMemFn)(char&nbsp;x,&nbsp;float&nbsp;y);
+</tt>
+</div>
+<p><b>Step 2:</b> create a <nobr><tt>#define</tt></nobr> macro:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;#define&nbsp;CALL_MEMBER_FN(object,ptrToMember)&nbsp;&nbsp;((object).*(ptrToMember))
+</tt>
+</div>
+<p>(<a href="inline-functions.html#faq-9.5" title="[9.5] Why should I use inline functions instead of plain old #define macros?">Normally I dislike <nobr><tt>#define</tt></nobr> macros<!--rawtext:[9.5]:rawtext--></a>, but
+<a href="big-picture.html#faq-6.16" title="[6.16] Will I sometimes use any so-called &quot;evil&quot; constructs?">you should use them with pointers to
+members<!--rawtext:[6.16]:rawtext--></a> because they improve the readability and writability of that
+sort of code.)
+<p>Here's how you use these features:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;userCode(Fred&amp;&nbsp;fred,&nbsp;FredMemFn&nbsp;memFn)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;ans&nbsp;=&nbsp;CALL_MEMBER_FN(fred,memFn)('x',&nbsp;3.14);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;Would&nbsp;normally&nbsp;be:&nbsp;<nobr><tt>int&nbsp;ans&nbsp;=&nbsp;(fred.*memFn)('x',&nbsp;3.14);</tt></nobr></small></em><tt><br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>I <em>strongly</em> recommend these features.  In the real world, member
+function invocations are a <em>lot</em> more complex than the simple example
+just given, and the difference in readability and writability is significant.
+<a href="news:comp.lang.c++" title="comp.lang.c++"><tt>comp.lang.c++</tt></a> has had to endure hundreds and hundreds of
+postings from confused programmers who couldn't quite get the syntax right.
+Almost all these errors would have vanished had they used these features.
+<p>Note: <nobr><tt>#define</tt></nobr> macros are <a href="big-picture.html#faq-6.15" title="[6.15] What does the FAQ mean by &quot;such and such is evil&quot;?">evil<!--rawtext:[6.15]:rawtext--></a> in 4 different
+ways: <a href="inline-functions.html#faq-9.5" title="[9.5] Why should I use inline functions instead of plain old #define macros?">evil#1<!--rawtext:[9.5]:rawtext--></a>, <a href="misc-technical-issues.html#faq-39.4" title="[39.4] What should be done with macros that contain if?">evil#2<!--rawtext:[39.4]:rawtext--></a>,
+<a href="misc-technical-issues.html#faq-39.5" title="[39.5] What should be done with macros that have multiple lines?">evil#3<!--rawtext:[39.5]:rawtext--></a>, and
+<a href="misc-technical-issues.html#faq-39.6" title="[39.6] What should be done with macros that need to paste two tokens together?">evil#4<!--rawtext:[39.6]:rawtext--></a>.  But they're
+<a href="big-picture.html#faq-6.16" title="[6.16] Will I sometimes use any so-called &quot;evil&quot; constructs?">still useful sometimes<!--rawtext:[6.16]:rawtext--></a>.  But you should
+still feel a vague sense of shame after using them.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.6"></a>
+<div class=FaqTitle><h3>[33.6] How do I create and use an array of pointer-to-member-function?</h3></div>
+<p>Use <em>both</em> the <tt>typedef</tt> <em>and</em> the <nobr><tt>#define</tt></nobr> macro
+<a href="pointers-to-members.html#faq-33.5" title="[33.5] How can I avoid syntax errors when calling a member function using a pointer-to-member-function?">described earlier<!--rawtext:[33.5]:rawtext--></a>, and you're 90% done.
+<p><b>Step 1:</b> create a <tt>typedef</tt>:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Fred&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;f(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;g(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;h(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;i(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;</tt><em><small>//&nbsp;<tt>FredMemFn</tt>&nbsp;points&nbsp;to&nbsp;a&nbsp;member&nbsp;of&nbsp;<tt>Fred</tt>&nbsp;that&nbsp;takes&nbsp;<nobr><tt>(char,float)</tt></nobr></small></em><tt><br>
+&nbsp;typedef&nbsp;&nbsp;int&nbsp;(Fred::*FredMemFn)(char&nbsp;x,&nbsp;float&nbsp;y);
+</tt>
+</div>
+<p><b>Step 2:</b> create a <nobr><tt>#define</tt></nobr> macro:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;#define&nbsp;CALL_MEMBER_FN(object,ptrToMember)&nbsp;&nbsp;((object).*(ptrToMember))
+</tt>
+</div>
+<p>Now your array of pointers-to-member-functions is straightforward:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;FredMemFn&nbsp;a[]&nbsp;=&nbsp;{&nbsp;&amp;Fred::f,&nbsp;&amp;Fred::g,&nbsp;&amp;Fred::h,&nbsp;&amp;Fred::i&nbsp;};
+</tt>
+</div>
+<p>And your usage of one of the member function pointers is also straightforward:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;userCode(Fred&amp;&nbsp;fred,&nbsp;int&nbsp;memFnNum)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;Assume&nbsp;<tt>memFnNum</tt>&nbsp;is&nbsp;between&nbsp;0&nbsp;and&nbsp;3&nbsp;inclusive:</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;CALL_MEMBER_FN(fred,&nbsp;a[memFnNum])&nbsp;('x',&nbsp;3.14);<br>
+&nbsp;}
+</tt>
+</div>
+<p>Note: <nobr><tt>#define</tt></nobr> macros are <a href="big-picture.html#faq-6.15" title="[6.15] What does the FAQ mean by &quot;such and such is evil&quot;?">evil<!--rawtext:[6.15]:rawtext--></a> in 4 different ways:
+<a href="inline-functions.html#faq-9.5" title="[9.5] Why should I use inline functions instead of plain old #define macros?">evil#1<!--rawtext:[9.5]:rawtext--></a>, <a href="misc-technical-issues.html#faq-39.4" title="[39.4] What should be done with macros that contain if?">evil#2<!--rawtext:[39.4]:rawtext--></a>,
+<a href="misc-technical-issues.html#faq-39.5" title="[39.5] What should be done with macros that have multiple lines?">evil#3<!--rawtext:[39.5]:rawtext--></a>, and
+<a href="misc-technical-issues.html#faq-39.6" title="[39.6] What should be done with macros that need to paste two tokens together?">evil#4<!--rawtext:[39.6]:rawtext--></a>.  But they're still useful
+sometimes.  Feel ashamed, feel guilty, but when an evil construct like a macro
+improves your software, <a href="big-picture.html#faq-6.16" title="[6.16] Will I sometimes use any so-called &quot;evil&quot; constructs?">use it<!--rawtext:[6.16]:rawtext--></a>.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.7"></a>
+<div class=FaqTitle><h3>[33.7] Can I convert a pointer-to-member-function to a <nobr><tt>void*</tt></nobr>?</h3></div>
+<p>No!
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Fred&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;f(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;g(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;h(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;i(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;</tt><em><small>//&nbsp;<tt>FredMemFn</tt>&nbsp;points&nbsp;to&nbsp;a&nbsp;member&nbsp;of&nbsp;<tt>Fred</tt>&nbsp;that&nbsp;takes&nbsp;<nobr><tt>(char,float)</tt></nobr></small></em><tt><br>
+&nbsp;typedef&nbsp;&nbsp;int&nbsp;(Fred::*FredMemFn)(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;<br>
+&nbsp;#define&nbsp;CALL_MEMBER_FN(object,ptrToMember)&nbsp;&nbsp;((object).*(ptrToMember))<br>
+&nbsp;<br>
+&nbsp;int&nbsp;callit(Fred&amp;&nbsp;o,&nbsp;FredMemFn&nbsp;p,&nbsp;char&nbsp;x,&nbsp;float&nbsp;y)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;return&nbsp;CALL_MEMBER_FN(o,p)(x,&nbsp;y);<br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;int&nbsp;main()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;FredMemFn&nbsp;p&nbsp;=&nbsp;&amp;Fred::f;<br>
+&nbsp;&nbsp;&nbsp;void*&nbsp;p2&nbsp;=&nbsp;(void*)p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;<big>&#8592;</big>&nbsp;illegal!!</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;Fred&nbsp;o;<br>
+&nbsp;&nbsp;&nbsp;callit(o,&nbsp;p,&nbsp;'x',&nbsp;3.14f);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;okay</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;callit(o,&nbsp;FredMemFn(p2),&nbsp;'x',&nbsp;3.14f);&nbsp;</tt><em><small>//&nbsp;might&nbsp;fail!!</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p><em>Please</em> do not email me if the above <em>seems to work</em> on your
+particular version of your particular compiler on your particular operating
+system.  I don't care.  It's illegal, period.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.8"></a>
+<div class=FaqTitle><h3>[33.8] Can I convert a pointer-to-function to a <nobr><tt>void*</tt></nobr>?</h3></div>
+<p>No!
+<p><div class=CodeBlock>
+<tt>
+&nbsp;int&nbsp;f(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;int&nbsp;g(char&nbsp;x,&nbsp;float&nbsp;y);<br>
+&nbsp;<br>
+&nbsp;typedef&nbsp;int(*FunctPtr)(char,float);<br>
+&nbsp;<br>
+&nbsp;int&nbsp;callit(FunctPtr&nbsp;p,&nbsp;char&nbsp;x,&nbsp;float&nbsp;y)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;return&nbsp;p(x,&nbsp;y);<br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;int&nbsp;main()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;FunctPtr&nbsp;p&nbsp;=&nbsp;f;<br>
+&nbsp;&nbsp;&nbsp;void*&nbsp;p2&nbsp;=&nbsp;(void*)p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;<big>&#8592;</big>&nbsp;illegal!!</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;callit(p,&nbsp;'x',&nbsp;3.14f);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;okay</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;callit(FunctPtr(p2),&nbsp;'x',&nbsp;3.14f);&nbsp;</tt><em><small>//&nbsp;might&nbsp;fail!!</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p><em>Please</em> do not email me if the above <em>seems to work</em> on your
+particular version of your particular compiler on your particular operating
+system.  I don't care.  It's illegal, period.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.9"></a>
+<div class=FaqTitle><h3>[33.9] I need something like function-pointers, but with more flexibility and/or thread-safety; is there another way?</h3></div>
+<p>Use a functionoid.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.10"></a>
+<div class=FaqTitle><h3>[33.10] What the heck is a functionoid, and why would I use one?</h3></div>
+<p>Functionoids are functions on steroids.  Functionoids are strictly more
+powerful than functions, and that extra power solves some (not all) of the
+challenges typically faced when you use function-pointers.
+<p>Let's work an example showing a traditional use of function-pointers, then
+we'll translate that example into functionoids.  The traditional
+function-pointer idea is to have a bunch of compatible functions:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;int&nbsp;funct1(</tt><em><small>...params...</small></em><tt>)&nbsp;{&nbsp;</tt><em><small>...code...</small></em><tt>&nbsp;}<br>
+&nbsp;int&nbsp;funct2(</tt><em><small>...params...</small></em><tt>)&nbsp;{&nbsp;</tt><em><small>...code...</small></em><tt>&nbsp;}<br>
+&nbsp;int&nbsp;funct3(</tt><em><small>...params...</small></em><tt>)&nbsp;{&nbsp;</tt><em><small>...code...</small></em><tt>&nbsp;}
+</tt>
+</div>
+<p>Then you access those by function-pointers:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;typedef&nbsp;int(*FunctPtr)(</tt><em><small>...params...</small></em><tt>);<br>
+&nbsp;<br>
+&nbsp;void&nbsp;myCode(FunctPtr&nbsp;f)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;f(</tt><em><small>...args-go-here...</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Sometimes people create an array of these function-pointers:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;FunctPtr&nbsp;array[10];<br>
+&nbsp;array[0]&nbsp;=&nbsp;funct1;<br>
+&nbsp;array[1]&nbsp;=&nbsp;funct1;<br>
+&nbsp;array[2]&nbsp;=&nbsp;funct3;<br>
+&nbsp;array[3]&nbsp;=&nbsp;funct2;<br>
+&nbsp;</tt><em><small>...</small></em><tt>
+</tt>
+</div>
+<p>In which case they call the function by accessing the array:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;array[i](</tt><em><small>...args-go-here...</small></em><tt>);
+</tt>
+</div>
+<p>With functionoids, you first create a base class with a pure-virtual method:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Funct&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;int&nbsp;doit(int&nbsp;x)&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;~Funct()&nbsp;=&nbsp;0;<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;inline&nbsp;Funct::~Funct()&nbsp;{&nbsp;}&nbsp;&nbsp;</tt><em><small>//&nbsp;defined&nbsp;even&nbsp;though&nbsp;it's&nbsp;<a href="abcs.html#faq-22.4" title="[22.4] What is a &quot;pure virtual&quot; member function?">pure&nbsp;virtual<!--rawtext:[22.4]:rawtext--></a>;&nbsp;it's&nbsp;faster&nbsp;this&nbsp;way;&nbsp;trust&nbsp;me</small></em><tt>
+</tt>
+</div>
+<p>Then instead of three functions, you create three derived classes:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Funct1&nbsp;:&nbsp;public&nbsp;Funct&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;int&nbsp;doit(int&nbsp;x)&nbsp;{&nbsp;</tt><em><small>...code&nbsp;from&nbsp;funct1...</small></em><tt>&nbsp;}<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Funct2&nbsp;:&nbsp;public&nbsp;Funct&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;int&nbsp;doit(int&nbsp;x)&nbsp;{&nbsp;</tt><em><small>...code&nbsp;from&nbsp;funct2...</small></em><tt>&nbsp;}<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Funct3&nbsp;:&nbsp;public&nbsp;Funct&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;int&nbsp;doit(int&nbsp;x)&nbsp;{&nbsp;</tt><em><small>...code&nbsp;from&nbsp;funct3...</small></em><tt>&nbsp;}<br>
+&nbsp;};
+</tt>
+</div>
+<p>Then instead of passing a function-pointer, you pass a <nobr><tt>Funct*</tt></nobr>.  I'll
+create a <tt>typedef</tt> called <tt>FunctPtr</tt> merely to make the rest of
+the code similar to the old-fashioned approach:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;typedef&nbsp;Funct*&nbsp;FunctPtr;<br>
+&nbsp;<br>
+&nbsp;void&nbsp;myCode(FunctPtr&nbsp;f)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;f-&gt;doit(</tt><em><small>...args-go-here...</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>You can create an array of them in almost the same way:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;FunctPtr&nbsp;array[10];<br>
+&nbsp;array[0]&nbsp;=&nbsp;new&nbsp;Funct1(</tt><em><small>...ctor-args...</small></em><tt>);<br>
+&nbsp;array[1]&nbsp;=&nbsp;new&nbsp;Funct1(</tt><em><small>...ctor-args...</small></em><tt>);<br>
+&nbsp;array[2]&nbsp;=&nbsp;new&nbsp;Funct3(</tt><em><small>...ctor-args...</small></em><tt>);<br>
+&nbsp;array[3]&nbsp;=&nbsp;new&nbsp;Funct2(</tt><em><small>...ctor-args...</small></em><tt>);<br>
+&nbsp;</tt><em><small>...</small></em><tt>
+</tt>
+</div>
+<p>This gives us the first hint about where functionoids are strictly more
+powerful than function-pointers: the fact that the functionoid approach has
+arguments you can pass to the ctors (shown above as <em>...ctor-args...</em>)
+whereas the function-pointers version does not.  Think of a functionoid object
+as a freeze-dried function-call (emphasis on the word <em>call</em>).  Unlike a
+pointer to a function, a functionoid is (conceptually) a pointer to a
+<em>partially called</em> function.  Imagine for the moment a technology that
+lets you pass some-but-not-all arguments to a function, then lets you
+freeze-dry that (partially completed) call.  Pretend that technology gives you
+back some sort of magic pointer to that freeze-dried partially-completed
+function-call.  Then later you pass the <em>remaining</em> args using that
+pointer, and the system magically takes your original args (that were
+freeze-dried), combines them with any local variables that the function
+calculated prior to being freeze-dried, combines all that with the newly
+passed args, and continues the function's execution where it left off when it
+was freeze-dried.  That might sound like science fiction, but it's
+conceptually what functionoids let you do.  <em>Plus</em> they let you
+repeatedly &quot;complete&quot; that freeze-dried function-call with various different
+&quot;remaining parameters,&quot; as often as you like.  <em>Plus</em> they allow (not
+require) you to change the freeze-dried state when it gets called, meaning
+functionoids can remember information from one call to the next.
+<p>Okay, let's get our feet back on the ground and we'll work a couple of
+examples to explain what all that mumbo jumbo really means.
+<p>Suppose the original functions (in the old-fashioned function-pointer style)
+took slightly different parameters.
+<p><div class=CodeBlock>
+<tt>
+&nbsp;int&nbsp;funct1(int&nbsp;x,&nbsp;float&nbsp;y)<br>
+&nbsp;{&nbsp;</tt><em><small>...code...</small></em><tt>&nbsp;}<br>
+&nbsp;<br>
+&nbsp;int&nbsp;funct2(int&nbsp;x,&nbsp;const&nbsp;std::string&amp;&nbsp;y,&nbsp;int&nbsp;z)<br>
+&nbsp;{&nbsp;</tt><em><small>...code...</small></em><tt>&nbsp;}<br>
+&nbsp;<br>
+&nbsp;int&nbsp;funct3(int&nbsp;x,&nbsp;const&nbsp;std::vector&lt;double&gt;&amp;&nbsp;y)<br>
+&nbsp;{&nbsp;</tt><em><small>...code...</small></em><tt>&nbsp;}
+</tt>
+</div>
+<p>When the parameters are different, the old-fashioned function-pointers
+approach is difficult to use, since the caller doesn't know which parameters
+to pass (the caller merely has a pointer to the function, not the function's
+<em>name</em> or, when the parameters are different, the number and types of
+its parameters) (do <em>not</em> write me an email about this; yes you can do
+it, but you have to stand on your head and do messy things; but do <em>not</em>
+write me about it &#151; use functionoids instead).
+<p>With functionoids, the situation is, at least sometimes, much better.  Since a
+functionoid can be thought of as a freeze-dried function <em>call</em>, just
+take the un-common args, such as the ones I've called <tt>y</tt> and/or
+<tt>z</tt>, and make them args to the corresponding ctors.  You may also pass
+the common args (in this case the <tt>int</tt> called <tt>x</tt>) to the ctor,
+but you don't have to &#151; you have the option of passing it/them to the pure
+virtual <nobr><tt>doit()</tt></nobr> method instead.  I'll assume you want to pass <tt>x</tt>
+and into <nobr><tt>doit()</tt></nobr> and <tt>y</tt> and/or <tt>z</tt> into the ctors:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Funct&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;int&nbsp;doit(int&nbsp;x)&nbsp;=&nbsp;0;<br>
+&nbsp;};
+</tt>
+</div>
+<p>Then instead of three functions, you create three derived classes:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Funct1&nbsp;:&nbsp;public&nbsp;Funct&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Funct1(float&nbsp;y)&nbsp;:&nbsp;y_(y)&nbsp;{&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;int&nbsp;doit(int&nbsp;x)&nbsp;{&nbsp;</tt><em><small>...code&nbsp;from&nbsp;funct1...</small></em><tt>&nbsp;}<br>
+&nbsp;private:<br>
+&nbsp;&nbsp;&nbsp;float&nbsp;y_;<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Funct2&nbsp;:&nbsp;public&nbsp;Funct&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Funct2(const&nbsp;std::string&amp;&nbsp;y,&nbsp;int&nbsp;z)&nbsp;:&nbsp;y_(y),&nbsp;z_(z)&nbsp;{&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;int&nbsp;doit(int&nbsp;x)&nbsp;{&nbsp;</tt><em><small>...code&nbsp;from&nbsp;funct2...</small></em><tt>&nbsp;}<br>
+&nbsp;private:<br>
+&nbsp;&nbsp;&nbsp;std::string&nbsp;y_;<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;z_;<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Funct3&nbsp;:&nbsp;public&nbsp;Funct&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Funct3(const&nbsp;std::vector&lt;double&gt;&amp;&nbsp;y)&nbsp;:&nbsp;y_(y)&nbsp;{&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;int&nbsp;doit(int&nbsp;x)&nbsp;{&nbsp;</tt><em><small>...code&nbsp;from&nbsp;funct3...</small></em><tt>&nbsp;}<br>
+&nbsp;private:<br>
+&nbsp;&nbsp;&nbsp;std::vector&lt;double&gt;&nbsp;y_;<br>
+&nbsp;};
+</tt>
+</div>
+<p>Now you see that the ctor's parameters get freeze-dried into the functionoid
+when you create the array of functionoids:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;FunctPtr&nbsp;array[10];<br>
+&nbsp;<br>
+&nbsp;array[0]&nbsp;=&nbsp;new&nbsp;Funct1(3.14f);<br>
+&nbsp;<br>
+&nbsp;array[1]&nbsp;=&nbsp;new&nbsp;Funct1(2.18f);<br>
+&nbsp;<br>
+&nbsp;std::vector&lt;double&gt;&nbsp;bottlesOfBeerOnTheWall;<br>
+&nbsp;bottlesOfBeerOnTheWall.push_back(100);<br>
+&nbsp;bottlesOfBeerOnTheWall.push_back(99);<br>
+&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;bottlesOfBeerOnTheWall.push_back(1);<br>
+&nbsp;array[2]&nbsp;=&nbsp;new&nbsp;Funct3(bottlesOfBeerOnTheWall);<br>
+&nbsp;<br>
+&nbsp;array[3]&nbsp;=&nbsp;new&nbsp;Funct2(&quot;my&nbsp;string&quot;,&nbsp;42);<br>
+&nbsp;<br>
+&nbsp;</tt><em><small>...</small></em><tt>
+</tt>
+</div>
+<p>So when the user invokes the <nobr><tt>doit()</tt></nobr> on one of these functionoids, he
+supplies the &quot;remaining&quot; args, and the call conceptually combines the original
+args passed to the ctor with those passed into the <nobr><tt>doit()</tt></nobr> method:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;array[i]-&gt;doit(12);
+</tt>
+</div>
+<p>As I've already hinted, one of the benefits of functionoids is that you can
+have several instances of, say, <tt>Funct1</tt> in your array, and those
+instances can have different parameters freeze-dried into them.  For example,
+<nobr><tt>array[0]</tt></nobr> and <nobr><tt>array[1]</tt></nobr> are both of type <tt>Funct1</tt>, but the
+behavior of <nobr><tt>array[0]-&gt;doit(12)</tt></nobr> will be different from the behavior of
+<nobr><tt>array[1]-&gt;doit(12)</tt></nobr> since the behavior will depend on both the 12 that
+was passed to <nobr><tt>doit()</tt></nobr> <em>and</em> the args passed to the ctors.
+<p>Another benefit of functionoids is apparent if we change the example from an
+array of functionoids to a local functionoid.  To set the stage, let's go back
+to the old-fashioned function-pointer approach, and imagine that you're trying
+to pass a comparison-function to a <nobr><tt>sort()</tt></nobr> or <nobr><tt>binarySearch()</tt></nobr>
+routine.  The <nobr><tt>sort()</tt></nobr> or <nobr><tt>binarySearch()</tt></nobr> routine is called
+<nobr><tt>childRoutine()</tt></nobr> and the comparison function-pointer type is called
+<tt>FunctPtr</tt>:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;childRoutine(FunctPtr&nbsp;f)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;f(</tt><em><small>...args...</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Then different callers would pass different function-pointers depending on
+what they thought was best:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;myCaller()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;childRoutine(funct1);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;void&nbsp;yourCaller()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;childRoutine(funct3);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>We can easily translate this example into one using functionoids:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;childRoutine(Funct&amp;&nbsp;f)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;f.doit(</tt><em><small>...args...</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;void&nbsp;myCaller()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;Funct1&nbsp;funct(</tt><em><small>...ctor-args...</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;childRoutine(funct);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;void&nbsp;yourCaller()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;Funct3&nbsp;funct(</tt><em><small>...ctor-args...</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;childRoutine(funct);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Given this example as a backdrop, we can see two benefits of functionoids over
+function-pointers.  The &quot;ctor args&quot; benefit described above, plus the fact
+that functionoids can maintain state between calls <em>in a thread-safe
+manner</em>.  With plain function-pointers, people normally maintain state
+between calls via static data.  However static data is not intrinsically
+thread-safe &#151; static data is shared between all threads.  The functionoid
+approach provides you with something that is <em>intrinsically</em> thread-safe
+since the code ends up with thread-local data.  The implementation is trivial:
+change the old-fashioned static datum to an instance data member inside the
+functionoid's <tt>this</tt> object, and poof, the data is not only
+thread-local, but it is even safe with recursive calls: each call to
+<nobr><tt>yourCaller()</tt></nobr> will have its own distinct <tt>Funct3</tt> object with its
+own distinct instance data.
+<p>Note that we've gained something without losing anything.  If you <em>want</em>
+thread-global data, functionoids can give you that too: just change it from an
+instance data member inside the functionoid's <tt>this</tt> object to a static
+data member within the functionoid's class, or even to a local-scope static
+data.  You'd be no better off than with function-pointers, but you wouldn't be
+worse off either.
+<p>The functionoid approach gives you a third option which is not available with
+the old-fashioned approach: the functionoid lets callers decide whether
+<em>they</em> want thread-local or thread-global data.  They'd be responsible
+to use locks in cases where they wanted thread-global data, but at least
+they'd have the choice.  It's easy:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;callerWithThreadLocalData()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;Funct1&nbsp;funct(</tt><em><small>...ctor-args...</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;childRoutine(funct);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;void&nbsp;callerWithThreadGlobalData()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;static&nbsp;Funct1&nbsp;funct(</tt><em><small>...ctor-args...</small></em><tt>);&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;the&nbsp;<tt>static</tt>&nbsp;is&nbsp;the&nbsp;only&nbsp;difference</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;childRoutine(funct);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Functionoids don't solve every problem encountered when making flexible
+software, but they are strictly more powerful than function-pointers and they
+are worth at least evaluating.  In fact you can easily prove that functionoids
+don't lose any power over function-pointers, since you can imagine that the
+old-fashioned approach of function-pointers is equivalent to having a
+global(!) functionoid object.  Since you can always make a global functionoid
+object, you haven't lost any ground.  QED.
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-33.11"></a>
+<div class=FaqTitle><h3>[33.11] Can you make functionoids faster than normal function calls?</h3></div>
+<p>Yes.
+<p>If you have a small functionoid, and in the real world that's rather common,
+the cost of the function-call can be high compared to the cost of the work
+done by the functionoid.  In <a href="pointers-to-members.html#faq-33.10" title="[33.10] What the heck is a functionoid, and why would I use one?">the previous FAQ<!--rawtext:[33.10]:rawtext--></a>,
+functionoids were implemented using <a href="virtual-functions.html" title="[20] Inheritance -- virtual functions">virtual
+functions<!--rawtext:[20]:rawtext--></a> and will typically cost you a function-call.  An alternate
+approach uses <a href="templates.html" title="[35] Templates">templates<!--rawtext:[35]:rawtext--></a>.
+<p>The following example is similar in spirit to the one in
+<a href="pointers-to-members.html#faq-33.10" title="[33.10] What the heck is a functionoid, and why would I use one?">the previous FAQ<!--rawtext:[33.10]:rawtext--></a>.  I have renamed <nobr><tt>doit()</tt></nobr> to
+<nobr><tt>operator()()</tt></nobr> to improve the caller code's readability and to allow
+someone to pass a regular function-pointer:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Funct1&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Funct1(float&nbsp;y)&nbsp;:&nbsp;y_(y)&nbsp;{&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;operator()(int&nbsp;x)&nbsp;{&nbsp;</tt><em><small>...code&nbsp;from&nbsp;funct1...</small></em><tt>&nbsp;}<br>
+&nbsp;private:<br>
+&nbsp;&nbsp;&nbsp;float&nbsp;y_;<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Funct2&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Funct2(const&nbsp;std::string&amp;&nbsp;y,&nbsp;int&nbsp;z)&nbsp;:&nbsp;y_(y),&nbsp;z_(z)&nbsp;{&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;operator()(int&nbsp;x)&nbsp;{&nbsp;</tt><em><small>...code&nbsp;from&nbsp;funct2...</small></em><tt>&nbsp;}<br>
+&nbsp;private:<br>
+&nbsp;&nbsp;&nbsp;std::string&nbsp;y_;<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;z_;<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Funct3&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Funct3(const&nbsp;std::vector&lt;double&gt;&amp;&nbsp;y)&nbsp;:&nbsp;y_(y)&nbsp;{&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;operator()(int&nbsp;x)&nbsp;{&nbsp;</tt><em><small>...code&nbsp;from&nbsp;funct3...</small></em><tt>&nbsp;}<br>
+&nbsp;private:<br>
+&nbsp;&nbsp;&nbsp;std::vector&lt;double&gt;&nbsp;y_;<br>
+&nbsp;};
+</tt>
+</div>
+<p>The difference between this approach and the one in <a href="pointers-to-members.html#faq-33.10" title="[33.10] What the heck is a functionoid, and why would I use one?">the
+previous FAQ<!--rawtext:[33.10]:rawtext--></a> is that the fuctionoid gets &quot;bound&quot; to the caller at
+compile-time rather than at run-time.  Think of it as passing in a parameter:
+if you know at compile-time the kind of functionoid you ultimately want to
+pass in, then you can use the above technique, and you can,
+<a href="inline-functions.html#faq-9.3" title="[9.3] Do inline functions improve performance?">at least in typical cases<!--rawtext:[9.3]:rawtext--></a>, get a speed benefit
+from having the compiler <a href="inline-functions.html" title="[9] Inline functions">inline-expand<!--rawtext:[9]:rawtext--></a> the
+functionoid code within the caller.  Here is an example:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;template&nbsp;&lt;typename&nbsp;FunctObj&gt;<br>
+&nbsp;void&nbsp;myCode(FunctObj&nbsp;f)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;f(</tt><em><small>...args-go-here...</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>When the compiler compiles the above, it <a href="inline-functions.html#faq-9.1" title="[9.1] What's the deal with inline functions?">might<!--rawtext:[9.1]:rawtext--></a>
+inline-expand the call which <a href="inline-functions.html#faq-9.3" title="[9.3] Do inline functions improve performance?">might<!--rawtext:[9.3]:rawtext--></a> improve
+performance.
+<p>Here is one way to call the above:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;blah()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;Funct2&nbsp;x(&quot;functionoids&nbsp;are&nbsp;powerful&quot;,&nbsp;42);<br>
+&nbsp;&nbsp;&nbsp;myCode(x);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Aside: as was hinted at in the first paragraph above, you may also pass in the
+names of normal functions (though you might incur the cost of the function
+call when the caller uses these):
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;myNormalFunction(int&nbsp;x);<br>
+&nbsp;<br>
+&nbsp;void&nbsp;blah()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;myCode(myNormalFunction);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p><small>[&nbsp;<a href="#top" title="Top of section [33] Pointers to member functions">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [33] Pointers to member functions">Bottom</a> |&nbsp;<a href="mixing-c-and-cpp.html" title="[32] How to mix C and C++">Previous&nbsp;section</a> |&nbsp;<a href="containers.html" title="[34] Container classes">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="bottom"></a>
+<a href="mailto:cline@parashift.com" title="cline@parashift.com"><img src="mbox.gif" height=26 width=89 alt="E-Mail">&nbsp;E-mail the author</a><br>
+[&nbsp;<a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>
+|&nbsp;<a href="index-2.html#table-of-contents" title="Table of contents">Table&nbsp;of&nbsp;contents</a>
+|&nbsp;<a href="subject-index.html" title="Subject index; 5111 links to 3243 topics">Subject&nbsp;index</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.1" title="[1.1] Author">About&nbsp;the&nbsp;author</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">&copy;</a>
+|&nbsp;<a href="on-line-availability.html#faq-2.2" title="[2.2] What happened to the one-click-download option?">Download&nbsp;your&nbsp;own&nbsp;copy</a>&nbsp;]<br>
+<small>Revised Mar 1, 2006</small>
+</body>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/pointers-to-members.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:23 GMT -->
+</html>

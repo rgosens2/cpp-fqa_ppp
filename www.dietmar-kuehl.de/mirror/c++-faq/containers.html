@@ -1,0 +1,331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/containers.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:23 GMT -->
+<head>
+<title>[34] Container classes &nbsp;Updated!&nbsp;, C++ FAQ Lite</title>
+<meta name="FILENAME" content="containers.html">
+<meta name="ABSTRACT" content="[34] Container classes [Updated!], C++ FAQ Lite">
+<meta name="OWNER"    content="cline@parashift.com">
+<meta name="AUTHOR"   content="Marshall Cline, cline@parashift.com">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rev=made href="mailto:cline@parashift.com">
+<style type='text/css'>
+  <!--
+  body       { font-family: arial; color: black; background: white }
+  .CodeBlock { color: black; background-color: #dfdfdf; margin-left: 30px; margin-right: 30px; padding: 5pt }
+  .CodeBlock small tt { font-size: small }
+  .FaqTitle  { color: black; background-color: gold }
+  .Updated   { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #ffff00; border: solid #e0e000 1px; }
+  .New       { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #00ff00; border: solid #00d000 1px; }
+  ul         { margin-bottom: 1px; margin-top: 1px }
+  ol         { margin-bottom: 1px; margin-top: 1px }
+  li         { margin-bottom: 4px; margin-top: 4px }
+  -->
+</style>
+</head>
+<body>
+<h1><a name="top"></a>[34] Container classes <span class=Updated>&nbsp;Updated!&nbsp;</span><br>
+<small><small>(Part of <a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>, <a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">Copyright&nbsp;&copy; 1991-2006</a>, <a href="http://www.parashift.com/" title="www.parashift.com/" target='_blank'>Marshall Cline</a>, <a href="mailto:cline@parashift.com" title="cline@parashift.com"><tt>cline@parashift.com</tt></a>)</small></small></h1>
+<hr>
+<h3>FAQs in section [34]:</h3>
+<ul>
+<li><a href="containers.html#faq-34.1" title="[34.1] Why should I use container classes rather than simple arrays?">[34.1] Why should I use container classes rather than simple arrays?</a></li>
+<li><a href="containers.html#faq-34.2" title="[34.2] How can I make a perl-like associative array in C++?">[34.2] How can I make a <tt>perl</tt>-like associative array in C++?</a></li>
+<li><a href="containers.html#faq-34.3" title="[34.3] Is the storage for a std::vector&lt;T&gt; guaranteed to be contiguous?">[34.3] Is the storage for a <nobr><tt>std::vector&lt;T&gt;</tt></nobr> guaranteed to be contiguous?</a> <span class=Updated>&nbsp;Updated!&nbsp;</span></li>
+<li><a href="containers.html#faq-34.4" title="[34.4] How can I build a &lt;favorite container&gt; of objects of different types?">[34.4] How can I build a &lt;favorite container&gt; of objects of different types?</a></li>
+<li><a href="containers.html#faq-34.5" title="[34.5] How can I insert/access/change elements from a linked list/hashtable/etc?">[34.5] How can I insert/access/change elements from a linked list/hashtable/etc?</a></li>
+</ul>
+<p><hr>
+<p><a name="faq-34.1"></a>
+<div class=FaqTitle><h3>[34.1] Why should I use container classes rather than simple arrays?</h3></div>
+<p>Because arrays are <a href="big-picture.html#faq-6.15" title="[6.15] What does the FAQ mean by &quot;such and such is evil&quot;?">evil<!--rawtext:[6.15]:rawtext--></a>.
+<p>Let's assume the best case scenario: you're an experienced C programmer, which
+almost by definition means you're pretty good at working with arrays.  You
+know you can handle the complexity; you've done it for years.  And you're
+smart &#151; the smartest on the team &#151; the smartest in the whole company.  But
+even given all that, <em>please</em> read this entire FAQ and think very
+carefully about it before you go into &quot;business as usual&quot; mode.
+<p>Fundamentally it boils down to this simple fact: C++ is not C.  That means
+(this might be painful for you!!) you'll need to set aside some of your hard
+earned wisdom from your vast experience in C.  The two languages simply are
+different.  The &quot;best&quot; way to do something in C is not always the same as the
+&quot;best&quot; way to do it in C++.  If you really want to program in C, please do
+yourself a favor and program in C.  But if you want to be really good at C++,
+then learn the C++ ways of doing things.  You may be a C guru, but if you're
+just learning C++, you're just learning C++ &#151; you're a newbie.  (Ouch; I
+know that had to hurt.  Sorry.)
+<p>Here's what you need to realize about containers <em>vs.</em> arrays:
+<ol>
+<li>Container classes make programmers more productive.  So if you
+insist on using arrays while those around are willing to use container
+classes, you'll probably be less productive than they are (even if you're
+smarter and more experienced than they are!).</li>
+<li>Container classes let programmers write more robust code.  So if
+you insist on using arrays while those around are willing to use container
+classes, your code will probably have more bugs than their code (even if
+you're smarter and more experienced).</li>
+<li>And if you're <em>so</em> smart and <em>so</em> experienced that you
+can use arrays as fast and as safe as they can use container classes, someone
+else will probably end up maintaining your code and <em>they'll</em> probably
+introduce bugs.  Or worse, you'll be the only one who can maintain your code
+so management will yank you from development and move you into a full-time
+maintenance role &#151; just what you always wanted!</li>
+</ol>
+<p>Here are some specific problems with arrays:
+<ol>
+<li>Subscripts don't get checked to see if they are out of bounds.
+(Note that some container classes, such as <nobr><tt>std::vector</tt></nobr>, have methods to
+access elements with or without bounds checking on subscripts.)</li>
+<li>Arrays often require you to allocate memory from the heap (see
+below for examples), in which case you must manually make sure the allocation
+is eventually <tt>delete</tt>d (even when someone <tt>throw</tt>s an exception).  When you
+use container classes, this memory management is handled automatically, but
+when you use arrays, you have to manually write a bunch of code (and
+<a href="exceptions.html#faq-17.5" title="[17.5] How do I change the string-length of an array of char to prevent memory leaks even if/when someone throws an exception?">unfortunately that code is often subtle and
+tricky<!--rawtext:[17.5]:rawtext--></a>) to deal with this.  For example, in addition to writing the code
+that destroys all the objects and <tt>delete</tt>s the memory, arrays often also
+force you you to write an extra <tt>try</tt> block with a <tt>catch</tt> clause that
+destroys all the objects, <tt>delete</tt>s the memory, then re-throws the exception.
+This is a real pain in the neck, <a href="freestore-mgmt.html#faq-16.16" title="[16.16] How do I allocate multidimensional arrays using new?">as shown here<!--rawtext:[16.16]:rawtext--></a>.
+When using container classes, <a href="freestore-mgmt.html#faq-16.17" title="[16.17] But the previous FAQ's code is SOOOO tricky and error prone! Isn't there a simpler way?">things are much
+easier<!--rawtext:[16.17]:rawtext--></a>.</li>
+<li>You can't insert an element into the middle of the array, or even
+add one at the end, unless you allocate the array via the heap, and even then
+you must allocate a new array and copy the elements.</li>
+<li>Container classes give you the choice of passing them by reference
+or by value, but arrays do not give you that choice: they are always passed by
+reference.  If you want to simulate pass-by-value with an array, you have to
+manually write code that explicitly copies the array's elements (possibly
+allocating from the heap), along with code to clean up the copy when you're
+done with it.  All this is handled automatically for you if you use a
+container class.</li>
+<li>If your function has a non-<tt>static</tt> local array (i.e., an &quot;auto&quot;
+array), you cannot return that array, whereas the same is not true for objects
+of container classes.</li>
+</ol>
+<p>Here are some things to think about when using containers:
+<ol>
+<li>Different C++ containers have different strengths and weaknesses,
+but for any given job there's usually one of them that is better &#151; clearer,
+safer, easier/cheaper to maintain, and often more efficient &#151; than an array.
+For instance,
+<ul>
+<li>You might consider a <nobr><tt>std::map</tt></nobr> instead of manually writing code
+for a lookup table.</li>
+<li>A <nobr><tt>std::map</tt></nobr> might also be used for a sparse array or sparse
+matrix.</li>
+<li>A <nobr><tt>std::vector</tt></nobr> is the most array-like of the standard container
+classes, but it also offers various extra features such as bounds checking via
+the <nobr><tt>at()</tt></nobr> member function, insertions/removals of elements, automatic memory
+management even if someone throws an exception, ability to be passed both by
+reference and by value, etc.</li>
+<li>A <nobr><tt>std::string</tt></nobr> is <a href="exceptions.html#faq-17.5" title="[17.5] How do I change the string-length of an array of char to prevent memory leaks even if/when someone throws an exception?">almost always
+better than an array of <tt>char</tt><!--rawtext:[17.5]:rawtext--></a> (you can think of a <nobr><tt>std::string</tt></nobr> as a
+&quot;container class&quot; for the sake of this discussion).</li>
+</ul>
+</li>
+<li>Container classes aren't best for <em>everything</em>, and sometimes
+you may need to use arrays.  But that should be very rare, and if/when it
+happens:
+<ul>
+<li>Please design your container class's <tt>public</tt> interface in such a
+way that the code that uses the container class is unaware of the fact that
+there is an array inside.</li>
+<li>The goal is to &quot;bury&quot; the array inside a container class.  In other
+words, make sure there is a very small number of lines of code that directly
+touch the array (just your own methods of your container class) so everyone
+else (the users of your container class) can write code that doesn't depend on
+there being an array inside your container class.</li>
+</ul>
+</li>
+</ol>
+<p>To net this out, arrays really are <a href="big-picture.html#faq-6.15" title="[6.15] What does the FAQ mean by &quot;such and such is evil&quot;?">evil<!--rawtext:[6.15]:rawtext--></a>.  You may not
+think so if you're new to C++.  But after you write a big pile of code that
+uses arrays (especially if you make your code leak-proof and exception-safe),
+you'll learn &#151; the hard way.  Or you'll learn the easy way by believing
+those who've already done things like that.  The choice is yours.
+<p><small>[&nbsp;<a href="#top" title="Top of section [34] Container classes">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [34] Container classes">Bottom</a> |&nbsp;<a href="pointers-to-members.html" title="[33] Pointers to member functions">Previous&nbsp;section</a> |&nbsp;<a href="templates.html" title="[35] Templates">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-34.2"></a>
+<div class=FaqTitle><h3>[34.2] How can I make a <tt>perl</tt>-like associative array in C++?</h3></div>
+<p>Use the standard class template <nobr><tt>std::map&lt;Key,Val&gt;</tt></nobr>:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;#include&nbsp;&lt;string&gt;<br>
+&nbsp;#include&nbsp;&lt;map&gt;<br>
+&nbsp;#include&nbsp;&lt;iostream&gt;<br>
+&nbsp;<br>
+&nbsp;int&nbsp;main()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;<tt>age</tt>&nbsp;is&nbsp;a&nbsp;<tt>map</tt>&nbsp;from&nbsp;<tt>string</tt>&nbsp;to&nbsp;<tt>int</tt></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;std::map&lt;std::string,&nbsp;int,&nbsp;std::less&lt;std::string&gt;&nbsp;&gt;&nbsp;&nbsp;age;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;age[&quot;Fred&quot;]&nbsp;=&nbsp;42;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;Fred&nbsp;is&nbsp;42&nbsp;years&nbsp;old</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;age[&quot;Barney&quot;]&nbsp;=&nbsp;37;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;Barney&nbsp;is&nbsp;37</small></em><tt><br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;if&nbsp;(todayIsFredsBirthday())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;On&nbsp;Fred's&nbsp;birthday,</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++&nbsp;age[&quot;Fred&quot;];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;&nbsp;&nbsp;&nbsp;increment&nbsp;Fred's&nbsp;age</small></em><tt><br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;std::cout&nbsp;&lt;&lt;&nbsp;&quot;Fred&nbsp;is&nbsp;&quot;&nbsp;&lt;&lt;&nbsp;age[&quot;Fred&quot;]&nbsp;&lt;&lt;&nbsp;&quot;&nbsp;years&nbsp;old\n&quot;;<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p><small>[&nbsp;<a href="#top" title="Top of section [34] Container classes">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [34] Container classes">Bottom</a> |&nbsp;<a href="pointers-to-members.html" title="[33] Pointers to member functions">Previous&nbsp;section</a> |&nbsp;<a href="templates.html" title="[35] Templates">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-34.3"></a>
+<div class=FaqTitle><h3>[34.3] Is the storage for a <nobr><tt>std::vector&lt;T&gt;</tt></nobr> guaranteed to be contiguous? <span class=Updated>&nbsp;Updated!&nbsp;</span></h3></div>
+<small><em>[Recently added new subject-index entries that point to this FAQ thanks to <a href="mailto:(NOSPAM)peter(DOT)koch(DOT)larsen(AT)gmail(DOT)com" title="(NOSPAM)peter(DOT)koch(DOT)larsen(AT)gmail(DOT)com">Peter Koch</a> (in 3/06).  <a href="templates.html#faq-35.7" title="[35.7] My template function does something special when the template type T is int or std::string; how do I write my template so it uses the special code when T is one of those specific types?">Click here to go to the next FAQ in the &quot;chain&quot; of recent changes<!--rawtext:[35.7]:rawtext--></a>.]</em></small>
+<p>Yes.
+<p>This means you the following technique is safe:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;#include&nbsp;&lt;vector&gt;<br>
+&nbsp;#include&nbsp;&quot;Foo.h&quot;&nbsp;&nbsp;</tt><em><small>/*&nbsp;get&nbsp;class&nbsp;Foo&nbsp;*/</small></em><tt><br>
+&nbsp;<br>
+&nbsp;</tt><em><small>//&nbsp;old-style&nbsp;code&nbsp;that&nbsp;wants&nbsp;an&nbsp;array</small></em><tt><br>
+&nbsp;void&nbsp;f(Foo*&nbsp;array,&nbsp;unsigned&nbsp;numFoos);<br>
+&nbsp;<br>
+&nbsp;void&nbsp;g()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;std::vector&lt;Foo&gt;&nbsp;v;<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;f(v.empty()&nbsp;?&nbsp;NULL&nbsp;:&nbsp;&amp;v[0],&nbsp;v.size());&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;safe</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>The funny expression <nobr><tt>v.empty() ? NULL : &amp;v[0]</tt></nobr> simply passes the
+<tt>NULL</tt> pointer if <tt>v</tt> is empty, otherwise passes a pointer to the
+first (zeroth) element of <tt>v</tt>.  If you know <em>a priori</em> that
+<tt>v</tt> is not empty, you can change that to simply <nobr><tt>&amp;v[0]</tt></nobr>.
+<p>In general, it means you are guaranteed that <nobr><tt>&amp;v[0] + n == &amp;v[n]</tt></nobr>, where
+<tt>v</tt> is a <nobr><tt>std::vector&lt;T&gt;</tt></nobr> and <tt>n</tt> is an integer in the range
+<nobr><tt>0 .. v.size()-1</tt></nobr>.
+<p><em>However</em> <nobr><tt>v.begin()</tt></nobr> is <em>not</em> guaranteed to be a
+<nobr><tt>T*</tt></nobr>, which means <nobr><tt>v.begin()</tt></nobr> is not guaranteed to be the same as
+<nobr><tt>&amp;v[0]</tt></nobr>:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;g()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;std::vector&lt;Foo&gt;&nbsp;v;<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;f(v.begin(),&nbsp;v.size());&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;Error!!&nbsp;Not&nbsp;Guaranteed!!</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^^^^^^^^^</tt><em><small>--&nbsp;cough,&nbsp;choke,&nbsp;gag;&nbsp;not&nbsp;guaranteed&nbsp;to&nbsp;be&nbsp;the&nbsp;same&nbsp;as&nbsp;<nobr><tt>&amp;v[0]</tt></nobr></small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Do <em><b><u>NOT</u></b></em> email me and tell me that <nobr><tt>v.begin() ==
+&amp;v[0]</tt></nobr> on your particular version of your particular compiler on your
+particular platform.  I don't care, plus that would show that you've
+<em>totally</em> missed the point.  The point is to help you know the kind of
+code that is guaranteed to work correctly on <em>all</em> standard-conforming
+implementations, not to study the vagaries of particular implementations.
+<p>Caveat: the above guarantee is currently in the technical corrigendum of the
+standard and has not, as of this date, officially become a part of the
+standard.  However it will be ratified <em>Real Soon Now</em>.  In the mean
+time, the practically important thing is that existing implementations make
+the storage contiguous, so it is safe to assume that <nobr><tt>&amp;v[0] + n == &amp;v[n]</tt></nobr>.
+<p><small>[&nbsp;<a href="#top" title="Top of section [34] Container classes">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [34] Container classes">Bottom</a> |&nbsp;<a href="pointers-to-members.html" title="[33] Pointers to member functions">Previous&nbsp;section</a> |&nbsp;<a href="templates.html" title="[35] Templates">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-34.4"></a>
+<div class=FaqTitle><h3>[34.4] How can I build a &lt;favorite container&gt; of objects of different types?</h3></div>
+<p>You can't, but you can fake it pretty well.  In C/C++ all arrays are
+homogeneous (i.e., the elements are all the same type).  However, with an extra
+layer of indirection you can give the appearance of a heterogeneous container
+(a heterogeneous container is a container where the contained objects are of
+different types).
+<p>There are two cases with heterogeneous containers.
+<p>The first case occurs when all objects you want to store in a container are
+publicly derived from a common base class.  You can then declare/define your
+container to hold pointers to the base class.  You indirectly store a derived
+class object in a container by storing the object's address as an element in
+the container.  You can then access objects in the container indirectly through
+the pointers (enjoying polymorphic behavior).  If you need to know the exact
+type of the object in the container you can use <nobr><tt>dynamic_cast&lt;&gt;</tt></nobr> or
+<nobr><tt>typeid()</tt></nobr>.  You'll probably need the <a href="virtual-functions.html#faq-20.8" title="[20.8] What is a &quot;virtual constructor&quot;?">Virtual Constructor
+Idiom<!--rawtext:[20.8]:rawtext--></a> to copy a container of disparate object types.  The
+downside of this approach is that it makes memory management a little more
+problematic (who &quot;owns&quot; the pointed-to objects? if you <tt>delete</tt> these
+pointed-to objects when you destroy the container, how can you guarantee that
+no one else has a copy of one of these pointers? if you don't <tt>delete</tt> these
+pointed-to objects when you destroy the container, how can you be sure that
+someone else will eventually do the <tt>delete</tt>ing?).  It also makes copying the
+container more complex (may actually break the container's copying functions
+since you don't want to copy the pointers, at least not when the container
+&quot;owns&quot; the pointed-to objects).
+<p>The second case occurs when the object types are disjoint &#151; they do not share
+a common base class.  The approach here is to use a handle class.  The
+container is a container of handle objects (by value or by pointer, your
+choice; by value is easier).  Each handle object knows how to &quot;hold on to&quot;
+(i.e., maintain a pointer to) one of the objects you want to put in the
+container.  You can use either a single handle class with several different
+types of pointers as instance data, or a hierarchy of handle classes that
+shadow the various types you wish to contain (requires the container be of
+handle base class pointers).  The downside of this approach is that it opens up
+the handle class(es) to maintenance every time you change the set of types
+that can be contained.  The benefit is that you can use the handle class(es)
+to encapsulate most of the ugliness of memory management and object lifetime.
+Thus using handle objects may be beneficial even in the first case.
+<p><small>[&nbsp;<a href="#top" title="Top of section [34] Container classes">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [34] Container classes">Bottom</a> |&nbsp;<a href="pointers-to-members.html" title="[33] Pointers to member functions">Previous&nbsp;section</a> |&nbsp;<a href="templates.html" title="[35] Templates">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-34.5"></a>
+<div class=FaqTitle><h3>[34.5] How can I insert/access/change elements from a linked list/hashtable/etc?</h3></div>
+<p>The most important thing to remember is this: don't roll your own from scratch
+unless there is a compelling reason to do so.  In other words, instead of
+creating your own list or hashtable, use one of the standard class templates
+such as <nobr><tt>std::vector&lt;T&gt;</tt></nobr> or <nobr><tt>std::list&lt;T&gt;</tt></nobr> or whatever.
+<p>Assuming you have a compelling reason to build your own container, here's how
+to handle inserting (or accessing, changing, etc.) the elements.
+<p>To make the discussion concrete, I'll discuss how to insert an element into a
+linked list.  This example is just complex enough that it generalizes pretty
+well to things like vectors, hash tables, binary trees, etc.
+<p>A linked list makes it easy insert an element before the first or after the
+last element of the list, but limiting ourselves to these would produce a
+library that is too weak (a weak library is almost worse than no library).
+This answer will be a lot to swallow for novice C++'ers, so I'll give a couple
+of options.  The first option is easiest; the second and third are better.
+<ol>
+<li>Empower the <tt>List</tt> with a &quot;current location,&quot; and member functions
+such as <nobr><tt>advance()</tt></nobr>, <nobr><tt>backup()</tt></nobr>, <nobr><tt>atEnd()</tt></nobr>, <nobr><tt>atBegin()</tt></nobr>, <nobr><tt>getCurrElem()</tt></nobr>,
+<nobr><tt>setCurrElem(Elem)</tt></nobr>, <nobr><tt>insertElem(Elem)</tt></nobr>, and <nobr><tt>removeElem()</tt></nobr>.  Although this
+works in small examples, the notion of <em>a</em> current position makes it
+difficult to access elements at two or more positions within the list (e.g.,
+&quot;for all pairs x,y do the following...&quot;).</li>
+<li>Remove the above member functions from <tt>List</tt> itself, and move them
+to a separate class, <tt>ListPosition</tt>.  <tt>ListPosition</tt> would act as a &quot;current
+position&quot; within a list.  This allows multiple positions within the same list.
+<tt>ListPosition</tt> would be a <a href="friends.html" title="[14] Friends"><tt>friend</tt><!--rawtext:[14]:rawtext--></a> of <tt>class</tt> <tt>List</tt>, so
+<tt>List</tt> can hide its innards from the outside world (else the innards of <tt>List</tt>
+would have to be publicized via <tt>public</tt> member functions in <tt>List</tt>).  Note:
+<tt>ListPosition</tt> can use <tt>operator</tt> overloading for things like <nobr><tt>advance()</tt></nobr> and
+<nobr><tt>backup()</tt></nobr>, since <tt>operator</tt> overloading is syntactic sugar for normal member
+functions.</li>
+<li>Consider the entire iteration as an atomic event, and create a class
+template that embodies this event.  This enhances performance by allowing the
+public access member functions (which may be <a href="virtual-functions.html" title="[20] Inheritance -- virtual functions"><tt>virtual</tt><!--rawtext:[20]:rawtext--></a> functions) to be avoided during the access, and this access
+often occurs within an inner loop.  Unfortunately the class template will
+increase the size of your object code, since templates gain speed by
+duplicating code.  For more, see [Koenig, &quot;Templates as interfaces,&quot; JOOP, 4, 5
+(Sept 91)], and [Stroustrup, &quot;The C++ Programming Language Third Edition,&quot;
+under &quot;Comparator&quot;].</li>
+</ol>
+<p><small>[&nbsp;<a href="#top" title="Top of section [34] Container classes">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [34] Container classes">Bottom</a> |&nbsp;<a href="pointers-to-members.html" title="[33] Pointers to member functions">Previous&nbsp;section</a> |&nbsp;<a href="templates.html" title="[35] Templates">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="bottom"></a>
+<a href="mailto:cline@parashift.com" title="cline@parashift.com"><img src="mbox.gif" height=26 width=89 alt="E-Mail">&nbsp;E-mail the author</a><br>
+[&nbsp;<a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>
+|&nbsp;<a href="index-2.html#table-of-contents" title="Table of contents">Table&nbsp;of&nbsp;contents</a>
+|&nbsp;<a href="subject-index.html" title="Subject index; 5111 links to 3243 topics">Subject&nbsp;index</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.1" title="[1.1] Author">About&nbsp;the&nbsp;author</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">&copy;</a>
+|&nbsp;<a href="on-line-availability.html#faq-2.2" title="[2.2] What happened to the one-click-download option?">Download&nbsp;your&nbsp;own&nbsp;copy</a>&nbsp;]<br>
+<small>Revised Mar 1, 2006</small>
+</body>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/containers.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:23 GMT -->
+</html>

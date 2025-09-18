@@ -1,0 +1,826 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:21 GMT -->
+<head>
+<title>[23] Inheritance -- what your mother never told you &nbsp;Updated!&nbsp;, C++ FAQ Lite</title>
+<meta name="FILENAME" content="strange-inheritance.html">
+<meta name="ABSTRACT" content="[23] Inheritance -- what your mother never told you [Updated!], C++ FAQ Lite">
+<meta name="OWNER"    content="cline@parashift.com">
+<meta name="AUTHOR"   content="Marshall Cline, cline@parashift.com">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rev=made href="mailto:cline@parashift.com">
+<style type='text/css'>
+  <!--
+  body       { font-family: arial; color: black; background: white }
+  .CodeBlock { color: black; background-color: #dfdfdf; margin-left: 30px; margin-right: 30px; padding: 5pt }
+  .CodeBlock small tt { font-size: small }
+  .FaqTitle  { color: black; background-color: gold }
+  .Updated   { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #ffff00; border: solid #e0e000 1px; }
+  .New       { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #00ff00; border: solid #00d000 1px; }
+  ul         { margin-bottom: 1px; margin-top: 1px }
+  ol         { margin-bottom: 1px; margin-top: 1px }
+  li         { margin-bottom: 4px; margin-top: 4px }
+  -->
+</style>
+</head>
+<body>
+<h1><a name="top"></a>[23] Inheritance &#151; what your mother never told you <span class=Updated>&nbsp;Updated!&nbsp;</span><br>
+<small><small>(Part of <a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>, <a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">Copyright&nbsp;&copy; 1991-2006</a>, <a href="http://www.parashift.com/" title="www.parashift.com/" target='_blank'>Marshall Cline</a>, <a href="mailto:cline@parashift.com" title="cline@parashift.com"><tt>cline@parashift.com</tt></a>)</small></small></h1>
+<hr>
+<h3>FAQs in section [23]:</h3>
+<ul>
+<li><a href="strange-inheritance.html#faq-23.1" title="[23.1] Is it okay for a non-virtual function of the base class to call a virtual function?">[23.1] Is it okay for a non-<tt>virtual</tt> function of the base class to call a <tt>virtual</tt> function?</a></li>
+<li><a href="strange-inheritance.html#faq-23.2" title="[23.2] That last FAQ confuses me. Is it a different strategy from the other ways to use virtual functions? What's going on?">[23.2] That last FAQ confuses me. Is it a different strategy from the other ways to use <tt>virtual</tt> functions? What's going on?</a></li>
+<li><a href="strange-inheritance.html#faq-23.3" title="[23.3] Should I use protected virtuals instead of public virtuals?">[23.3] Should I use protected virtuals instead of public virtuals?</a> <span class=New>&nbsp;New!&nbsp;</span></li>
+<li><a href="strange-inheritance.html#faq-23.4" title="[23.4] When should someone use private virtuals?">[23.4] When should someone use private virtuals?</a> <span class=New>&nbsp;New!&nbsp;</span></li>
+<li><a href="strange-inheritance.html#faq-23.5" title="[23.5] When my base class's constructor calls a virtual function on its this object, why doesn't my derived class's override of that virtual function get invoked?">[23.5] When my base class's constructor calls a <tt>virtual</tt> function on its <tt>this</tt> object, why doesn't my derived class's override of that <tt>virtual</tt> function get invoked?</a></li>
+<li><a href="strange-inheritance.html#faq-23.6" title="[23.6] Okay, but is there a way to simulate that behavior as if dynamic binding worked on the this object within my base class's constructor?">[23.6] Okay, but is there a way to <em>simulate</em> that behavior <em>as if</em> dynamic binding worked on the <tt>this</tt> object within my base class's constructor?</a></li>
+<li><a href="strange-inheritance.html#faq-23.7" title="[23.7] I'm getting the same mess with destructors: calling a virtual on my this object from my base class's destructor ends up ignoring the override in the derived class; what's going on?">[23.7] I'm getting the same mess with destructors: calling a <tt>virtual</tt> on my <tt>this</tt> object from my base class's destructor ends up ignoring the override in the derived class; what's going on?</a></li>
+<li><a href="strange-inheritance.html#faq-23.8" title="[23.8] Should a derived class redefine (&quot;override&quot;) a member function that is non-virtual in a base class?">[23.8] Should a derived class redefine (&quot;override&quot;) a member function that is non-<tt>virtual</tt> in a base class?</a></li>
+<li><a href="strange-inheritance.html#faq-23.9" title="[23.9] What's the meaning of, Warning: Derived::f(char) hides Base::f(double)?">[23.9] What's the meaning of, <nobr><tt>Warning: Derived::f(char) hides Base::f(double)</tt></nobr>?</a></li>
+<li><a href="strange-inheritance.html#faq-23.10" title="[23.10] What does it mean that the &quot;virtual table&quot; is an unresolved external?">[23.10] What does it mean that the &quot;virtual table&quot; is an unresolved external?</a></li>
+<li><a href="strange-inheritance.html#faq-23.11" title="[23.11] How can I set up my class so it won't be inherited from?">[23.11] How can I set up my class so it won't be inherited from?</a></li>
+<li><a href="strange-inheritance.html#faq-23.12" title="[23.12] How can I set up my member function so it won't be overridden in a derived class?">[23.12] How can I set up my member function so it won't be overridden in a derived class?</a></li>
+</ul>
+<p><hr>
+<p><a name="faq-23.1"></a>
+<div class=FaqTitle><h3>[23.1] Is it okay for a non-<tt>virtual</tt> function of the base class to call a <tt>virtual</tt> function?</h3></div>
+<p>Yes.  It's sometimes (<em>not always!</em>) a great idea.  For example, suppose
+all <tt>Shape</tt> objects have a common algorithm for printing, but this algorithm
+depends on their area and they all have a potentially different way to compute
+their area.  In this case <tt>Shape</tt>'s <nobr><tt>area()</tt></nobr> method would necessarily
+have to be <tt>virtual</tt> (probably pure <tt>virtual</tt>) but <nobr><tt>Shape::print()</tt></nobr>
+could, <a href="strange-inheritance.html#faq-23.8" title="[23.8] Should a derived class redefine (&quot;override&quot;) a member function that is non-virtual in a base class?">if we were guaranteed no derived class
+wanted a different algorithm for printing<!--rawtext:[23.8]:rawtext--></a>, be a non-<tt>virtual</tt> defined in
+the base class <tt>Shape</tt>.
+<p><div class=CodeBlock>
+<tt>
+&nbsp;#include&nbsp;&quot;Shape.h&quot;<br>
+&nbsp;<br>
+&nbsp;void&nbsp;Shape::print()&nbsp;const<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;float&nbsp;a&nbsp;=&nbsp;this-&gt;area();&nbsp;&nbsp;</tt><em><small>//&nbsp;<nobr><tt>area()</tt></nobr>&nbsp;is&nbsp;pure&nbsp;<tt>virtual</tt></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.2"></a>
+<div class=FaqTitle><h3>[23.2] That last FAQ confuses me. Is it a different strategy from the other ways to use <tt>virtual</tt> functions? What's going on?</h3></div>
+<p>Yes, it is a different strategy.  Yes, there really are two different basic
+ways to use <tt>virtual</tt> functions:
+<ol>
+<li>Suppose you have the situation described in the previous FAQ: you
+have a method whose overall structure is the same for each derived class, but
+has little pieces that are different in each derived class.  So the algorithm
+is the same, but the primitives are different.  In this case you'd write the
+overall algorithm in the base class as a <tt>public</tt> method (that's sometimes
+non-<tt>virtual</tt>), and you'd write the little pieces in the derived classes.  The
+little pieces would be declared in the base class (they're often <tt>protected</tt>,
+they're often pure <tt>virtual</tt>, and they're <em>certainly</em> virtual), and
+they'd ultimately be defined in each derived class.  The most critical
+question in this situation is whether or not the <tt>public</tt> method containing
+the overall algorithm should be <tt>virtual</tt>.  The answer is to make it <tt>virtual</tt>
+<a href="strange-inheritance.html#faq-23.8" title="[23.8] Should a derived class redefine (&quot;override&quot;) a member function that is non-virtual in a base class?">if you think that some derived class might need
+to override it<!--rawtext:[23.8]:rawtext--></a>.</li>
+<li>Suppose you have the exact opposite situation from the previous
+FAQ, where you have a method whose overall structure is different in each
+derived class, yet it has little pieces that are the same in most (if not all)
+derived classes.  In this case you'd put the overall algorithm in a <tt>public</tt>
+<tt>virtual</tt> that's ultimately defined in the derived classes, and the little
+pieces of common code can be written once (to avoid code duplication) and
+stashed somewhere (anywhere!).  A common place to stash the little pieces is
+in the <tt>protected</tt> part of the base class, but that's not necessary and it
+might not even be best.  Just find a place to stash them and you'll be fine.
+Note that if you do stash them in the base class, you should normally make
+them <tt>protected</tt>, since normally they do things that <tt>public</tt> users don't
+need/want to do.  Assuming they're <tt>protected</tt>, they probably shouldn't be
+<tt>virtual</tt>: if the derived class doesn't like the behavior in one of them, it
+doesn't have to call that method.</li>
+</ol>
+<p>For emphasis, the above list is a both/and situation, not an either/or
+situation.  In other words, you don't have to choose between these two
+strategies on any given class.  It's perfectly normal to have method <nobr><tt>f()</tt></nobr>
+correspond to strategy #1 while method <nobr><tt>g()</tt></nobr> corresponds to strategy #2.  In
+other words, it's perfectly normal to have both strategies working in the same
+class.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.3"></a>
+<div class=FaqTitle><h3>[23.3] Should I use protected virtuals instead of public virtuals? <span class=New>&nbsp;New!&nbsp;</span></h3></div>
+<small><em>[Recently created thanks to a question from <a href="mailto:(NOSPAM)neil(DOT)morgenstern(AT)csfb(DOT)com" title="(NOSPAM)neil(DOT)morgenstern(AT)csfb(DOT)com">Neil Morgenstern</a> (in 10/05) and connected in the (previously named) &quot;Public Overloaded Non-Virtuals Call Protected Non-Overloaded Virtuals&quot; Idiom (in 3/06).  <a href="strange-inheritance.html#faq-23.4" title="[23.4] When should someone use private virtuals?">Click here to go to the next FAQ in the &quot;chain&quot; of recent changes<!--rawtext:[23.4]:rawtext--></a>.]</em></small>
+<p>Sometimes yes, sometimes no.
+<p>First, stay away from always/never rules, and instead use whichever approach
+is the best fit for the situation.  There are at least two good reasons to use
+protected virtuals (see below), but just because you are sometimes better off
+with protected virtuals does not mean you should always use them.  Consistency
+and symmetry are good up to a point, but at the end of the day the most
+important metrics are cost + schedule + risk, and unless an idea materially
+improves cost and/or schedule and/or risk, it's just symmetry for symmetry's
+sake (or consistency for consistency's sake, etc.).
+<p>The cheapest + fastest + lowest risk approach in my experience ends up
+resulting in most virtuals being public, with protected virtuals being used
+whenever you have either of these two cases: the situation discussed in FAQ
+<a href="strange-inheritance.html#faq-23.2" title="[23.2] That last FAQ confuses me. Is it a different strategy from the other ways to use virtual functions? What's going on?">[23.2]</a>, or the situation discussed in FAQ
+<a href="strange-inheritance.html#faq-23.9" title="[23.9] What's the meaning of, Warning: Derived::f(char) hides Base::f(double)?">[23.9]</a>.
+<p>The latter deserves some additional commentary.  Pretend you have a base class
+with a set of overloaded virtuals.  To make the example easy, pretend there
+are just two: <nobr><tt>virtual void f(int)</tt></nobr> and <nobr><tt>virtual void f(double)</tt></nobr>.
+The idea of the <em>Public Overloaded Non-Virtuals Call Protected
+Non-Overloaded Virtuals</em> idiom is to change the public overloaded methods
+to non-virtuals, and make those call protected non-overloaded virtuals.
+<p>Code using public overloaded virtuals:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;f(int&nbsp;x);&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;may&nbsp;or&nbsp;may&nbsp;not&nbsp;be&nbsp;pure&nbsp;virtual</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;f(double&nbsp;x);&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;may&nbsp;or&nbsp;may&nbsp;not&nbsp;be&nbsp;pure&nbsp;virtual</small></em><tt><br>
+&nbsp;};
+</tt>
+</div>
+<p>Improving this via the <em>Public Overloaded Non-Virtuals Call Protected
+Non-Overloaded Virtuals</em> idiom:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;void&nbsp;f(int&nbsp;x)&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;f_int(x);&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;non-virtual</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;void&nbsp;f(double&nbsp;x)&nbsp;{&nbsp;f_double(x);&nbsp;}&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;non-virtual</small></em><tt><br>
+&nbsp;protected:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;f_int(int);<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;f_dbl(double);<br>
+&nbsp;};
+</tt>
+</div>
+<p>Here's an overview of the original code:
+<table  BORDER='1'>
+<tr>
+<td>Public?</td>
+<td>Inline?</td>
+<td>Virtual?</td>
+<td>Overloaded?</td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+</table>
+<p>Here's an overview of the improved code that uses the <em>Public Overloaded
+Non-Virtuals Call Protected Non-Overloaded Virtuals</em> idiom:
+<table  BORDER='1'>
+<tr>
+<td>Public?</td>
+<td>Inline?</td>
+<td>Virtual?</td>
+<td>Overloaded?</td>
+</tr>
+<tr>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</table>
+<p>The reason I and others use this idiom is to make life easier and less
+error-prone for the developers of the derived classes.  Remember the goals
+stated above: schedule + cost + risk?  Let's evaluate this Idiom in light of
+those goals.  From a cost/schedule standpoint, the base class (singular) is
+slightly larger but the derived classes (plural) are slightly smaller, for a
+net (small) improvement in schedule and cost.  The more signicant improvement
+is in risk: the idiom packs the complexity of <a href="strange-inheritance.html#faq-23.9" title="[23.9] What's the meaning of, Warning: Derived::f(char) hides Base::f(double)?">properly
+managing the hiding rule<!--rawtext:[23.9]:rawtext--></a> into the base class (singular).  This means the
+derived classes (plural) more-or-less automatically handle the hiding rule, so
+the various developers who produce those derived classes can remain almost
+completely focused on the details of the derived classes themselves &#151; they
+need not concern themselves with the (subtle and often misunderstood) hiding
+rule.  This greatly reduces the chance that the writers of the derived classes
+will screw up the hiding-rule.
+<p>With apologies to Spock, the good of the many (the derived classes (plural))
+outweighs the good of the one (the base class (singular)).
+<p>(See FAQ <a href="strange-inheritance.html#faq-23.9" title="[23.9] What's the meaning of, Warning: Derived::f(char) hides Base::f(double)?">[23.9]</a> for why you need to be careful about
+overriding some-but-not-all of a set of overloaded methods, and therefore why
+the above makes life easier on derived classes.)
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.4"></a>
+<div class=FaqTitle><h3>[23.4] When should someone use private virtuals? <span class=New>&nbsp;New!&nbsp;</span></h3></div>
+<small><em>[Recently created thanks to a question from <a href="mailto:(NOSPAM)neil(DOT)morgenstern(AT)csfb(DOT)com" title="(NOSPAM)neil(DOT)morgenstern(AT)csfb(DOT)com">Neil Morgenstern</a> (in 10/05).  <a href="newbie.html#faq-29.18" title="[29.18] Why is cos(x) != cos(y) even though x == y? (Or sine or tangent or log or just about any other floating point computation)">Click here to go to the next FAQ in the &quot;chain&quot; of recent changes<!--rawtext:[29.18]:rawtext--></a>.]</em></small>
+<p>Almost never.
+<p><a href="strange-inheritance.html#faq-23.3" title="[23.3] Should I use protected virtuals instead of public virtuals?">Protected virtuals are okay<!--rawtext:[23.3]:rawtext--></a>, but private
+virtuals are usually a net loss.  Reason: private virtuals confuse new C++
+programmers, and confusion increases cost, delays schedule, and degrades risk.
+<p>New C++ programmers get confused by private virtuals because they think a
+private virtual cannot be overridden.  After all, a derived class cannot
+access members that are private in its base class so how, they ask, could it
+override a private virtual from its base class?  There are explanations for
+the above, but that's academic.  The real issue is that almost everyone gets
+confused the first time they run into private virtuals, and confusion is bad.
+<p>Unless there is a compelling reason to the contrary, avoid private virtuals.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.5"></a>
+<div class=FaqTitle><h3>[23.5] When my base class's constructor calls a <tt>virtual</tt> function on its <tt>this</tt> object, why doesn't my derived class's override of that <tt>virtual</tt> function get invoked?</h3></div>
+<p>Because that would be very dangerous, and C++ is protecting you from that
+danger.
+<p>The rest of this FAQ gives a rationale for why C++ needs to protect you from
+that danger, but before we start that, be advised that you can get the
+<em>effect as if</em> dynamic binding worked on the <tt>this</tt> object even during a
+constructor via <a href="strange-inheritance.html#faq-23.6" title="[23.6] Okay, but is there a way to simulate that behavior as if dynamic binding worked on the this object within my base class's constructor?">The Dynamic Binding
+During Initialization Idiom<!--rawtext:[23.6]:rawtext--></a>.
+<p>First, here is an example to explain exactly what C++ actually does:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;#include&nbsp;&lt;iostream&gt;<br>
+&nbsp;#include&nbsp;&lt;string&gt;<br>
+&nbsp;<br>
+&nbsp;void&nbsp;println(const&nbsp;std::string&amp;&nbsp;msg)<br>
+&nbsp;{&nbsp;std::cout&nbsp;&lt;&lt;&nbsp;msg&nbsp;&lt;&lt;&nbsp;'\n';&nbsp;}<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Base()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;println(&quot;Base::Base()&quot;);&nbsp;&nbsp;virt();&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;virt()&nbsp;{&nbsp;println(&quot;Base::virt()&quot;);&nbsp;}<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Derived&nbsp;:&nbsp;public&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Derived()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;println(&quot;Derived::Derived()&quot;);&nbsp;&nbsp;virt();&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;virt()&nbsp;{&nbsp;println(&quot;Derived::virt()&quot;);&nbsp;}<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;int&nbsp;main()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;Derived&nbsp;d;<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>The output from the above program will be:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;Base::Base()<br>
+&nbsp;Base::virt()&nbsp;</tt><em><small>//&nbsp;<big>&#8592;</big>&nbsp;<b><u>Not</u></b>&nbsp;<nobr><tt>Derived::virt()</tt></nobr></small></em><tt><br>
+&nbsp;Derived::Derived()<br>
+&nbsp;Derived::virt()
+</tt>
+</div>
+<p>The rest of this FAQ describes <em>why</em> C++ does the above.  If you're
+happy merely knowing <em>what</em> C++ does without knowing <em>why</em>, feel
+free to skip this stuff.
+<p>The explanation for this behavior comes from combining two facts:
+<ol>
+<li>When you create a <tt>Derived</tt> object, it first calls <tt>Base</tt>'s
+constructor.  That's why it prints <nobr><tt>Base::Base()</tt></nobr> before
+<nobr><tt>Derived::Derived()</tt></nobr>.</li>
+<li>While executing <nobr><tt>Base::Base()</tt></nobr>, the <tt>this</tt> object is not yet
+of type <tt>Derived</tt>; its type is still merely <tt>Base</tt>.  That's why the call to
+<a href="virtual-functions.html" title="[20] Inheritance -- virtual functions"><tt>virtual</tt><!--rawtext:[20]:rawtext--></a> function <nobr><tt>virt()</tt></nobr> within
+<nobr><tt>Base::Base()</tt></nobr> binds to <nobr><tt>Base::virt()</tt></nobr> even though an override
+exists in <tt>Derived</tt>.</li>
+</ol>
+<p>Now some of you are still curious, saying to yourself, &quot;Hmmmm, but I still
+wonder <em>why</em> the <tt>this</tt> object is merely of type <tt>Base</tt> during
+<nobr><tt>Base::Base()</tt></nobr>.&quot; If that's you, the answer is that C++ is protecting
+you from serious and subtle bugs.  In particular, if the above rule were
+different, you could easily use objects <em>before</em> they were initialized,
+and that would cause no end of grief and havoc.
+<p>Here's how: imagine for the moment that calling <nobr><tt>this-&gt;virt()</tt></nobr> within
+<nobr><tt>Base::Base()</tt></nobr> ended up invoking the override <nobr><tt>Derived::virt()</tt></nobr>.
+Overrides can (and often do!) access non-static data members declared in the
+<tt>Derived</tt> class.  But since the non-static data members declared in <tt>Derived</tt>
+are not initialized during the call to <nobr><tt>virt()</tt></nobr>, any use of them within
+<nobr><tt>Derived::virt()</tt></nobr> would be a &quot;use before initialized&quot; error.  Bang,
+you're dead.
+<p>So fortunately the C++ language doesn't let this happen: it makes sure any
+call to <nobr><tt>this-&gt;virt()</tt></nobr> that occurs while control is flowing through
+<tt>Base</tt>'s constructor will end up invoking <nobr><tt>Base::virt()</tt></nobr>, not the
+override <nobr><tt>Derived::virt()</tt></nobr>.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.6"></a>
+<div class=FaqTitle><h3>[23.6] Okay, but is there a way to <em>simulate</em> that behavior <em>as if</em> dynamic binding worked on the <tt>this</tt> object within my base class's constructor?</h3></div>
+<p>Yes: the <em>Dynamic Binding During Initialization</em> idiom (AKA Calling Virtuals During Initialization).
+<p>To clarify, we're talking about this situation:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Base();<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;foo(int&nbsp;n)&nbsp;const;&nbsp;</tt><em><small>//&nbsp;often&nbsp;<a href="abcs.html#faq-22.4" title="[22.4] What is a &quot;pure virtual&quot; member function?">pure&nbsp;<tt>virtual</tt><!--rawtext:[22.4]:rawtext--></a></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;double&nbsp;bar()&nbsp;const;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;often&nbsp;<a href="abcs.html#faq-22.4" title="[22.4] What is a &quot;pure virtual&quot; member function?">pure&nbsp;<tt>virtual</tt><!--rawtext:[22.4]:rawtext--></a></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;if&nbsp;you&nbsp;don't&nbsp;want&nbsp;outsiders&nbsp;calling&nbsp;these,&nbsp;make&nbsp;them&nbsp;<tt>protected</tt></small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;Base::Base()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt>&nbsp;foo(42)&nbsp;</tt><em><small>...</small></em><tt>&nbsp;bar()&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;these&nbsp;will&nbsp;<a href="strange-inheritance.html#faq-23.5" title="[23.5] When my base class's constructor calls a virtual function on its this object, why doesn't my derived class's override of that virtual function get invoked?">not<!--rawtext:[23.5]:rawtext--></a>&nbsp;use&nbsp;dynamic&nbsp;binding</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;goal:&nbsp;simulate&nbsp;dynamic&nbsp;binding&nbsp;in&nbsp;those&nbsp;calls</small></em><tt><br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Derived&nbsp;:&nbsp;public&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;foo(int&nbsp;n)&nbsp;const;<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;double&nbsp;bar()&nbsp;const;<br>
+&nbsp;};
+</tt>
+</div>
+<p>This FAQ shows some ways to <em>simulate</em> dynamic binding <em>as if</em> the
+calls made in <tt>Base</tt>'s constructor dynamically bound to the <tt>this</tt> object's
+derived class.  The ways we'll show have tradeoffs, so choose the one that
+best fits your needs, or make up another.
+<p>The first approach is a two-phase initialization.  In Phase I, someone calls
+the actual constructor; in Phase II, someone calls an &quot;init&quot; method on the
+object.  Dynamic binding on the <tt>this</tt> object works fine during Phase II, and
+Phase II is <em>conceptually</em> part of construction, so we simply move some
+code from the original <nobr><tt>Base::Base()</tt></nobr> into <nobr><tt>Base::init()</tt></nobr>.
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;void&nbsp;init();&nbsp;&nbsp;</tt><em><small>//&nbsp;may&nbsp;or&nbsp;may&nbsp;not&nbsp;be&nbsp;<tt>virtual</tt></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;foo(int&nbsp;n)&nbsp;const;&nbsp;</tt><em><small>//&nbsp;often&nbsp;<a href="abcs.html#faq-22.4" title="[22.4] What is a &quot;pure virtual&quot; member function?">pure&nbsp;<tt>virtual</tt><!--rawtext:[22.4]:rawtext--></a></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;double&nbsp;bar()&nbsp;const;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;often&nbsp;<a href="abcs.html#faq-22.4" title="[22.4] What is a &quot;pure virtual&quot; member function?">pure&nbsp;<tt>virtual</tt><!--rawtext:[22.4]:rawtext--></a></small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;void&nbsp;Base::init()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt>&nbsp;foo(42)&nbsp;</tt><em><small>...</small></em><tt>&nbsp;bar()&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;most&nbsp;of&nbsp;this&nbsp;is&nbsp;copied&nbsp;from&nbsp;the&nbsp;original&nbsp;<nobr><tt>Base::Base()</tt></nobr></small></em><tt><br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Derived&nbsp;:&nbsp;public&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;foo(int&nbsp;n)&nbsp;const;<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;double&nbsp;bar()&nbsp;const;<br>
+&nbsp;};
+</tt>
+</div>
+<p>The only remaining issues are determining <em>where</em> to call Phase I and
+<em>where</em> to call Phase II.  There are many variations on where these
+calls can live; we will consider two.
+<p>The first variation is simplest initially, though the code that actually wants
+to create objects requires a tiny bit of programmer self-discipline, which in
+practice means you're doomed.  Seriously, if there are only one or two places
+that actually create objects of this hierarchy, the programmer self-discipline
+is quite localized and shouldn't cause problems.
+<p>In this variation, the code that is creating the object explicitly executes
+both phases.  When executing Phase I, the code creating the object either
+knows the object's exact class (e.g., <nobr><tt>new Derived()</tt></nobr> or perhaps a local
+<tt>Derived</tt> object), or doesn't know the object's exact class (e.g.,
+<a href="virtual-functions.html#faq-20.8" title="[20.8] What is a &quot;virtual constructor&quot;?">the virtual constructor idiom<!--rawtext:[20.8]:rawtext--></a> or some other
+factory).  The &quot;doesn't know&quot; case is strongly preferred when you want to make
+it easy to plug-in new derived classes.
+<p>Note: Phase I often, but not always, allocates the object from the heap.  When
+it does, you should store the pointer in some sort of
+<a href="operator-overloading.html#faq-13.3" title="[13.3] What are some examples of operator overloading?">managed pointer<!--rawtext:[13.3]:rawtext--></a>, such as a
+<a href="exceptions.html#faq-17.4" title="[17.4] How should I handle resources if my constructors may throw exceptions?"><nobr><tt>std::auto_ptr</tt></nobr><!--rawtext:[17.4]:rawtext--></a>, a
+<a href="freestore-mgmt.html#faq-16.22" title="[16.22] How do I do simple reference counting?">reference counted pointer<!--rawtext:[16.22]:rawtext--></a>, or some other object
+whose <a href="dtors.html#faq-11.1" title="[11.1] What's the deal with destructors?">destructor <tt>delete</tt>s the allocation<!--rawtext:[11.1]:rawtext--></a>.
+This is the best way to prevent memory leaks when Phase II might
+<a href="exceptions.html" title="[17] Exceptions and error handling">throw exceptions<!--rawtext:[17]:rawtext--></a>.  The following example assumes Phase
+I allocates the object from the heap.
+<p><div class=CodeBlock>
+<tt>
+&nbsp;#include&nbsp;&lt;memory&gt;<br>
+&nbsp;<br>
+&nbsp;void&nbsp;joe_user()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;std::auto_ptr&lt;Base&gt;&nbsp;p(</tt><em><small>/*...somehow&nbsp;create&nbsp;a&nbsp;<tt>Derived</tt>&nbsp;object&nbsp;via&nbsp;<tt>new</tt>...*/</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;p-&gt;init();<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>The second variation is to combine the first two lines of the <tt>joe_user</tt>
+function into some <tt>create</tt> function.  That's almost always the right
+thing to do when there are lots of <tt>joe_user</tt>-like functions.  For
+example, if you're using some kind of factory, such as a registry and
+<a href="virtual-functions.html#faq-20.8" title="[20.8] What is a &quot;virtual constructor&quot;?">the virtual constructor idiom<!--rawtext:[20.8]:rawtext--></a>, you could move those
+two lines into a static method called <nobr><tt>Base::create()</tt></nobr>:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;#include&nbsp;&lt;memory&gt;<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;typedef&nbsp;std::auto_ptr&lt;Base&gt;&nbsp;Ptr;&nbsp;&nbsp;</tt><em><small>//&nbsp;<tt>typedef</tt>s&nbsp;simplify&nbsp;the&nbsp;code</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;static&nbsp;Ptr&nbsp;create();<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;Base::Ptr&nbsp;Base::create()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;Ptr&nbsp;p(</tt><em><small>/*...use&nbsp;a&nbsp;factory&nbsp;to&nbsp;create&nbsp;a&nbsp;<tt>Derived</tt>&nbsp;object&nbsp;via&nbsp;<tt>new</tt>...*/</small></em><tt>);<br>
+&nbsp;&nbsp;&nbsp;p-&gt;init();<br>
+&nbsp;&nbsp;&nbsp;return&nbsp;p;<br>
+&nbsp;}
+</tt>
+</div>
+<p>This simplifies all the <tt>joe_user</tt>-like functions (a little), but more
+importantly, it reduces the chance that any of them will create a <tt>Derived</tt>
+object without also calling <nobr><tt>init()</tt></nobr> on it.
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;joe_user()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;Base::Ptr&nbsp;p&nbsp;=&nbsp;Base::create();<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>If you're sufficiently clever and motivated, you can even <em>eliminate</em>
+the chance that someone could create a <tt>Derived</tt> object without also calling
+<nobr><tt>init()</tt></nobr> on it.  An important step in achieving that goal is to
+<a href="ctors.html#faq-10.8" title="[10.8] What is the &quot;Named Constructor Idiom&quot;?">make <tt>Derived</tt>'s constructors, including its copy
+constructor, <tt>protected</tt> or <tt>private</tt>.<!--rawtext:[10.8]:rawtext--></a>.
+<p>The next approach does not rely on a two-phase initialization, instead using a
+second hierarchy whose only job is to house methods <nobr><tt>foo()</tt></nobr> and
+<nobr><tt>bar()</tt></nobr>.  This approach doesn't always work, and in particular it
+doesn't work in cases when <nobr><tt>foo()</tt></nobr> and <nobr><tt>bar()</tt></nobr> need to access the
+instance data declared in <tt>Derived</tt>, but it is conceptually quite simple and
+clean and is commonly used.
+<p>Let's call the base class of this second hierarchy <tt>Helper</tt>, and its
+derived classes <tt>Helper1</tt>, <tt>Helper2</tt>, etc.  The first step is to
+move <nobr><tt>foo()</tt></nobr> and <nobr><tt>bar()</tt></nobr> into this second hierarchy:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Helper&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;foo(int&nbsp;n)&nbsp;const&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;double&nbsp;bar()&nbsp;const&nbsp;=&nbsp;0;<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Helper1&nbsp;:&nbsp;public&nbsp;Helper&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;foo(int&nbsp;n)&nbsp;const;<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;double&nbsp;bar()&nbsp;const;<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Helper2&nbsp;:&nbsp;public&nbsp;Helper&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;void&nbsp;foo(int&nbsp;n)&nbsp;const;<br>
+&nbsp;&nbsp;&nbsp;virtual&nbsp;double&nbsp;bar()&nbsp;const;<br>
+&nbsp;};
+</tt>
+</div>
+<p>Next, remove <nobr><tt>init()</tt></nobr> from <tt>Base</tt> (since we're no longer using the two-phase
+approach), remove <nobr><tt>foo()</tt></nobr> and <nobr><tt>bar()</tt></nobr> from <tt>Base</tt> and <tt>Derived</tt>
+(<nobr><tt>foo()</tt></nobr> and <nobr><tt>bar()</tt></nobr> are now in the <tt>Helper</tt> hierarchy), and
+change the signature of <tt>Base</tt>'s constructor so it takes a <tt>Helper</tt> by
+reference:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Base(const&nbsp;Helper&amp;&nbsp;h);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt>&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;remove&nbsp;<nobr><tt>init()</tt></nobr>&nbsp;since&nbsp;not&nbsp;using&nbsp;two-phase&nbsp;this&nbsp;time</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt>&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;remove&nbsp;<nobr><tt>foo()</tt></nobr>&nbsp;and&nbsp;<nobr><tt>bar()</tt></nobr>&nbsp;since&nbsp;they're&nbsp;in&nbsp;<tt>Helper</tt></small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Derived&nbsp;:&nbsp;public&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt>&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;remove&nbsp;<nobr><tt>foo()</tt></nobr>&nbsp;and&nbsp;<nobr><tt>bar()</tt></nobr>&nbsp;since&nbsp;they're&nbsp;in&nbsp;<tt>Helper</tt></small></em><tt><br>
+&nbsp;};
+</tt>
+</div>
+<p>We then define <nobr><tt>Base::Base(const Helper&amp;)</tt></nobr> so it calls <nobr><tt>h.foo(42)</tt></nobr>
+and <nobr><tt>h.bar()</tt></nobr> in exactly those places that <nobr><tt>init()</tt></nobr> used to call
+<nobr><tt>this-&gt;foo(42)</tt></nobr> and <nobr><tt>this-&gt;bar()</tt></nobr>:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;Base::Base(const&nbsp;Helper&amp;&nbsp;h)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt>&nbsp;h.foo(42)&nbsp;</tt><em><small>...</small></em><tt>&nbsp;h.bar()&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;almost&nbsp;identical&nbsp;to&nbsp;the&nbsp;original&nbsp;<nobr><tt>Base::Base()</tt></nobr></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;but&nbsp;with&nbsp;<nobr><tt><u>h.</u></tt></nobr>&nbsp;in&nbsp;calls&nbsp;to&nbsp;<nobr><tt><u>h.</u>foo()</tt></nobr>&nbsp;and&nbsp;<nobr><tt><u>h.</u>bar()</tt></nobr></small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Finally we change <tt>Derived</tt>'s constructor to pass a (perhaps temporary) object
+of an appropriate <tt>Helper</tt> derived class to <tt>Base</tt>'s constructor (using
+the <a href="ctors.html#faq-10.6" title="[10.6] Should my constructors use &quot;initialization lists&quot; or &quot;assignment&quot;?">init list syntax<!--rawtext:[10.6]:rawtext--></a>).  For example, <tt>Derived</tt> would
+pass an instance of <tt>Helper2</tt> if it happened to contain the behaviors
+that <tt>Derived</tt> wanted for methods <nobr><tt>foo()</tt></nobr> and <nobr><tt>bar()</tt></nobr>:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;Derived::Derived()<br>
+&nbsp;&nbsp;&nbsp;:&nbsp;Base(Helper2())&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;<big>&#8592;</big>the&nbsp;magic&nbsp;happens&nbsp;here</small></em><tt><br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Note that <tt>Derived</tt> can pass values into the <tt>Helper</tt> derived class's
+constructor, but it <em>must not</em> pass any data members that actually live
+inside the <tt>this</tt> object.  While we're at it, let's explicitly say that
+<nobr><tt>Helper::foo()</tt></nobr> and <nobr><tt>Helper::bar()</tt></nobr> must not access data members
+of the <tt>this</tt> object, particularly data members declared in <tt>Derived</tt>.  (Think
+about when those data members are initialized and you'll see why.)
+<p>Of course the choice of which <tt>Helper</tt> derived class could be made out
+in the <tt>joe_user</tt>-like function, in which case it would be passed into
+the <tt>Derived</tt> ctor and then up to the <tt>Base</tt> ctor:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;Derived::Derived(const&nbsp;Helper&amp;&nbsp;h)<br>
+&nbsp;&nbsp;&nbsp;:&nbsp;Base(h)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>If the <tt>Helper</tt> objects don't need to hold any data, that is, if each is
+<em>merely</em> a collection of its methods, then you can simply pass
+<a href="pointers-to-members.html#faq-33.1" title="[33.1] Is the type of &quot;pointer-to-member-function&quot; different from &quot;pointer-to-function&quot;?"><tt>static</tt> member functions<!--rawtext:[33.1]:rawtext--></a> instead.  This
+might be simpler since it entirely eliminates the <tt>Helper</tt> hierarchy.
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;typedef&nbsp;void&nbsp;(*FooFn)(int);&nbsp;&nbsp;</tt><em><small>//&nbsp;<tt>typedef</tt>s&nbsp;simplify</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;typedef&nbsp;double&nbsp;(*BarFn)();&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;code</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;Base(FooFn&nbsp;foo,&nbsp;BarFn&nbsp;bar);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;Base::Base(FooFn&nbsp;foo,&nbsp;BarFn&nbsp;bar)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt>&nbsp;foo(42)&nbsp;</tt><em><small>...</small></em><tt>&nbsp;bar()&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;almost&nbsp;identical&nbsp;to&nbsp;the&nbsp;original&nbsp;<nobr><tt>Base::Base()</tt></nobr></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;except&nbsp;calls&nbsp;are&nbsp;made&nbsp;via&nbsp;function&nbsp;pointers.</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>The <tt>Derived</tt> class is also easy to implement:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Derived&nbsp;:&nbsp;public&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;Derived();<br>
+&nbsp;&nbsp;&nbsp;static&nbsp;void&nbsp;foo(int&nbsp;n);&nbsp;</tt><em><small>//&nbsp;the&nbsp;<tt>static</tt>&nbsp;is&nbsp;important!</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;static&nbsp;double&nbsp;bar();&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;the&nbsp;<tt>static</tt>&nbsp;is&nbsp;important!</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;Derived::Derived()<br>
+&nbsp;&nbsp;&nbsp;:&nbsp;Base(foo,&nbsp;bar)&nbsp;&nbsp;</tt><em><small>//&nbsp;<big>&#8592;</big>pass&nbsp;the&nbsp;function-ptrs&nbsp;into&nbsp;<tt>Base</tt>'s&nbsp;ctor</small></em><tt><br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>As before, the functionality for <nobr><tt>foo()</tt></nobr> and/or <nobr><tt>bar()</tt></nobr> can be
+passed in from the <tt>joe_user</tt>-like functions.  In that case, <tt>Derived</tt>'s
+ctor just accepts them and passes them up into <tt>Base</tt>'s ctor:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;Derived::Derived(FooFn&nbsp;foo,&nbsp;BarFn&nbsp;bar)<br>
+&nbsp;&nbsp;&nbsp;:&nbsp;Base(foo,&nbsp;bar)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>A final approach is to use templates to &quot;pass&quot; the functionality into the
+derived classes.  This is similar to the case where the <tt>joe_user</tt>-like
+functions choose the initializer-function or the <tt>Helper</tt> derived class,
+but instead of using function pointers or dynamic binding, it wires the code
+into the classes via templates.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.7"></a>
+<div class=FaqTitle><h3>[23.7] I'm getting the same mess with destructors: calling a <tt>virtual</tt> on my <tt>this</tt> object from my base class's destructor ends up ignoring the override in the derived class; what's going on?</h3></div>
+<p>C++ is protecting you from yourself.  What you are trying to do is very
+dangerous, and if the compiler did what you wanted, you'd be in worse shape.
+<p>For rationale of why C++ needs to protect you from that danger, read FAQ
+<a href="strange-inheritance.html#faq-23.5" title="[23.5] When my base class's constructor calls a virtual function on its this object, why doesn't my derived class's override of that virtual function get invoked?">[23.5]</a>.  The situation during a destructor is
+analogous to that during the constructor.  In particular, within the
+<nobr><tt>{</tt></nobr>body<nobr><tt>}</tt></nobr> of <nobr><tt>Base::~Base()</tt></nobr>, an object that was originally
+of type <tt>Derived</tt> has already been demoted (devolved, if you will) to an
+object of type <tt>Base</tt>.  If you call a virtual function that has been
+overridden in class <tt>Derived</tt>, the call will resolve to
+<nobr><tt>Base::virt()</tt></nobr>, not to the override <nobr><tt>Derived::virt()</tt></nobr>.  Same goes
+for using <tt>typeid</tt> on the <tt>this</tt> object: the <tt>this</tt> object
+really has been demoted to type <tt>Base</tt>; it is no longer an object of
+type <tt>Derived</tt>.
+<p>Read FAQ <a href="strange-inheritance.html#faq-23.5" title="[23.5] When my base class's constructor calls a virtual function on its this object, why doesn't my derived class's override of that virtual function get invoked?">[23.5]</a> for more insight on this
+matter.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.8"></a>
+<div class=FaqTitle><h3>[23.8] Should a derived class redefine (&quot;override&quot;) a member function that is non-<tt>virtual</tt> in a base class?</h3></div>
+<p>It's legal, but it ain't moral.
+<p>Experienced C++ programmers will sometimes redefine a non-<tt>virtual</tt> function
+for efficiency (e.g., if the derived class implementation can make better use
+of the derived class's resources) or to get around the <a href="strange-inheritance.html#faq-23.9" title="[23.9] What's the meaning of, Warning: Derived::f(char) hides Base::f(double)?">hiding
+rule<!--rawtext:[23.9]:rawtext--></a>.  However the client-visible effects must be <em>identical,</em>
+since non-<tt>virtual</tt> functions are dispatched based on the static type of the
+pointer/reference rather than the dynamic type of the pointed-to/referenced
+object.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.9"></a>
+<div class=FaqTitle><h3>[23.9] What's the meaning of, <nobr><tt>Warning: Derived::f(char) hides Base::f(double)</tt></nobr>?</h3></div>
+<p>It means you're going to die.
+<p>Here's the mess you're in: if <tt>Base</tt> declares a member function
+<nobr><tt>f(double x)</tt></nobr>, and <tt>Derived</tt> declares a member function <nobr><tt>f(char
+c)</tt></nobr> (same name but different parameter types and/or constness), then the
+<tt>Base</tt> <nobr><tt>f(double x)</tt></nobr> is &quot;hidden&quot; rather than &quot;overloaded&quot; or
+&quot;overridden&quot; (even if the Base <nobr><tt>f(double x)</tt></nobr> is
+<a href="virtual-functions.html" title="[20] Inheritance -- virtual functions"><tt>virtual</tt><!--rawtext:[20]:rawtext--></a>).
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;void&nbsp;f(double&nbsp;x);&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;doesn't&nbsp;matter&nbsp;whether&nbsp;or&nbsp;not&nbsp;this&nbsp;is&nbsp;virtual</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Derived&nbsp;:&nbsp;public&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;void&nbsp;f(char&nbsp;c);&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;doesn't&nbsp;matter&nbsp;whether&nbsp;or&nbsp;not&nbsp;this&nbsp;is&nbsp;virtual</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;int&nbsp;main()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;Derived*&nbsp;d&nbsp;=&nbsp;new&nbsp;Derived();<br>
+&nbsp;&nbsp;&nbsp;Base*&nbsp;b&nbsp;=&nbsp;d;<br>
+&nbsp;&nbsp;&nbsp;b-&gt;f(65.3);&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;okay:&nbsp;passes&nbsp;<tt>65.3</tt>&nbsp;to&nbsp;<nobr><tt>f(double&nbsp;x)</tt></nobr></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;d-&gt;f(65.3);&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;bizarre:&nbsp;converts&nbsp;<tt>65.3</tt>&nbsp;to&nbsp;a&nbsp;<tt>char</tt>&nbsp;(<nobr><tt>'A'</tt></nobr>&nbsp;if&nbsp;ASCII)&nbsp;and&nbsp;passes&nbsp;it&nbsp;to&nbsp;<nobr><tt>f(char&nbsp;c)</tt></nobr>;&nbsp;does&nbsp;NOT&nbsp;call&nbsp;<nobr><tt>f(double&nbsp;x)</tt></nobr>!!</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;return&nbsp;0;<br>
+&nbsp;}
+</tt>
+</div>
+<p>Here's how you get out of the mess: <tt>Derived</tt> must have a <tt>using</tt>
+declaration of the hidden member function.  For example,
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;void&nbsp;f(double&nbsp;x);<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Derived&nbsp;:&nbsp;public&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;using&nbsp;Base::f;&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;This&nbsp;un-hides&nbsp;<nobr><tt>Base::f(double&nbsp;x)</tt></nobr></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;void&nbsp;f(char&nbsp;c);<br>
+&nbsp;};
+</tt>
+</div>
+<p>If the <tt>using</tt> syntax isn't supported by your compiler, redefine the
+hidden <tt>Base</tt> member function(s), <a href="strange-inheritance.html#faq-23.8" title="[23.8] Should a derived class redefine (&quot;override&quot;) a member function that is non-virtual in a base class?">even if they are
+non-<tt>virtual</tt><!--rawtext:[23.8]:rawtext--></a>.  Normally this re-definition merely calls the hidden
+<tt>Base</tt> member function using the <nobr><tt>::</tt></nobr> syntax.  E.g.,
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Derived&nbsp;:&nbsp;public&nbsp;Base&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;void&nbsp;f(double&nbsp;x)&nbsp;{&nbsp;Base::f(x);&nbsp;}&nbsp;&nbsp;</tt><em><small><big>&#8592;</big>&nbsp;The&nbsp;redefinition&nbsp;merely&nbsp;calls&nbsp;<nobr><tt>Base::f(double&nbsp;x)</tt></nobr></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;void&nbsp;f(char&nbsp;c);<br>
+&nbsp;};
+</tt>
+</div>
+<p>Note: the hiding problem also occurs if class <tt>Base</tt> declares a method
+<nobr><tt>f(char)</tt></nobr>.
+<p>Note: warnings are not part of the standard, so your compiler may or may not
+give the above warning.
+<p>Note: nothing gets hidden when you have a base-pointer.  Think about it: what
+a derived class does or does not do is irrelevant when the compiler is dealing
+with a base-pointer.  The compiler might not even know that the particular
+derived class exists.  Even if it knows of the existence some particular
+derived class, it cannot assume that a specific base-pointer necessarily
+points at an object of that particular derived class.  Hiding takes place when
+you have a derived pointer, not when you have a base pointer.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.10"></a>
+<div class=FaqTitle><h3>[23.10] What does it mean that the &quot;virtual table&quot; is an unresolved external?</h3></div>
+<p>If you get a link error of the form &quot;<nobr><tt>Error: Unresolved or undefined symbols
+detected: virtual table for class Fred</tt></nobr>,&quot; you probably have an undefined
+<a href="virtual-functions.html" title="[20] Inheritance -- virtual functions"><tt>virtual</tt><!--rawtext:[20]:rawtext--></a> member function in <tt>class</tt> <tt>Fred</tt>.
+<p>The compiler typically creates a magical data structure called the &quot;virtual
+table&quot; for classes that have <tt>virtual</tt> functions (this is how it handles
+<a href="virtual-functions.html#faq-20.2" title="[20.2] How can C++ achieve dynamic binding yet also static typing?">dynamic binding<!--rawtext:[20.2]:rawtext--></a>).  Normally you don't
+have to know about it at all.  But if you forget to define a <tt>virtual</tt> function
+for class <tt>Fred</tt>, you will sometimes get this linker error.
+<p>Here's the nitty gritty: Many compilers put this magical &quot;virtual table&quot; in the
+compilation unit that defines the first non-<tt>inline</tt> <tt>virtual</tt> function in the
+class.  Thus if the first non-<tt>inline</tt> <tt>virtual</tt> function in <tt>Fred</tt> is
+<nobr><tt>wilma()</tt></nobr>, the compiler will put <tt>Fred</tt>'s virtual table in the same compilation
+unit where it sees <nobr><tt>Fred::wilma()</tt></nobr>.  Unfortunately if you accidentally
+forget to define <nobr><tt>Fred::wilma()</tt></nobr>, rather than getting a
+<nobr><tt>Fred::wilma()</tt></nobr> is undefined, you may get a &quot;<tt>Fred</tt>'s virtual table is
+undefined&quot;.  Sad but true.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.11"></a>
+<div class=FaqTitle><h3>[23.11] How can I set up my class so it won't be inherited from?</h3></div>
+<p>This is known as making the class &quot;final&quot; or &quot;a leaf.&quot; There are three ways
+to do it: an easy technical approach, an even easier non-technical approach,
+and a slightly trickier technical approach.
+<p><b>The (easy) technical approach</b> is to make the class's constructors
+<tt>private</tt> and to use <a href="ctors.html#faq-10.8" title="[10.8] What is the &quot;Named Constructor Idiom&quot;?">the Named Constructor
+Idiom<!--rawtext:[10.8]:rawtext--></a> to create the objects.  No one can create objects of a derived
+class since the base class's constructor will be inaccessible.  The &quot;named
+constructors&quot; themselves could <a href="freestore-mgmt.html#faq-16.21" title="[16.21] How can I force objects of my class to always be created via new rather than as locals or global/static objects?">return by pointer
+if you want your objects allocated by <tt>new</tt><!--rawtext:[16.21]:rawtext--></a> or they could
+<a href="ctors.html#faq-10.8" title="[10.8] What is the &quot;Named Constructor Idiom&quot;?">return by value if you want the objects created on the
+stack<!--rawtext:[10.8]:rawtext--></a>.
+<p><b>The (even easier) non-technical approach</b> is to put a big fat ugly
+comment next to the class definition.  The comment could say, for example,
+<nobr><tt>// We'll fire you if you inherit from this class</tt></nobr> or even just
+<nobr><tt>/*final*/ class Whatever {</tt>...<tt>};</tt></nobr>.  Some programmers balk at this
+because it is enforced by people rather than by technology, but don't knock it
+on face value: it is quite effective in practice.
+<p><b>A slightly trickier technical approach</b> is to exploit
+<a href="multiple-inheritance.html#faq-25.9" title="[25.9] Where in a hierarchy should I use virtual inheritance?">virtual inheritance<!--rawtext:[25.9]:rawtext--></a>.  Since
+<a href="multiple-inheritance.html#faq-25.12" title="[25.12] What special considerations do I need to know about when I inherit from a class that uses virtual inheritance?">the most derived class's ctor needs to
+directly call the virtual base class's ctor<!--rawtext:[25.12]:rawtext--></a>, the following guarantees
+that no concrete class can inherit from class <tt>Fred</tt>:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Fred;<br>
+&nbsp;<br>
+&nbsp;class&nbsp;FredBase&nbsp;{<br>
+&nbsp;private:<br>
+&nbsp;&nbsp;&nbsp;friend&nbsp;class&nbsp;Fred;<br>
+&nbsp;&nbsp;&nbsp;FredBase()&nbsp;{&nbsp;}<br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;class&nbsp;Fred&nbsp;:&nbsp;private&nbsp;virtual&nbsp;FredBase&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;};
+</tt>
+</div>
+<p>Class <tt>Fred</tt> can access <tt>FredBase</tt>'s ctor, since <tt>Fred</tt> is a
+<tt>friend</tt> of <tt>FredBase</tt>, but no class derived from <tt>Fred</tt> can
+access <tt>FredBase</tt>'s ctor, and therefore no one can create a concrete
+class derived from <tt>Fred</tt>.
+<p>If you are in extremely space-constrained environments (such as an embedded
+system or a handheld with limited memory, etc.), you should be aware that the
+above technique might add a word of memory to <nobr><tt>sizeof(Fred)</tt></nobr>.  That's
+because most compilers implement virtual inheritance by adding a pointer in
+objects of the derived class.  This is compiler specific; your mileage may
+vary.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-23.12"></a>
+<div class=FaqTitle><h3>[23.12] How can I set up my member function so it won't be overridden in a derived class?</h3></div>
+<p>This is known as making the method &quot;final&quot; or &quot;a leaf.&quot; Here's an easy-to-use
+solution to this that gives you 90+% of what you want: simply add a comment
+next to the method and rely on code reviews or random maintenance activities
+to find violators.  The comment could say, for example, <nobr><tt>// We'll fire you
+if you override this method</tt></nobr> or perhaps more likely, <nobr><tt>/*final*/ void
+theMethod();</tt></nobr>.
+<p>The advantages to this technique are (a) it is extremely easy/fast/inexpensive
+to use, and (b) it is quite effective in practice.  In other words, you get
+90+% of the benefit with almost no cost &#151; lots of bang per buck.
+<p>(I'm not aware of a &quot;100% solution&quot; to this problem so this may be the best
+you can get.  If you know of something better, please let me know,
+<a href="mailto:cline@parashift.com" title="cline@parashift.com"><tt>cline@parashift.com</tt></a>.  But <em>please</em> do
+<em>not</em> email me objecting to this solution because it's low-tech or
+because it doesn't &quot;prevent&quot; people from doing the wrong thing.  Who cares
+whether it's low-tech or high-tech as long as it's effective?!?  And nothing
+in C++ &quot;prevents&quot; people from doing the wrong thing.  Using
+<a href="coding-standards.html#faq-27.11" title="[27.11] Why do people worry so much about pointer casts and/or reference casts?">pointer casts<!--rawtext:[27.11]:rawtext--></a> and pointer arithmetic, people can do
+just about anything they want.  C++ makes it easy to do the right thing, but
+<a href="freestore-mgmt.html#faq-16.25" title="[16.25] Can you absolutely prevent people from subverting the reference counting mechanism, and if so, should you?">it doesn't prevent espionage<!--rawtext:[16.25]:rawtext--></a>.
+Besides, the original question (see above) asked for something so people
+<em>won't</em> do the wrong thing, not so they <em>can't</em> do the wrong
+thing.)
+<p>In any case, this solution should give you most of the potential benefit at
+almost no cost.
+<p><small>[&nbsp;<a href="#top" title="Top of section [23] Inheritance -- what your mother never told you">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [23] Inheritance -- what your mother never told you">Bottom</a> |&nbsp;<a href="abcs.html" title="[22] Inheritance -- abstract base classes (ABCs)">Previous&nbsp;section</a> |&nbsp;<a href="private-inheritance.html" title="[24] Inheritance -- private and protected inheritance">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="bottom"></a>
+<a href="mailto:cline@parashift.com" title="cline@parashift.com"><img src="mbox.gif" height=26 width=89 alt="E-Mail">&nbsp;E-mail the author</a><br>
+[&nbsp;<a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>
+|&nbsp;<a href="index-2.html#table-of-contents" title="Table of contents">Table&nbsp;of&nbsp;contents</a>
+|&nbsp;<a href="subject-index.html" title="Subject index; 5111 links to 3243 topics">Subject&nbsp;index</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.1" title="[1.1] Author">About&nbsp;the&nbsp;author</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">&copy;</a>
+|&nbsp;<a href="on-line-availability.html#faq-2.2" title="[2.2] What happened to the one-click-download option?">Download&nbsp;your&nbsp;own&nbsp;copy</a>&nbsp;]<br>
+<small>Revised Mar 1, 2006</small>
+</body>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:21 GMT -->
+</html>

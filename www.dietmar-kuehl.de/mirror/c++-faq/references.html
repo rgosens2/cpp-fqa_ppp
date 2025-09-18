@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/references.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:21 GMT -->
+<head>
+<title>[8] References, C++ FAQ Lite</title>
+<meta name="FILENAME" content="references.html">
+<meta name="ABSTRACT" content="[8] References, C++ FAQ Lite">
+<meta name="OWNER"    content="cline@parashift.com">
+<meta name="AUTHOR"   content="Marshall Cline, cline@parashift.com">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rev=made href="mailto:cline@parashift.com">
+<style type='text/css'>
+  <!--
+  body       { font-family: arial; color: black; background: white }
+  .CodeBlock { color: black; background-color: #dfdfdf; margin-left: 30px; margin-right: 30px; padding: 5pt }
+  .CodeBlock small tt { font-size: small }
+  .FaqTitle  { color: black; background-color: gold }
+  .Updated   { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #ffff00; border: solid #e0e000 1px; }
+  .New       { color: black; cursor: default; font-size: x-small; font-variant: small-caps; font-family: cursive;
+               background-color: #00ff00; border: solid #00d000 1px; }
+  ul         { margin-bottom: 1px; margin-top: 1px }
+  ol         { margin-bottom: 1px; margin-top: 1px }
+  li         { margin-bottom: 4px; margin-top: 4px }
+  -->
+</style>
+</head>
+<body>
+<h1><a name="top"></a>[8] References<br>
+<small><small>(Part of <a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>, <a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">Copyright&nbsp;&copy; 1991-2006</a>, <a href="http://www.parashift.com/" title="www.parashift.com/" target='_blank'>Marshall Cline</a>, <a href="mailto:cline@parashift.com" title="cline@parashift.com"><tt>cline@parashift.com</tt></a>)</small></small></h1>
+<hr>
+<h3>FAQs in section [8]:</h3>
+<ul>
+<li><a href="references.html#faq-8.1" title="[8.1] What is a reference?">[8.1] What is a reference?</a></li>
+<li><a href="references.html#faq-8.2" title="[8.2] What happens if you assign to a reference?">[8.2] What happens if you assign to a reference?</a></li>
+<li><a href="references.html#faq-8.3" title="[8.3] What happens if you return a reference?">[8.3] What happens if you return a reference?</a></li>
+<li><a href="references.html#faq-8.4" title="[8.4] What does object.method1().method2() mean?">[8.4] What does <nobr><tt>object.method1().method2()</tt></nobr> mean?</a></li>
+<li><a href="references.html#faq-8.5" title="[8.5] How can you reseat a reference to make it refer to a different object?">[8.5] How can you reseat a reference to make it refer to a different object?</a></li>
+<li><a href="references.html#faq-8.6" title="[8.6] When should I use references, and when should I use pointers?">[8.6] When should I use references, and when should I use pointers?</a></li>
+<li><a href="references.html#faq-8.7" title="[8.7] What is a handle to an object? Is it a pointer? Is it a reference? Is it a pointer-to-a-pointer? What is it?">[8.7] What is a <em>handle</em> to an object? Is it a pointer? Is it a reference? Is it a pointer-to-a-pointer? What is it?</a></li>
+</ul>
+<p><hr>
+<p><a name="faq-8.1"></a>
+<div class=FaqTitle><h3>[8.1] What is a reference?</h3></div>
+<p>An alias (an alternate name) for an object.
+<p>References are frequently used for pass-by-reference:
+<p><div class=CodeBlock>
+<tt>
+&nbsp;void&nbsp;swap(int&amp;&nbsp;i,&nbsp;int&amp;&nbsp;j)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;tmp&nbsp;=&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;i&nbsp;=&nbsp;j;<br>
+&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;tmp;<br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;int&nbsp;main()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;x,&nbsp;y;<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;&nbsp;&nbsp;swap(x,y);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p>Here <tt>i</tt> and <tt>j</tt> are aliases for main's <tt>x</tt> and <tt>y</tt> respectively.  In other
+words, <tt>i</tt> <em>is</em> <tt>x</tt> &#151; not a pointer to <tt>x</tt>, nor a copy of <tt>x</tt>, but <tt>x</tt>
+itself.  Anything you do to <tt>i</tt> gets done to <tt>x</tt>, and vice versa.
+<p>OK.  That's how you should think of references as a programmer.  Now, at the
+risk of confusing you by giving you a different perspective, here's how
+references are implemented.  Underneath it all, a reference <tt>i</tt> to object <tt>x</tt>
+is typically the machine address of the object <tt>x</tt>.  But when the programmer
+says <nobr><tt>i++</tt></nobr>, the compiler generates code that increments <tt>x</tt>.  In
+particular, the address bits that the compiler uses to find <tt>x</tt> are not
+changed.  A C programmer will think of this as if you used the C style
+pass-by-pointer, with the syntactic variant of (1) moving the <nobr><tt>&amp;</tt></nobr> from the
+caller into the callee, and (2) eliminating the <nobr><tt>*</tt></nobr>s.  In other words, a C
+programmer will think of <tt>i</tt> as a macro for <nobr><tt>(*p)</tt></nobr>, where <tt>p</tt> is a
+pointer to <tt>x</tt> (e.g., the compiler automatically dereferences the underlying
+pointer; <nobr><tt>i++</tt></nobr> is changed to <nobr><tt>(*p)++</tt></nobr>; <nobr><tt>i = 7</tt></nobr> is
+automatically changed to <nobr><tt>*p = 7</tt></nobr>).
+<p><em>Important note:</em> Even though a reference is often implemented using an
+address in the underlying assembly language, please do <em>not</em> think of a
+reference as a funny looking pointer to an object.  A reference <em>is</em> the
+object.  It is not a pointer to the object, nor a copy of the object.  It
+<em>is</em> the object.
+<p><small>[&nbsp;<a href="#top" title="Top of section [8] References">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [8] References">Bottom</a> |&nbsp;<a href="classes-and-objects.html" title="[7] Classes and objects">Previous&nbsp;section</a> |&nbsp;<a href="inline-functions.html" title="[9] Inline functions">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-8.2"></a>
+<div class=FaqTitle><h3>[8.2] What happens if you assign to a reference?</h3></div>
+<p>You change the state of the referent (the referent is the object to which the
+reference refers).
+<p>Remember: the reference <em>is</em> the referent, so changing the reference
+changes the state of the referent.  In compiler writer lingo, a reference is an
+&quot;lvalue&quot; (something that can appear on the left hand side of an assignment
+<tt>operator</tt>).
+<p><small>[&nbsp;<a href="#top" title="Top of section [8] References">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [8] References">Bottom</a> |&nbsp;<a href="classes-and-objects.html" title="[7] Classes and objects">Previous&nbsp;section</a> |&nbsp;<a href="inline-functions.html" title="[9] Inline functions">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-8.3"></a>
+<div class=FaqTitle><h3>[8.3] What happens if you return a reference?</h3></div>
+<p>The function call can appear on the left hand side of an assignment <tt>operator</tt>.
+<p>This ability may seem strange at first.  For example, no one thinks the
+expression <nobr><tt>f() = 7</tt></nobr> makes sense.  Yet, if <tt>a</tt> is an object of
+<tt>class</tt> <tt>Array</tt>, most people think that <nobr><tt>a[i] = 7</tt></nobr> makes sense even
+though <nobr><tt>a[i]</tt></nobr> is really just a function call in disguise (it calls
+<nobr><tt>Array::operator[](int)</tt></nobr>, which is the subscript <tt>operator</tt> for <tt>class</tt>
+<tt>Array</tt>).
+<p><div class=CodeBlock>
+<tt>
+&nbsp;class&nbsp;Array&nbsp;{<br>
+&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;int&nbsp;size()&nbsp;const;<br>
+&nbsp;&nbsp;&nbsp;float&amp;&nbsp;operator[]&nbsp;(int&nbsp;index);<br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;};<br>
+&nbsp;<br>
+&nbsp;int&nbsp;main()<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;Array&nbsp;a;<br>
+&nbsp;&nbsp;&nbsp;for&nbsp;(int&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;a.size();&nbsp;++i)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a[i]&nbsp;=&nbsp;7;&nbsp;&nbsp;&nbsp;&nbsp;</tt><em><small>//&nbsp;This&nbsp;line&nbsp;invokes&nbsp;<nobr><tt>Array::operator[](int)</tt></nobr></small></em><tt><br>
+&nbsp;&nbsp;&nbsp;</tt><em><small>...</small></em><tt><br>
+&nbsp;}
+</tt>
+</div>
+<p><small>[&nbsp;<a href="#top" title="Top of section [8] References">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [8] References">Bottom</a> |&nbsp;<a href="classes-and-objects.html" title="[7] Classes and objects">Previous&nbsp;section</a> |&nbsp;<a href="inline-functions.html" title="[9] Inline functions">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-8.4"></a>
+<div class=FaqTitle><h3>[8.4] What does <nobr><tt>object.method1().method2()</tt></nobr> mean?</h3></div>
+<p>It <em>chains</em> these method calls, which is why this is called <em>method
+chaining</em>.
+<p>The first thing that gets executed is <nobr><tt>object.method1()</tt></nobr>.  This returns
+some object, which might be a reference to <tt>object</tt> (i.e.,
+<nobr><tt>method1()</tt></nobr> might end with <nobr><tt>return *this;</tt></nobr>), or it might be some
+other object.  Let's call the returned object <tt>objectB</tt>.  Then
+<tt>objectB</tt> becomes the <tt>this</tt> object of <nobr><tt>method2()</tt></nobr>.
+<p>The most common use of method chaining is in the <tt>iostream</tt> library.
+E.g., <nobr><tt>cout &lt;&lt; x &lt;&lt; y</tt></nobr> works because <nobr><tt>cout &lt;&lt; x</tt></nobr> is a function
+that returns <tt>cout</tt>.
+<p>A less common, but still rather slick, use for method chaining is in
+<a href="ctors.html#faq-10.18" title="[10.18] What is the &quot;Named Parameter Idiom&quot;?">the Named Parameter Idiom<!--rawtext:[10.18]:rawtext--></a>.
+<p><small>[&nbsp;<a href="#top" title="Top of section [8] References">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [8] References">Bottom</a> |&nbsp;<a href="classes-and-objects.html" title="[7] Classes and objects">Previous&nbsp;section</a> |&nbsp;<a href="inline-functions.html" title="[9] Inline functions">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-8.5"></a>
+<div class=FaqTitle><h3>[8.5] How can you reseat a reference to make it refer to a different object?</h3></div>
+<p>No way.
+<p>You can't separate the reference from the referent.
+<p>Unlike a pointer, once a reference is bound to an object, it can <em>not</em> be
+&quot;reseated&quot; to another object.  The reference itself isn't an object (it has no
+identity; taking the address of a reference gives you the address of the
+referent; remember: the reference <em>is</em> its referent).
+<p>In that sense, a reference is similar to a <a href="const-correctness.html#faq-18.5" title="[18.5] What's the difference between &quot;const Fred* p&quot;, &quot;Fred* const p&quot; and &quot;const Fred* const p&quot;?"><tt>const</tt>
+pointer<!--rawtext:[18.5]:rawtext--></a> such as <nobr><tt>int* const p</tt></nobr> (as opposed to a <a href="const-correctness.html#faq-18.4" title="[18.4] What does &quot;const Fred* p&quot; mean?">pointer to <tt>const</tt><!--rawtext:[18.4]:rawtext--></a> such as <nobr><tt>const int* p</tt></nobr>).  In spite of the gross
+similarity, please don't confuse references with pointers; they're not <em>at
+all</em> the same.
+<p><small>[&nbsp;<a href="#top" title="Top of section [8] References">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [8] References">Bottom</a> |&nbsp;<a href="classes-and-objects.html" title="[7] Classes and objects">Previous&nbsp;section</a> |&nbsp;<a href="inline-functions.html" title="[9] Inline functions">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-8.6"></a>
+<div class=FaqTitle><h3>[8.6] When should I use references, and when should I use pointers?</h3></div>
+<p>Use references when you can, and pointers when you have to.
+<p>References are usually preferred over pointers whenever you don't need
+<a href="references.html#faq-8.5" title="[8.5] How can you reseat a reference to make it refer to a different object?">&quot;reseating&quot;<!--rawtext:[8.5]:rawtext--></a>.  This usually means that references are
+most useful in a class's <tt>public</tt> interface.  References typically appear on
+the skin of an object, and pointers on the inside.
+<p>The exception to the above is where a function's parameter or return value
+needs a &quot;sentinel&quot; reference &#151; a reference that does not refer to an object.  This is usually best done by returning/taking a
+pointer, and giving the <tt>NULL</tt> pointer this special significance (references
+should always alias objects, not a dereferenced <tt>NULL</tt> pointer).
+<p>Note: Old line C programmers sometimes don't like references since they provide
+reference semantics that isn't explicit in the caller's code.  After some C++
+experience, however, one quickly realizes this is a form of information hiding,
+which is an asset rather than a liability.  E.g., programmers should write code
+in the language of the problem rather than the language of the machine.
+<p><small>[&nbsp;<a href="#top" title="Top of section [8] References">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [8] References">Bottom</a> |&nbsp;<a href="classes-and-objects.html" title="[7] Classes and objects">Previous&nbsp;section</a> |&nbsp;<a href="inline-functions.html" title="[9] Inline functions">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="faq-8.7"></a>
+<div class=FaqTitle><h3>[8.7] What is a <em>handle</em> to an object? Is it a pointer? Is it a reference? Is it a pointer-to-a-pointer? What is it?</h3></div>
+<p>The term <em>handle</em> is used to mean any technique that lets you get to
+another object &#151; a generalized pseudo-pointer.  The term is (intentionally)
+ambiguous and vague.
+<p>Ambiguity is actually an asset in certain cases.  For example, during early
+design you might not be ready to commit to a specific representation for the
+handles.  You might not be sure whether you'll want simple pointers
+<em>vs.</em> references <em>vs.</em>  pointers-to-pointers <em>vs.</em> references-to-pointers
+<em>vs.</em> integer indices into an array <em>vs.</em> strings (or other key) that can be
+looked up in a hash-table (or other data structure) <em>vs.</em> database keys <em>vs.</em> some
+other technique.  If you merely know that you'll need some sort of thingy that
+will uniquely identify and get to an object, you call the thingy a Handle.
+<p>So if your ultimate goal is to enable a glop of code to uniquely
+identify/look-up a specific object of some class <tt>Fred</tt>, you need to
+pass a <tt>Fred</tt> handle into that glop of code.  The handle might be a
+string that can be used as a key in some well-known lookup table (e.g., a key
+in a <a href="containers.html#faq-34.2" title="[34.2] How can I make a perl-like associative array in C++?"><nobr><tt>std::map&lt;std::string,Fred&gt;</tt></nobr><!--rawtext:[34.2]:rawtext--></a> or a
+<a href="containers.html#faq-34.2" title="[34.2] How can I make a perl-like associative array in C++?"><nobr><tt>std::map&lt;std::string,Fred*&gt;</tt></nobr><!--rawtext:[34.2]:rawtext--></a>), or it
+might be an integer that would be an index into some well-known array (e.g.,
+<a href="freestore-mgmt.html#faq-16.11" title="[16.11] How do I allocate / unallocate an array of things?"><nobr><tt>Fred* array = new Fred[maxNumFreds]</tt></nobr><!--rawtext:[16.11]:rawtext--></a>), or it
+might be a simple <nobr><tt>Fred*</tt></nobr>, or it might be something else.
+<p>Novices often think in terms of pointers, but in reality there are downside
+risks to using raw pointers.  E.g., what if the <tt>Fred</tt> object needs to
+move?  How do we know when it's safe to <tt>delete</tt> the <tt>Fred</tt>
+objects?  What if the <tt>Fred</tt> object needs to (temporarily) get
+serialized on disk?  etc., etc.  Most of the time we add more layers of
+indirection to manage situations like these.  For example, the handles might
+be <nobr><tt>Fred**</tt></nobr>, where the pointed-to <nobr><tt>Fred*</tt></nobr> pointers are guaranteed
+to never move but when the <tt>Fred</tt> objects need to move, you just update
+the pointed-to <nobr><tt>Fred*</tt></nobr> pointers.  Or you make the handle an integer then
+have the <tt>Fred</tt> objects (or pointers to the <tt>Fred</tt> objects) looked
+up in a table/array/whatever.  Or whatever.
+<p>The point is that we use the word Handle when we don't yet know the details of
+what we're going to do.
+<p>Another time we use the word Handle is when we want to be vague about what
+we've already done (sometimes the term <em>magic cookie</em> is used for this
+as well, as in, &quot;The software passes around a <em>magic cookie</em> that is
+used to uniquely identify and locate the appropriate <tt>Fred</tt> object&quot;).
+The reason we (sometimes) want to be vague about what we've already done is to
+minimize the ripple effect if/when the specific details/representation of the
+handle change.  E.g., if/when someone changes the handle from a string that is
+used in a lookup table to an integer that is looked up in an array, we don't
+want to go and update a zillion lines of code.
+<p>To further ease maintenance if/when the details/representation of a handle
+changes (or to generally make the code easier to read/write), we often
+encapsulate the handle in a class.  This class often
+<a href="operator-overloading.html" title="[13] Operator overloading">overloads operators<!--rawtext:[13]:rawtext--></a> <nobr><tt>operator-&gt;</tt></nobr> and
+<nobr><tt>operator*</tt></nobr> (since the handle acts like a pointer, it might as well look
+like a pointer).
+<p><small>[&nbsp;<a href="#top" title="Top of section [8] References">Top</a> |&nbsp;<a href="#bottom" title="Bottom of section [8] References">Bottom</a> |&nbsp;<a href="classes-and-objects.html" title="[7] Classes and objects">Previous&nbsp;section</a> |&nbsp;<a href="inline-functions.html" title="[9] Inline functions">Next&nbsp;section</a> |&nbsp;<a href="index-2.html#search-the-faq" title="Look up FAQs several ways">Search&nbsp;the&nbsp;FAQ</a> ]</small>
+<hr>
+<p><a name="bottom"></a>
+<a href="mailto:cline@parashift.com" title="cline@parashift.com"><img src="mbox.gif" height=26 width=89 alt="E-Mail">&nbsp;E-mail the author</a><br>
+[&nbsp;<a href="index-2.html" title="C++ FAQ Lite"><em>C++ FAQ Lite</em></a>
+|&nbsp;<a href="index-2.html#table-of-contents" title="Table of contents">Table&nbsp;of&nbsp;contents</a>
+|&nbsp;<a href="subject-index.html" title="Subject index; 5111 links to 3243 topics">Subject&nbsp;index</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.1" title="[1.1] Author">About&nbsp;the&nbsp;author</a>
+|&nbsp;<a href="copy-permissions.html#faq-1.2" title="[1.2] Copyright Notice">&copy;</a>
+|&nbsp;<a href="on-line-availability.html#faq-2.2" title="[2.2] What happened to the one-click-download option?">Download&nbsp;your&nbsp;own&nbsp;copy</a>&nbsp;]<br>
+<small>Revised Mar 1, 2006</small>
+</body>
+
+<!-- Mirrored from www.dietmar-kuehl.de/mirror/c++-faq/references.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Sep 2025 13:11:21 GMT -->
+</html>
