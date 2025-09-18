@@ -1,4 +1,4 @@
-Inheritance -- virtual functions
+Inheritance — virtual functions
 {'section':20,'faq-page':'virtual-functions.html'}
 This page is about |virtual| functions - a rare example of a C++ feature which is neither a part of C nor completely self-defeating.
 

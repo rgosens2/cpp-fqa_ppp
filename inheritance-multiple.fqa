@@ -1,4 +1,4 @@
-Inheritance -- multiple and virtual inheritance
+Inheritance — multiple and virtual inheritance
 {'section':25,'faq-page':'multiple-inheritance.html'}
 This section is about multiple inheritance. While inheritance and |virtual| functions are among the most useful (that is, [20.1 the least useless]) C++ features, C++ multiple inheritance is at the other end of the spectrum.
 

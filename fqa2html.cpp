@@ -577,12 +577,12 @@ std::vector<std::pair<std::string, std::string>> secindex = {
     {"heap", "Freestore management"},
     {"exceptions", "Exceptions"},
     {"const", "Const correctness"},
-    {"inheritance-basics", "Inheritance - basics"},
-    {"inheritance-virtual", "Inheritance - <code>virtual</code> functions"},
-    {"inheritance-proper", "Inheritance - proper inheritance and substitutability"},
-    {"inheritance-abstract", "Inheritance - abstract base classes"},
-    {"inheritance-mother", "Inheritance - what your mother never told you"},
-    {"inheritance-multiple", "Inheritance - multiple and <code>virtual</code> inheritance"},
+    {"inheritance-basics", "Inheritance — basics"},
+    {"inheritance-virtual", "Inheritance — <code>virtual</code> functions"},
+    {"inheritance-proper", "Inheritance — proper inheritance and substitutability"},
+    {"inheritance-abstract", "Inheritance — abstract base classes"},
+    {"inheritance-mother", "Inheritance — what your mother never told you"},
+    {"inheritance-multiple", "Inheritance — multiple and <code>virtual</code> inheritance"},
     {"mixing", "How to mix C and C++"},
     {"function", "Pointers to member functions"},
     {"templates", "Templates"}
@@ -620,12 +620,12 @@ The single page version does not include most "metadata" sections such as [http:
 <li><a href="%(sp)s#fqa-heap">[16] Freestore management</a></li>
 <li><a href="%(sp)s#fqa-exceptions">[17] Exceptions</a></li>
 <li><a href="%(sp)s#fqa-const">[18] Const correctness</a></li>
-<li><a href="%(sp)s#fqa-inheritance-basics">[19] Inheritance - basics</a></li>
-<li><a href="%(sp)s#fqa-inheritance-virtual">[20] Inheritance - <code>virtual</code> functions</a></li>
-<li><a href="%(sp)s#fqa-inheritance-proper">[21] Inheritance - proper inheritance and substitutability</a></li>
-<li><a href="%(sp)s#fqa-inheritance-abstract">[22] Inheritance - abstract base classes</a></li>
-<li><a href="%(sp)s#fqa-inheritance-mother">[23] Inheritance - what your mother never told you</a></li>
-<li><a href="%(sp)s#fqa-inheritance-multiple">[25] Inheritance - multiple and <code>virtual</code> inheritance</a></li>
+<li><a href="%(sp)s#fqa-inheritance-basics">[19] Inheritance — basics</a></li>
+<li><a href="%(sp)s#fqa-inheritance-virtual">[20] Inheritance — <code>virtual</code> functions</a></li>
+<li><a href="%(sp)s#fqa-inheritance-proper">[21] Inheritance — proper inheritance and substitutability</a></li>
+<li><a href="%(sp)s#fqa-inheritance-abstract">[22] Inheritance — abstract base classes</a></li>
+<li><a href="%(sp)s#fqa-inheritance-mother">[23] Inheritance — what your mother never told you</a></li>
+<li><a href="%(sp)s#fqa-inheritance-multiple">[25] Inheritance — multiple and <code>virtual</code> inheritance</a></li>
 <li><a href="%(sp)s#fqa-mixing">[32] How to mix C and C++</a></li>
 <li><a href="%(sp)s#fqa-function">[33] Pointers to member functions</a></li>
 <li><a href="%(sp)s#fqa-templates">[35] Templates</a></li>
