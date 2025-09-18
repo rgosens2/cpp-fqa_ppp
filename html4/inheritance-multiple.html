@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Inheritance -- multiple and virtual inheritance</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This section is about multiple inheritance. While inheritance and <code>virtual</code> functions are among the most useful (that is, <a href="inheritance-virtual.html#fqa-20.1">the least useless</a>) C++ features, C++ multiple inheritance is at the other end of the spectrum.
@@ -34,7 +34,7 @@ This section is about multiple inheritance. While inheritance and <code>virtual<
 <a id="fqa-25.1"></a>
 <h2>[25.1] How is this section organized?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.1">FAQ:</a></b> The FAQ section contains both &quot;high-level&quot; issues (the meaning &amp; purpose of the language constructs) and &quot;low-level&quot; issues
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.1">FAQ:</a></b> The FAQ section contains both &quot;high-level&quot; issues (the meaning &amp; purpose of the language constructs) and &quot;low-level&quot; issues
 (the detailed semantics &amp; implementation of the language constructs), in that order. Be sure to understand the high-level stuff before
 delving into the low-level stuff.
 </p>
@@ -60,7 +60,7 @@ Let&#39;s sit back and watch.
 <a id="fqa-25.2"></a>
 <h2>[25.2] I&#39;ve been told that I should never use multiple inheritance. Is that right?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.2">FAQ:</a></b> THESE PEOPLE REALLY BOTHER ME!! How can they know what you should do without knowing what you want done?!?!
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.2">FAQ:</a></b> THESE PEOPLE REALLY BOTHER ME!! How can they know what you should do without knowing what you want done?!?!
 </p>
 
 <p>
@@ -101,7 +101,7 @@ You can memorize the sharp edges, or you can stay away from the whole thing. Pic
 <a id="fqa-25.3"></a>
 <h2>[25.3] So there are times when multiple inheritance isn&#39;t bad?!??</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.3">FAQ:</a></b> Sure! Sometimes (but not always) using multiple inheritance will lower all kinds of costs. If this is so in your case,
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.3">FAQ:</a></b> Sure! Sometimes (but not always) using multiple inheritance will lower all kinds of costs. If this is so in your case,
 use it! If it isn&#39;t, don&#39;t blame multiple inheritance - &quot;good workmen never blame their tools&quot;.
 </p>
 
@@ -145,7 +145,7 @@ has nothing to do with being a &quot;good workman&quot; (which itself has an irk
 <a id="fqa-25.4"></a>
 <h2>[25.4] What are some disciplines for using multiple inheritance?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.4">FAQ:</a></b> There&#39;s a long answer saying 3 things. First, you should normally do it to achieve polymorphism, not base class code reuse.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.4">FAQ:</a></b> There&#39;s a long answer saying 3 things. First, you should normally do it to achieve polymorphism, not base class code reuse.
 Second, the classes you multiply inherit from should normally be pure abstract. Third, you should consider using
 the &quot;bridge pattern&quot; or &quot;nested generalization&quot; - alternatives to MI described <a href="inheritance-multiple.html#fqa-25.5">below</a>.
 </p>
@@ -185,7 +185,7 @@ However, following these guidelines won&#39;t necessarily eliminate the problems
 <a id="fqa-25.5"></a>
 <h2>[25.5] Can you provide an example that demonstrates the above guidelines?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.5">FAQ:</a></b> There&#39;s a very long discussion of an example with different kinds of vehicles having different kinds of engines.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.5">FAQ:</a></b> There&#39;s a very long discussion of an example with different kinds of vehicles having different kinds of engines.
 The FAQ proposes to use MI, or the &quot;bridge pattern&quot; or &quot;nested generalization&quot;. &quot;Bridge pattern&quot; means that vehicle objects keep pointers to engine objects,
 and users can pass many different kinds of engine to an object of the same vehicle class. &quot;Nested generalization&quot;
 means that you have many classes derived from <code>Vehicle</code> (like <code>Plane</code>), and then for each such derived class there&#39;s a bunch of
@@ -220,7 +220,7 @@ And in C++, you can emulate multimethods using double dispatching (ugly, especia
 <a id="fqa-25.6"></a>
 <h2>[25.6] Is there a simple way to visualize all these tradeoffs?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.6">FAQ:</a></b> Here&#39;s a matrix with cute smilies for ya. Just don&#39;t apply it naively.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.6">FAQ:</a></b> Here&#39;s a matrix with cute smilies for ya. Just don&#39;t apply it naively.
 </p>
 
 <p>
@@ -236,7 +236,7 @@ Therefore, if you choose to store the cute matrix anywhere in your brain, you do
 <a id="fqa-25.7"></a>
 <h2>[25.7] Can you give another example to illustrate the above disciplines?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.7">FAQ:</a></b> Yes - consider the case with land &amp; water vehicles, when you also need to support amphibious vehicles. This case
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.7">FAQ:</a></b> Yes - consider the case with land &amp; water vehicles, when you also need to support amphibious vehicles. This case
 is more &quot;symmetric&quot; than the <a href="inheritance-multiple.html#fqa-25.5">previous</a> example, so multiple inheritance becomes more preferable. Still,
 you have to make sure you really want it by asking various questions (for the list of questions, follow the link to the FAQ).
 </p>
@@ -286,7 +286,7 @@ which is bad if <code>WaterVehicle</code> and <code>LandVehicle</code> inherit f
 <a id="fqa-25.8"></a>
 <h2>[25.8] What is the &quot;dreaded diamond&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.8">FAQ:</a></b> It&#39;s when there are circles in the inheritance graph. Here&#39;s the simplest case: <code>Derived1</code> and <code>Derived2</code> are
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.8">FAQ:</a></b> It&#39;s when there are circles in the inheritance graph. Here&#39;s the simplest case: <code>Derived1</code> and <code>Derived2</code> are
  inherited from <code>Base</code>, and <code>Join</code> is inherited from both <code>Derived1</code> and <code>Derived2</code>. The circle in the graph may look
  like a diamond if your imagination works that way.
 </p>
@@ -317,7 +317,7 @@ If you feel that things are getting pointlessly complicated at this point, it ma
 <a id="fqa-25.9"></a>
 <h2>[25.9] Where in a hierarchy should I use virtual inheritance?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.9">FAQ:</a></b> At the top of the dreaded diamond - when you derive from <code>Base</code>, you should say:
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.9">FAQ:</a></b> At the top of the dreaded diamond - when you derive from <code>Base</code>, you should say:
 </p>
 
 <pre>
@@ -349,7 +349,7 @@ In general, it is a special case of the generic C++ principles of specifying eve
 <a id="fqa-25.10"></a>
 <h2>[25.10] What does it mean to &quot;delegate to a sister class&quot; via virtual inheritance?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.10">FAQ:</a></b> If you have a <a href="inheritance-multiple.html#fqa-25.9">diamond-like hierarchy with virtual inheritance</a>, and <code>Base</code> has two virtual functions f and g,
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.10">FAQ:</a></b> If you have a <a href="inheritance-multiple.html#fqa-25.9">diamond-like hierarchy with virtual inheritance</a>, and <code>Base</code> has two virtual functions f and g,
  then <code>Derived1</code> can implement f, <code>Derived2</code> can implement g and <code>Derived1::f</code> can call <code>Derived2::g</code> by simply
  saying <code>g();</code> or (more verbosely and equivalently) <code>Base::g();</code> - that is, without knowing anything about
  the existence of <code>Derived2</code>.
@@ -376,7 +376,7 @@ What&#39;s that? You say that you only care about the enlightened wizards (varia
 <a id="fqa-25.11"></a>
 <h2>[25.11] What special considerations do I need to know about when I use virtual inheritance?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.11">FAQ:</a></b> Usually virtual inheritance is a good idea only if the virtual base class and classes derived from it have little
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.11">FAQ:</a></b> Usually virtual inheritance is a good idea only if the virtual base class and classes derived from it have little
  or no data.
 </p>
 
@@ -401,7 +401,7 @@ The FAQ&#39;s advice is a special case of its <a href="inheritance-multiple.html
 <a id="fqa-25.12"></a>
 <h2>[25.12] What special considerations do I need to know about when I inherit from a class that uses virtual inheritance?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.12">FAQ:</a></b> Derived classes call the constructors of their virtual base classes directly. In particular, when a virtual
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.12">FAQ:</a></b> Derived classes call the constructors of their virtual base classes directly. In particular, when a virtual
  base class has no default constructor, you have to call its constructor explicitly in the initialization
  lists of the constructors of the derived class.
 </p>
@@ -422,7 +422,7 @@ with virtual base classes, either.
 <a id="fqa-25.13"></a>
 <h2>[25.13] What special considerations do I need to know about when I use a class that uses virtual inheritance?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.13">FAQ:</a></b> Don&#39;t use downcasts using the C-like syntax <code>(Derived*)pBase</code>. Use <code>dynamic_cast&lt;Derived*&gt;(pBase)</code>.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.13">FAQ:</a></b> Don&#39;t use downcasts using the C-like syntax <code>(Derived*)pBase</code>. Use <code>dynamic_cast&lt;Derived*&gt;(pBase)</code>.
 </p>
 
 <p>
@@ -453,7 +453,7 @@ The answer is simple: in C++, the compiler compiles random meaningless things be
 <a id="fqa-25.14"></a>
 <h2>[25.14] One more time: what is the exact order of constructors in a multiple and/or virtual inheritance situation?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.14">FAQ:</a></b> So and so.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.14">FAQ:</a></b> So and so.
 </p>
 
 <p>
@@ -469,7 +469,7 @@ Well, <a href="inheritance-multiple.html#fqa-25.12">why</a> would you use initia
 <a id="fqa-25.15"></a>
 <h2>[25.15] What is the exact order of destructors in a multiple and/or virtual inheritance situation?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.15">FAQ:</a></b> The reverse order of construction.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/multiple-inheritance.html#faq-25.15">FAQ:</a></b> The reverse order of construction.
 </p>
 
 <p>

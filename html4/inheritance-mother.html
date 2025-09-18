@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Inheritance -- what your mother never told you</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 Note: section names are copied verbatim from the FAQ. The document is not based on the assumption that it was your mother who told you the other things about inheritance.
@@ -31,7 +31,7 @@ Note: section names are copied verbatim from the FAQ. The document is not based 
 <a id="fqa-23.1"></a>
 <h2>[23.1] Is it okay for a non-<code>virtual</code> function of the base class to call a <code>virtual</code> function?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.1">FAQ:</a></b> Sometimes it is. Suppose you have a class <code>Animal</code> with a non-<code>virtual</code> <code>getAwfullyExcited()</code> method.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.1">FAQ:</a></b> Sometimes it is. Suppose you have a class <code>Animal</code> with a non-<code>virtual</code> <code>getAwfullyExcited()</code> method.
 In your system, all animals do it similarly:
 </p>
 
@@ -84,7 +84,7 @@ The thing is that C++ classes with <i>many</i> methods, some virtual and some no
 <a id="fqa-23.2"></a>
 <h2>[23.2] That last FAQ confuses me. Is it a different strategy from the other ways to use <code>virtual</code> functions? What&#39;s going on?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.2">FAQ:</a></b> Yes, there are two different strategies related to the use of <code>virtual</code> functions. In the first case,
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.2">FAQ:</a></b> Yes, there are two different strategies related to the use of <code>virtual</code> functions. In the first case,
  you have a common non-<code>virtual</code> method in the base class, but use <code>virtual</code> methods to implement the parts which
  do differ. In the second case, you have <code>virtual</code> methods implemented differently in derived classes,
  but they call common non-<code>virtual</code> methods in the base class. These common bits can also be implemented somewhere
@@ -136,7 +136,7 @@ Disclaimer: my knowledge of anthropology is approximately zero. Therefore, it&#3
 <a id="fqa-23.3"></a>
 <h2>[23.3] Should I use protected virtuals instead of public virtuals?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.3">FAQ:</a></b> Well, first of all avoid strict rules saying &quot;never do this, always do that&quot;. As a rule of thumb, experience
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.3">FAQ:</a></b> Well, first of all avoid strict rules saying &quot;never do this, always do that&quot;. As a rule of thumb, experience
  tells that most of the time virtual functions are best made public, with two notable exceptions. First, there
  are functions which are supposed to be called only from the base class, the way described in the previous two FAQs. And second, there&#39;s
  the <i>Public Overloaded Non-Virtuals Call Protected Non-Overloaded Virtuals</i> Idiom:
@@ -198,7 +198,7 @@ All we got is extra layers of code piling up. Ultimately, the people will have t
 <a id="fqa-23.4"></a>
 <h2>[23.4] When should someone use private virtuals?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.4">FAQ:</a></b> Probably never. It confuses people, because they don&#39;t think <code>private</code> virtuals can&#39;t be overridden, but they can.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.4">FAQ:</a></b> Probably never. It confuses people, because they don&#39;t think <code>private</code> virtuals can&#39;t be overridden, but they can.
 </p>
 
 <p>
@@ -211,7 +211,7 @@ All we got is extra layers of code piling up. Ultimately, the people will have t
 <a id="fqa-23.5"></a>
 <h2>[23.5] When my base class&#39;s constructor calls a <code>virtual</code> function on its <code>this</code> object, why doesn&#39;t my derived class&#39;s override of that <code>virtual</code> function get invoked?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.5">FAQ:</a></b> Suppose you have a base class called <code>Base</code>, calling a virtual function <code>f</code> in its constructor. Then, when objects
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.5">FAQ:</a></b> Suppose you have a base class called <code>Base</code>, calling a virtual function <code>f</code> in its constructor. Then, when objects
  of a derived class called <code>Derived</code> are created, <code>Base::virt</code> is called from <code>Base::Base</code>, not <code>Derived::f</code>.
 </p>
 
@@ -268,7 +268,7 @@ how things can behave this way. And you can&#39;t do that without understanding 
 <a id="fqa-23.6"></a>
 <h2>[23.6] Okay, but is there a way to <i>simulate</i> that behavior as <i>if</i> dynamic binding worked on the <code>this</code> object within my base class&#39;s constructor?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.6">FAQ:</a></b> Yes. It&#39;s an Idiom, of course. Namely, the <i>Dynamic Binding During Initialization Idiom</i>.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.6">FAQ:</a></b> Yes. It&#39;s an Idiom, of course. Namely, the <i>Dynamic Binding During Initialization Idiom</i>.
 </p>
 
 <p>
@@ -299,7 +299,7 @@ How about trying another programming language?
 <a id="fqa-23.7"></a>
 <h2>[23.7] I&#39;m getting the same mess with destructors: calling a <code>virtual</code> on my <code>this</code> object from my base class&#39;s destructor ends up ignoring the override in the derived class; what&#39;s going on?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.7">FAQ:</a></b> Again, you&#39;re being protected by the compiler. Protected from yourself! You could access members that were
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.7">FAQ:</a></b> Again, you&#39;re being protected by the compiler. Protected from yourself! You could access members that were
 already destroyed if the compiler let you do what you want.
 </p>
 
@@ -319,7 +319,7 @@ Protect me from access to destroyed objects through <a href="heap.html#fqa-16.1"
 <a id="fqa-23.8"></a>
 <h2>[23.8] Should a derived class redefine (&quot;override&quot;) a member function that is non-<code>virtual</code> in a base class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.8">FAQ:</a></b> You can do that, but you shouldn&#39;t.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.8">FAQ:</a></b> You can do that, but you shouldn&#39;t.
 </p>
 
 <p>
@@ -343,7 +343,7 @@ The redefinition-looking-like-an-override is <a href="operator.html#fqa-13.1">ov
 <a id="fqa-23.9"></a>
 <h2>[23.9] What&#39;s the meaning of, <code>Warning: Derived::f(char) hides Base::f(double)</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.9">FAQ:</a></b> What do you think it means? You&#39;re going to die.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.9">FAQ:</a></b> What do you think it means? You&#39;re going to die.
 </p>
 
 <p>
@@ -381,7 +381,7 @@ OK, suppose it improves clarity (a <i>very</i> questionable claim). Do you reall
 <a id="fqa-23.10"></a>
 <h2>[23.10] What does it mean that the &quot;virtual table&quot; is an unresolved external?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.10">FAQ:</a></b> Well, as you know, &quot;unresolved external&quot; means that there&#39;s a function or a global variable that your code declares
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.10">FAQ:</a></b> Well, as you know, &quot;unresolved external&quot; means that there&#39;s a function or a global variable that your code declares
  and uses, but never defines. A virtual table is a global variable declared implicitly by a typical C++ implementation
  for each class with at least one virtual function.
 </p>
@@ -437,7 +437,7 @@ I wonder what they do with <code>virtual</code> functions implemented in the bod
 <a id="fqa-23.11"></a>
 <h2>[23.11] How can I set up my class so it won&#39;t be inherited from?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.11">FAQ:</a></b> You can have the constructors <code>private</code>. The objects will have to be created by <code>public</code> functions delegating to
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.11">FAQ:</a></b> You can have the constructors <code>private</code>. The objects will have to be created by <code>public</code> functions delegating to
  the constructor.
 </p>
 
@@ -477,7 +477,7 @@ Having no real experience with other languages helps one to stick to this bizarr
 <a id="fqa-23.12"></a>
 <h2>[23.12] How can I set up my member function so it won&#39;t be overridden in a derived class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.12">FAQ:</a></b> Use a <code>/* final */</code> comment instead of a <code>final</code> keyword. It&#39;s not a technical solution - so what?
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/strange-inheritance.html#faq-23.12">FAQ:</a></b> Use a <code>/* final */</code> comment instead of a <code>final</code> keyword. It&#39;s not a technical solution - so what?
  The important thing is that it works.
 </p>
 

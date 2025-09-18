@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Constructors</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This section is about constructors, which create C++ objects, as well as a large number of problems.
@@ -38,7 +38,7 @@ This section is about constructors, which create C++ objects, as well as a large
 <a id="fqa-10.1"></a>
 <h2>[10.1] What&#39;s the deal with constructors?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.1">FAQ:</a></b> A constructor initializes an object given a chunk of memory having arbitrary (undefined) state, the way &quot;init functions&quot; do. It may acquire resource like memory, files, etc. &quot;Ctor&quot; is a common abbreviation.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.1">FAQ:</a></b> A constructor initializes an object given a chunk of memory having arbitrary (undefined) state, the way &quot;init functions&quot; do. It may acquire resource like memory, files, etc. &quot;Ctor&quot; is a common abbreviation.
 </p>
 
 <p>
@@ -71,7 +71,7 @@ but without the illusion of <a href="class.html#fqa-7.4">"encapsulation"</a>, an
 <a id="fqa-10.2"></a>
 <h2>[10.2] Is there any difference between <code>List x;</code> and <code>List x();</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.2">FAQ:</a></b> Yes, and it&#39;s a <i>big</i> one. The first statement declares an object of type <code>List</code>, the second declares a function returning an object of type <code>List</code>.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.2">FAQ:</a></b> Yes, and it&#39;s a <i>big</i> one. The first statement declares an object of type <code>List</code>, the second declares a function returning an object of type <code>List</code>.
 </p>
 
 <p>
@@ -98,7 +98,7 @@ When you get an incomprehensible error message from your C++ compiler, be sympat
 <a id="fqa-10.3"></a>
 <h2>[10.3] Can one constructor of a class call another constructor of the same class to initialize the <code>this</code> object?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.3">FAQ:</a></b> No. But you can factor out the common code into a private function. In some cases you can use default parameters to &quot;merge&quot; constructors. Calling placement <code>new</code> inside a constructor is very bad, although it can &quot;seem&quot; to do the job in some cases.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.3">FAQ:</a></b> No. But you can factor out the common code into a private function. In some cases you can use default parameters to &quot;merge&quot; constructors. Calling placement <code>new</code> inside a constructor is very bad, although it can &quot;seem&quot; to do the job in some cases.
 </p>
 
 <p>
@@ -117,7 +117,7 @@ If you&#39;re in a mood for breaking rules and doing clever tricks, this may be 
 <a id="fqa-10.4"></a>
 <h2>[10.4] Is the default constructor for <code>Fred</code> always <code>Fred::Fred()</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.4">FAQ:</a></b> No, the default constructor is the one that can be called without arguments - either because it takes none or because it defines default values for them.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.4">FAQ:</a></b> No, the default constructor is the one that can be called without arguments - either because it takes none or because it defines default values for them.
 </p>
 
 <p>
@@ -140,7 +140,7 @@ And what&#39;s needed in order to generate this code? The default constructor ge
 <a id="fqa-10.5"></a>
 <h2>[10.5] Which constructor gets called when I create an array of <code>Fred</code> objects?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.5">FAQ:</a></b> The default constructor. If there isn&#39;t any, your code won&#39;t compile. But if you use <code>std::vector</code>, you can call any constructor. And you should use <code>std::vector</code> anyway since arrays are <a href="picture.html#fqa-6.15">evil</a>. But sometimes you <a href="picture.html#fqa-6.16">need</a> them. In that case, you can initialize each element as in <code>Fred arr[2] = {Fred(3,4), Fred(3,4)};</code> if you need to call constructors other than the default. And finally you can use placement new - it will take ugly declarations and casts, you should be careful to align the storage right (which can&#39;t be done portably), and it&#39;s hard to make this exception-safe. See how evil those arrays are? Use <code>std::vector</code> - it gets all this complicated stuff right.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.5">FAQ:</a></b> The default constructor. If there isn&#39;t any, your code won&#39;t compile. But if you use <code>std::vector</code>, you can call any constructor. And you should use <code>std::vector</code> anyway since arrays are <a href="picture.html#fqa-6.15">evil</a>. But sometimes you <a href="picture.html#fqa-6.16">need</a> them. In that case, you can initialize each element as in <code>Fred arr[2] = {Fred(3,4), Fred(3,4)};</code> if you need to call constructors other than the default. And finally you can use placement new - it will take ugly declarations and casts, you should be careful to align the storage right (which can&#39;t be done portably), and it&#39;s hard to make this exception-safe. See how evil those arrays are? Use <code>std::vector</code> - it gets all this complicated stuff right.
 </p>
 
 <p>
@@ -180,7 +180,7 @@ Maybe you can&#39;t expect more consistency from the promoters of a language tha
 <a id="fqa-10.6"></a>
 <h2>[10.6] Should my constructors use &quot;initialization lists&quot; or &quot;assignment&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.6">FAQ:</a></b> Initialization lists - that&#39;s more efficient, except for built-in types (with initializers, you avoid the construction of an &quot;empty&quot; object and the overhead of cleaning it up at the assignment). And some things can&#39;t be initialized using assignment, like member references and const members and things without default constructors. So it&#39;s best to always use initialization lists even if you don&#39;t have to for the sake of &quot;symmetry&quot;. There are exceptions to this rule. There&#39;s no need for an exhaustive list of them - search your feelings.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.6">FAQ:</a></b> Initialization lists - that&#39;s more efficient, except for built-in types (with initializers, you avoid the construction of an &quot;empty&quot; object and the overhead of cleaning it up at the assignment). And some things can&#39;t be initialized using assignment, like member references and const members and things without default constructors. So it&#39;s best to always use initialization lists even if you don&#39;t have to for the sake of &quot;symmetry&quot;. There are exceptions to this rule. There&#39;s no need for an exhaustive list of them - search your feelings.
 </p>
 
 <p>
@@ -209,7 +209,7 @@ However, initialization lists are really less than useful, so it&#39;s probably 
 <a id="fqa-10.7"></a>
 <h2>[10.7] Should you use the <code>this</code> pointer in the constructor?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.7">FAQ:</a></b> Some people think you can&#39;t since the object is not fully initialized, but you can if you know the rules. For example, you can always access members inside the constructor body (after the opening brace). But you can never access members of a derived class by calling virtual functions (the function call will <a href="inheritance-mother.html#fqa-23.5">invoke the implementation of the class defining the constructor</a>, not that of the derived class). Sometimes you can use a member to initialize another member in an initializer list and sometimes you can&#39;t - you must know the order in which members are initialized.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.7">FAQ:</a></b> Some people think you can&#39;t since the object is not fully initialized, but you can if you know the rules. For example, you can always access members inside the constructor body (after the opening brace). But you can never access members of a derived class by calling virtual functions (the function call will <a href="inheritance-mother.html#fqa-23.5">invoke the implementation of the class defining the constructor</a>, not that of the derived class). Sometimes you can use a member to initialize another member in an initializer list and sometimes you can&#39;t - you must know the order in which members are initialized.
 </p>
 
 <p>
@@ -224,7 +224,7 @@ An alternative to avoiding the dark corners of C++ is to spend time learning the
 <a id="fqa-10.8"></a>
 <h2>[10.8] What is the &quot;Named Constructor Idiom&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.8">FAQ:</a></b> It&#39;s when you have static functions (&quot;named constructors&quot;) returning objects in your class. For example, this way you can have two &quot;constructors&quot; returning 2D point objects: one getting rectangular coordinates (2 <code>float</code>s), and another getting polar coordinates (also 2 <code>float</code>s). With C++ constructors you couldn&#39;t do it because they all have the same name, so that would be ambiguous overloading. And this can be as <i>fast</i> as regular constructors! And you can use a similar technique to enforce an allocation policy, like having all objects allocated with <code>new</code>.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.8">FAQ:</a></b> It&#39;s when you have static functions (&quot;named constructors&quot;) returning objects in your class. For example, this way you can have two &quot;constructors&quot; returning 2D point objects: one getting rectangular coordinates (2 <code>float</code>s), and another getting polar coordinates (also 2 <code>float</code>s). With C++ constructors you couldn&#39;t do it because they all have the same name, so that would be ambiguous overloading. And this can be as <i>fast</i> as regular constructors! And you can use a similar technique to enforce an allocation policy, like having all objects allocated with <code>new</code>.
 </p>
 
 <p>
@@ -239,7 +239,7 @@ The only thing left to do is to ditch the whole class thing, and use C pointers 
 <a id="fqa-10.9"></a>
 <h2>[10.9] Does return-by-value mean extra copies and extra overhead?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.9">FAQ:</a></b> &quot;Not necessarily&quot;. A truly exhausting, though not necessarily exhaustive list of examples follows, with many stories about &quot;virtually all commercial-grade compilers&quot; doing clever things.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.9">FAQ:</a></b> &quot;Not necessarily&quot;. A truly exhausting, though not necessarily exhaustive list of examples follows, with many stories about &quot;virtually all commercial-grade compilers&quot; doing clever things.
 </p>
 
 <p>
@@ -267,7 +267,7 @@ Of course our boring binary logic fails to represent the <a href="templates.html
 <a id="fqa-10.10"></a>
 <h2>[10.10] Why can&#39;t I initialize my <code>static</code> member data in my constructor&#39;s initialization list?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.10">FAQ:</a></b> Because you must define such data explicitly as in <code>static MyClass::g_myNum = 5;</code>.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.10">FAQ:</a></b> Because you must define such data explicitly as in <code>static MyClass::g_myNum = 5;</code>.
 </p>
 
 <p>
@@ -286,7 +286,7 @@ You can probably look at it both ways - &quot;initializers are used to initializ
 <a id="fqa-10.11"></a>
 <h2>[10.11] Why are classes with <code>static</code> data members getting linker errors?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.11">FAQ:</a></b> Because you must define such data explicitly as in <code>static MyClass::g_myNum = 5;</code>.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.11">FAQ:</a></b> Because you must define such data explicitly as in <code>static MyClass::g_myNum = 5;</code>.
 </p>
 
 <p>
@@ -313,7 +313,7 @@ The conclusion is that there is no technical reason whatsoever, even inside the 
 <a id="fqa-10.12"></a>
 <h2>[10.12] What&#39;s the &quot;static initialization order fiasco&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.12">FAQ:</a></b> A subtle, frequently misunderstood source of errors, which are hard to catch because they occur before <code>main</code> is called. The errors can happen when the constructor of a global object defined in <code>x.cpp</code> accesses (directly or indirectly) a global object defined in <code>y.cpp</code>. The order of initialization of these objects is undefined, so you&#39;ll see the problem in 50% of the cases (an error may be triggered by a rebuild). &quot;It&#39;s that simple&quot;.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.12">FAQ:</a></b> A subtle, frequently misunderstood source of errors, which are hard to catch because they occur before <code>main</code> is called. The errors can happen when the constructor of a global object defined in <code>x.cpp</code> accesses (directly or indirectly) a global object defined in <code>y.cpp</code>. The order of initialization of these objects is undefined, so you&#39;ll see the problem in 50% of the cases (an error may be triggered by a rebuild). &quot;It&#39;s that simple&quot;.
 </p>
 
 <p>
@@ -345,7 +345,7 @@ Some people believe that you need non-trivial global constructors, or else you&#
 <a id="fqa-10.13"></a>
 <h2>[10.13] How do I prevent the &quot;static initialization order fiasco&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.13">FAQ:</a></b> By using the &quot;Construct On First Use&quot; idiom, as in
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.13">FAQ:</a></b> By using the &quot;Construct On First Use&quot; idiom, as in
 </p>
 
 <pre>
@@ -377,7 +377,7 @@ The C++ global initialization and destruction support is broken. As usual, the &
 <a id="fqa-10.14"></a>
 <h2>[10.14] Why doesn&#39;t the construct-on-first-use idiom use a static object instead of a static pointer?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.14">FAQ:</a></b> It solves one problem and creates another problem. Namely, you avoid the resource leak, but your program can crash because now you achieved &quot;construct-on-first-use&quot;, but not &quot;destroy-after-last-use&quot;, so someone can access a dead object (using <code>new</code> means &quot;never destroy&quot;, which is at least guaranteed to be <i>after</i> last use).
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.14">FAQ:</a></b> It solves one problem and creates another problem. Namely, you avoid the resource leak, but your program can crash because now you achieved &quot;construct-on-first-use&quot;, but not &quot;destroy-after-last-use&quot;, so someone can access a dead object (using <code>new</code> means &quot;never destroy&quot;, which is at least guaranteed to be <i>after</i> last use).
 </p>
 
 <p>
@@ -404,7 +404,7 @@ By the way, I didn&#39;t read the C++ FAQ book (I really don&#39;t have time for
 <a id="fqa-10.15"></a>
 <h2>[10.15] How do I prevent the &quot;<code>static</code> initialization order fiasco&quot; for my <code>static</code> data members?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.15">FAQ:</a></b> Using the same techniques <a href="ctors.html#fqa-10.14">just described</a>, except for using static member functions instead of global functions. For some reason a long list of examples follows, as well as a discussion on performance.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.15">FAQ:</a></b> Using the same techniques <a href="ctors.html#fqa-10.14">just described</a>, except for using static member functions instead of global functions. For some reason a long list of examples follows, as well as a discussion on performance.
 </p>
 
 <p>
@@ -419,7 +419,7 @@ There&#39;s no point in having separate discussions on static data members and p
 <a id="fqa-10.16"></a>
 <h2>[10.16] Do I need to worry about the &quot;<code>static</code> initialization order fiasco&quot; for variables of built-in/intrinsic types?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.16">FAQ:</a></b> Yes, if you use function calls to initialize them as in <code>int g = f();</code> - that way <code>f</code> can access <code>g</code>, or you can have other dependency problems.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.16">FAQ:</a></b> Yes, if you use function calls to initialize them as in <code>int g = f();</code> - that way <code>f</code> can access <code>g</code>, or you can have other dependency problems.
 </p>
 
 <p>
@@ -434,7 +434,7 @@ Not that plain C is very safe, mind you. If you <a href="ctors.html#fqa-10.9">do
 <a id="fqa-10.17"></a>
 <h2>[10.17] How can I handle a constructor that fails?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.17">FAQ:</a></b> Throw an exception.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.17">FAQ:</a></b> Throw an exception.
 </p>
 
 <p>
@@ -458,7 +458,7 @@ It is also notable that the C++ standard library <i>doesn&#39;t</i> handle error
 <a id="fqa-10.18"></a>
 <h2>[10.18] What is the &quot;Named Parameter Idiom&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.18">FAQ:</a></b> A useful application of method chaining. It works around the fact that C &amp; C++ don&#39;t have keyword arguments, and it does that better than combining the parameters in a string or a bit mask. It works like this:
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.18">FAQ:</a></b> A useful application of method chaining. It works around the fact that C &amp; C++ don&#39;t have keyword arguments, and it does that better than combining the parameters in a string or a bit mask. It works like this:
 </p>
 
 <pre>
@@ -513,7 +513,7 @@ Abusing C++ syntax in order to cover up deficiencies of C++ syntax, thus creatin
 <a id="fqa-10.19"></a>
 <h2>[10.19] Why am I getting an error after declaring a <code>Foo</code> object via <code>Foo x(Bar())</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.19">FAQ:</a></b> This <i>hurts</i>. <i>Sit down</i>.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/ctors.html#faq-10.19">FAQ:</a></b> This <i>hurts</i>. <i>Sit down</i>.
 </p>
 
 <p>

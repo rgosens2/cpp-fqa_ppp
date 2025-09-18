@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Assignment operators</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/assignment-operators.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/assignment-operators.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This section is about <code>operator=</code>. It&#39;s rather strange that of all possible things, people only &quot;frequently ask&quot; about self assignment, but those are the only questions listed in the FAQ.
@@ -22,7 +22,7 @@ This section is about <code>operator=</code>. It&#39;s rather strange that of al
 <a id="fqa-12.1"></a>
 <h2>[12.1] What is &quot;self assignment&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/assignment-operators.html#faq-12.1">FAQ:</a></b> It&#39;s assigning the object to itself, directly or indirectly. For example:
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/assignment-operators.html#faq-12.1">FAQ:</a></b> It&#39;s assigning the object to itself, directly or indirectly. For example:
 </p>
 
 <pre>
@@ -41,7 +41,7 @@ that the FAQ&#39;s definition of &quot;self assignment&quot; is unfortunately to
 <a id="fqa-12.2"></a>
 <h2>[12.2] Why should I worry about &quot;self assignment&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/assignment-operators.html#faq-12.2">FAQ:</a></b> If you don&#39;t, your <code>operator=</code> will probably misbehave severely upon self-assignment:
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/assignment-operators.html#faq-12.2">FAQ:</a></b> If you don&#39;t, your <code>operator=</code> will probably misbehave severely upon self-assignment:
 </p>
 
 <pre>
@@ -98,7 +98,7 @@ than good containers <a href="picture.html#fqa-6.2">built into a language</a>.
 <a id="fqa-12.3"></a>
 <h2>[12.3] OK, OK, already; I&#39;ll handle self-assignment. How do I do it?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/assignment-operators.html#faq-12.3">FAQ:</a></b> By adding a test like <code>if(this==&amp;that) { return *this; }</code> or by copying the members of the input object before deallocating members
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/assignment-operators.html#faq-12.3">FAQ:</a></b> By adding a test like <code>if(this==&amp;that) { return *this; }</code> or by copying the members of the input object before deallocating members
 of <code>this</code>.
 </p>
 

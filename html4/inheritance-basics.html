@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Inheritance -- basics</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This section outlines the C++ &quot;support&quot; for the OO concept of inheritance. Do not confuse C++ and OO.
@@ -28,7 +28,7 @@ This section outlines the C++ &quot;support&quot; for the OO concept of inherita
 <a id="fqa-19.1"></a>
 <h2>[19.1] Is inheritance important to C++?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.1">FAQ:</a></b> Sure. That&#39;s the new thing OO adds on top of the more basic notion of abstract data types.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.1">FAQ:</a></b> Sure. That&#39;s the new thing OO adds on top of the more basic notion of abstract data types.
 </p>
 
 <p>
@@ -63,7 +63,7 @@ to list the interfaces supported by a class (the latter is a special case of lac
 <a id="fqa-19.2"></a>
 <h2>[19.2] When would I use inheritance?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.2">FAQ:</a></b> As a tool for specifying the behavior of a system. People think in two dimensions: &quot;is a&quot;
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.2">FAQ:</a></b> As a tool for specifying the behavior of a system. People think in two dimensions: &quot;is a&quot;
 and &quot;has a&quot;. For instance, a cat &quot;is a&quot; mammal and &quot;has a&quot; tail. Aggregation of data into
 abstract data types supports the &quot;has a&quot; dimension. Inheritance adds support for the &quot;is a&quot; dimension.
 </p>
@@ -100,7 +100,7 @@ yourself to the subset you do understand.
 <a id="fqa-19.3"></a>
 <h2>[19.3] How do you express inheritance in C++?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.3">FAQ:</a></b> By using the <code>: public</code> syntax, as in <code>class Car : public Vehicle { ... };</code>. <code>private</code> and <code>protected</code>
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.3">FAQ:</a></b> By using the <code>: public</code> syntax, as in <code>class Car : public Vehicle { ... };</code>. <code>private</code> and <code>protected</code>
 inheritance are different.
 </p>
 
@@ -126,7 +126,7 @@ To be fair, many languages have this problem with their grammar, and it&#39;s no
 <a id="fqa-19.4"></a>
 <h2>[19.4] Is it OK to convert a pointer from a derived class to its base class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.4">FAQ:</a></b> For public inheritance - yes. By definition, an object of a derived class is an object of the base class.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.4">FAQ:</a></b> For public inheritance - yes. By definition, an object of a derived class is an object of the base class.
 </p>
 
 <p>
@@ -147,7 +147,7 @@ of whether this is a reasonable usage of a language feature is left to the reade
 <a id="fqa-19.5"></a>
 <h2>[19.5] What&#39;s the difference between <code>public</code>, <code>private</code>, and <code>protected</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.5">FAQ:</a></b> <code>private</code> is for class members and friends. <code>protected</code> is also for derived classes and their friends. <code>public</code> is
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.5">FAQ:</a></b> <code>private</code> is for class members and friends. <code>protected</code> is also for derived classes and their friends. <code>public</code> is
 for everybody.
 </p>
 
@@ -159,7 +159,7 @@ for everybody.
 <a id="fqa-19.6"></a>
 <h2>[19.6] Why can&#39;t my derived class access <code>private</code> things from my base class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.6">FAQ:</a></b> It protects you from changes to the base class by not letting you rely on its implementation details.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.6">FAQ:</a></b> It protects you from changes to the base class by not letting you rely on its implementation details.
 </p>
 
 <p>
@@ -174,7 +174,7 @@ abstract ones (those having no data members) may be a good idea.
 <a id="fqa-19.7"></a>
 <h2>[19.7] How can I protect derived classes from breaking when I change the internal parts of the base class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.7">FAQ:</a></b> Your class has two interfaces: <code>public</code> and <code>protected</code>. To protect your users, don&#39;t expose
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.7">FAQ:</a></b> Your class has two interfaces: <code>public</code> and <code>protected</code>. To protect your users, don&#39;t expose
 data members. Similarly, you can protect the derived classes by not having <code>protected</code> data members;
 provide <code>protected inline</code> accessors instead.
 </p>
@@ -211,7 +211,7 @@ the <code>protected inline</code> part is kinda funny.
 <a id="fqa-19.8"></a>
 <h2>[19.8] I&#39;ve been told to never use protected data, and instead to always use private data with protected access functions. Is that a good rule?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.8">FAQ:</a></b> No, no, no - &quot;always&quot; rules don&#39;t work in the real world! You don&#39;t have time to make life
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.8">FAQ:</a></b> No, no, no - &quot;always&quot; rules don&#39;t work in the real world! You don&#39;t have time to make life
 easy for everyone. Spend your time making it easy for the important people. People are not equal.
 The important people are called &quot;customers&quot;.
 </p>
@@ -240,7 +240,7 @@ they are dealing with an <i>important</i> task, so now is the time to write pile
 <a id="fqa-19.9"></a>
 <h2>[19.9] Okay, so exactly how should I decide whether to build a &quot;protected interface&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.9">FAQ:</a></b> There are many useful guidelines, for example: grow up, don&#39;t do things that can jeopardize your
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/basics-of-inheritance.html#faq-19.9">FAQ:</a></b> There are many useful guidelines, for example: grow up, don&#39;t do things that can jeopardize your
 schedules, and only invest time in the things which will ultimately pay off.
 </p>
 

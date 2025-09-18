@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Friends</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/friends.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/friends.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 The questions here are about <code>friend</code> declarations. A short answer to them all: you probably don&#39;t need <code>friend</code> declarations.
@@ -24,7 +24,7 @@ The questions here are about <code>friend</code> declarations. A short answer to
 <a id="fqa-14.1"></a>
 <h2>[14.1] What is a <code>friend</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.1">FAQ:</a></b> A class can declare other classes and/or functions as friends. The declaration allows the friends to
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.1">FAQ:</a></b> A class can declare other classes and/or functions as friends. The declaration allows the friends to
 access non-<code>public</code> class members unaccessible to other code outside of the class.
 </p>
 
@@ -69,7 +69,7 @@ So there you are.
 <a id="fqa-14.2"></a>
 <h2>[14.2] Do friends violate encapsulation?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.2">FAQ:</a></b> On the contrary - they enhance it. If used properly, of course.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.2">FAQ:</a></b> On the contrary - they enhance it. If used properly, of course.
 </p>
 
 <p>
@@ -103,7 +103,7 @@ a <code>friend operator&lt;&lt;</code>, for example. This argument is only inter
 <a id="fqa-14.3"></a>
 <h2>[14.3] What are some advantages/disadvantages of using <code>friend</code> functions?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.3">FAQ:</a></b> Advantage: they allow the designer to choose between <code>obj.func()</code> and <code>func(obj)</code>, which &quot;lowers maintenance costs&quot;.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.3">FAQ:</a></b> Advantage: they allow the designer to choose between <code>obj.func()</code> and <code>func(obj)</code>, which &quot;lowers maintenance costs&quot;.
 </p>
 
 <p>
@@ -131,7 +131,7 @@ or something?
 <a id="fqa-14.4"></a>
 <h2>[14.4] What does it mean that &quot;friendship isn&#39;t inherited, transitive, or reciprocal&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.4">FAQ:</a></b> It means that classes derived from a friend class don&#39;t automatically become friends (do <i>you</i> trust the kids of your friends?),
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.4">FAQ:</a></b> It means that classes derived from a friend class don&#39;t automatically become friends (do <i>you</i> trust the kids of your friends?),
 a friend of a friend doesn&#39;t automatically become a friend (do <i>you</i> trust the friends of your friends?), and that a class
 declaring another class as &quot;friend&quot; doesn&#39;t automatically become a friend of that class (do <i>you</i> trust anyone who calls you a friend?).
 </p>
@@ -150,7 +150,7 @@ to class hierarchies and stuff.
 <a id="fqa-14.5"></a>
 <h2>[14.5] Should my class declare a member function or a <code>friend</code> function?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.5">FAQ:</a></b> Use a member function unless you must use a <code>friend</code> function. For example, you may need <code>friend</code> for operator overloading.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/friends.html#faq-14.5">FAQ:</a></b> Use a member function unless you must use a <code>friend</code> function. For example, you may need <code>friend</code> for operator overloading.
 </p>
 
 <p>

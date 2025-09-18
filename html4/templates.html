@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Templates</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This page is about C++ templates, one of the largest cannons to aim at your feet that the C++ arsenal has to offer. Templates solve the problems with C macros by creating 2 orders of magnitude more problems.
@@ -39,7 +39,7 @@ This page is about C++ templates, one of the largest cannons to aim at your feet
 <a id="fqa-35.1"></a>
 <h2>[35.1] What&#39;s the idea behind templates?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.1">FAQ:</a></b> A template describes how to build definitions (classes or functions) which are basically the same.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.1">FAQ:</a></b> A template describes how to build definitions (classes or functions) which are basically the same.
 </p>
 
 <p>
@@ -99,7 +99,7 @@ If you use C++, chances are that you&#39;re going to deal a lot with its obscure
 <a id="fqa-35.2"></a>
 <h2>[35.2] What&#39;s the syntax / semantics for a &quot;class template&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.2">FAQ:</a></b> You add the parameters before the definition of your class, as in <code>template&lt;typename T&gt; class Array { ... };</code>,
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.2">FAQ:</a></b> You add the parameters before the definition of your class, as in <code>template&lt;typename T&gt; class Array { ... };</code>,
 and then you can use the parameters in the definition of the class, as in <code>T arr[N];</code>, and then you can use
 your class by substituting the parameters as in <code>Array&lt;int&gt;</code>
 (the FAQ gives a code listing instead of using words; its example is as simple as that).
@@ -153,7 +153,7 @@ Oh, and when you want to use a template, be kind with the C++ lexer
 <a id="fqa-35.3"></a>
 <h2>[35.3] What&#39;s the syntax / semantics for a &quot;function template&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.3">FAQ:</a></b> Pretty similar to class templates, plus you can usually omit the template parameters - the compiler will figure them
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.3">FAQ:</a></b> Pretty similar to class templates, plus you can usually omit the template parameters - the compiler will figure them
  out from the function arguments. For instance, you can write a <code>swap</code> function for swapping two values of any type,
  be it integers, strings, sets or file systems (yes, the FAQ <i>actually mentions</i> swapping some <code>FileSystem</code> objects).
 </p>
@@ -184,7 +184,7 @@ The note about &quot;function templates&quot; and &quot;template functions&quot;
 <a id="fqa-35.4"></a>
 <h2>[35.4] How do I explicitly select which version of a function template should get called?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.4">FAQ:</a></b> Most of the time you don&#39;t need to do it - the compiler will guess. It uses arguments to guess, so when your function has none,
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.4">FAQ:</a></b> Most of the time you don&#39;t need to do it - the compiler will guess. It uses arguments to guess, so when your function has none,
  use <code>f&lt;int&gt;();</code>. Sometimes you want to force the compiler to choose a different type than it would choose by default -
  for example, <code>g(45)</code> will instantiate <code>g&lt;int&gt;</code>, while you want <code>g&lt;long&gt;</code>. You can force the compiler to call <code>g&lt;long&gt;</code> with explicit instantiation
  as in <code>g&lt;long&gt;(45);</code> or type conversion as in <code>g(45L);</code>.
@@ -227,7 +227,7 @@ While C++ features generally interact poorly with each other, templates set the 
 <a id="fqa-35.5"></a>
 <h2>[35.5] What is a &quot;parameterized type&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.5">FAQ:</a></b> A way to say &quot;class templates&quot;.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.5">FAQ:</a></b> A way to say &quot;class templates&quot;.
 </p>
 
 <p>
@@ -238,7 +238,7 @@ While C++ features generally interact poorly with each other, templates set the 
 <a id="fqa-35.6"></a>
 <h2>[35.6] What is &quot;genericity&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.6">FAQ:</a></b> A way to say &quot;class templates&quot;. Don&#39;t confuse with &quot;generality&quot;.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.6">FAQ:</a></b> A way to say &quot;class templates&quot;. Don&#39;t confuse with &quot;generality&quot;.
 </p>
 
 <p>
@@ -249,7 +249,7 @@ While C++ features generally interact poorly with each other, templates set the 
 <a id="fqa-35.7"></a>
 <h2>[35.7] My template function does something special when the template type <code>T</code> is <code>int</code> or <code>std::string</code>; how do I write my template so it uses the special code when <code>T</code> is one of those specific types?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.7">FAQ:</a></b> First, make sure it&#39;s a good thing to do in your case. Generally, it is when the &quot;observable behavior&quot;
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.7">FAQ:</a></b> First, make sure it&#39;s a good thing to do in your case. Generally, it is when the &quot;observable behavior&quot;
   in the special version you want to add is identical to the general case - otherwise, you&#39;re not helping your users.  If the special case is &quot;consistent&quot; with the generic case, you can do it as in <code>template&lt;&gt; void foo&lt;int&gt;() { ... }</code>.
 </p>
 
@@ -291,7 +291,7 @@ Basically you can choose simple interfaces and simple implementations, or C++-st
 <a id="fqa-35.8"></a>
 <h2>[35.8] Huh? Can you provide an example of template specialization that doesn&#39;t use <code>foo</code> and <code>bar</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.8">FAQ:</a></b> For instance, you can &quot;stringify&quot; values of different types using a template. The generic version boils down to <code>ostringstream out; out &lt;&lt; x</code>. But you might want to define specializations to handle types where the <code>ostream</code> output operator doesn&#39;t do what you like (you can set the output precision of floating point numbers, etc.)
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.8">FAQ:</a></b> For instance, you can &quot;stringify&quot; values of different types using a template. The generic version boils down to <code>ostringstream out; out &lt;&lt; x</code>. But you might want to define specializations to handle types where the <code>ostream</code> output operator doesn&#39;t do what you like (you can set the output precision of floating point numbers, etc.)
 </p>
 
 <p>
@@ -313,7 +313,7 @@ In the meanwhile, it is quite likely that whatever your <i>real</i> job was, som
 <a id="fqa-35.9"></a>
 <h2>[35.9] But most of the code in my template function is the same; is there some way to get the benefits of template specialization without duplicating all that source code?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.9">FAQ:</a></b> You can factor out the common code and only specialize a helper function called from the common code. Two screens of source code are attached for illustration.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.9">FAQ:</a></b> You can factor out the common code and only specialize a helper function called from the common code. Two screens of source code are attached for illustration.
 </p>
 
 <p>
@@ -324,7 +324,7 @@ In the meanwhile, it is quite likely that whatever your <i>real</i> job was, som
 <a id="fqa-35.10"></a>
 <h2>[35.10] All those templates and template specializations must slow down my program, right?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.10">FAQ:</a></b> You guessed wrong. Maybe the compilation will become &quot;slightly&quot; slower. But the compiler ends up figuring out the types of everything, and then doing all the usual nifty C++ optimizations.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.10">FAQ:</a></b> You guessed wrong. Maybe the compilation will become &quot;slightly&quot; slower. But the compiler ends up figuring out the types of everything, and then doing all the usual nifty C++ optimizations.
 </p>
 
 <p>
@@ -356,7 +356,7 @@ And anyway, there&#39;s such a huge amount of scenarios to take care of to optim
 <a id="fqa-35.11"></a>
 <h2>[35.11] So templates are overloading, right?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.11">FAQ:</a></b> They are in the sense that they are inspected when the compiler resolves names (figures out the version of <code>f</code> that should be called by <code>f(x)</code>). They are not in the sense that the rules are different. Specifically, there&#39;s the SFINAE (Substitution Failure Is Not An Error) rule: the argument types have to match exactly for a template to be considered in overload resolution. If they don&#39;t, the compiler won&#39;t try to apply conversions the way it would with a function - instead it will discard the template.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.11">FAQ:</a></b> They are in the sense that they are inspected when the compiler resolves names (figures out the version of <code>f</code> that should be called by <code>f(x)</code>). They are not in the sense that the rules are different. Specifically, there&#39;s the SFINAE (Substitution Failure Is Not An Error) rule: the argument types have to match exactly for a template to be considered in overload resolution. If they don&#39;t, the compiler won&#39;t try to apply conversions the way it would with a function - instead it will discard the template.
 </p>
 
 <p>
@@ -412,7 +412,7 @@ This could be amusing (an implementor of the standard library of a language comp
 <a id="fqa-35.12"></a>
 <h2>[35.12] Why can&#39;t I separate the definition of my templates class from its declaration and put it inside a .cpp file?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.12">FAQ:</a></b> &quot;Accept these facts&quot;, says the FAQ - templates are not code, just a recipe for generating code given parameters; in order to compile this code, it must first be generated, which takes knowing both the template definition and the definitions of the parameters which are passed to it; and the compiler doesn&#39;t know anything about code outside of a file when compiling the file (which is called &quot;separate compilation&quot;).
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.12">FAQ:</a></b> &quot;Accept these facts&quot;, says the FAQ - templates are not code, just a recipe for generating code given parameters; in order to compile this code, it must first be generated, which takes knowing both the template definition and the definitions of the parameters which are passed to it; and the compiler doesn&#39;t know anything about code outside of a file when compiling the file (which is called &quot;separate compilation&quot;).
 </p>
 
 <p>
@@ -444,7 +444,7 @@ The basic problem inherited from C is that the compiler can&#39;t look up
 <a id="fqa-35.13"></a>
 <h2>[35.13] How can I avoid linker errors with my template functions?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.13">FAQ:</a></b> You probably didn&#39;t make the definition of a template available to your compiler at the point where a template is used (did you implement a template in a .cpp file?). There are three solutions:
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.13">FAQ:</a></b> You probably didn&#39;t make the definition of a template available to your compiler at the point where a template is used (did you implement a template in a .cpp file?). There are three solutions:
 </p>
 
 <ul>
@@ -467,7 +467,7 @@ The basic problem inherited from C is that the compiler can&#39;t look up
 <a id="fqa-35.14"></a>
 <h2>[35.14] How does the C++ keyword <code>export</code> help with template linker errors?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.14">FAQ:</a></b> It&#39;s &quot;designed&quot; to eliminate the need to make the definition of a template available to the compiler at the point of usage. Currently, there&#39;s only one compiler supporting it. The keyword&#39;s future is &quot;unknown&quot;.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.14">FAQ:</a></b> It&#39;s &quot;designed&quot; to eliminate the need to make the definition of a template available to the compiler at the point of usage. Currently, there&#39;s only one compiler supporting it. The keyword&#39;s future is &quot;unknown&quot;.
 </p>
 
 <p>
@@ -490,7 +490,7 @@ If you spot someone following the FAQ&#39;s advice (<code>#ifdef EXTRATERRESTRIA
 <a id="fqa-35.15"></a>
 <h2>[35.15] How can I avoid linker errors with my template classes?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.15">FAQ:</a></b> It&#39;s just like errors with template functions, which were explained in the previous answers.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.15">FAQ:</a></b> It&#39;s just like errors with template functions, which were explained in the previous answers.
 </p>
 
 <p>
@@ -501,7 +501,7 @@ If you spot someone following the FAQ&#39;s advice (<code>#ifdef EXTRATERRESTRIA
 <a id="fqa-35.16"></a>
 <h2>[35.16] Why do I get linker errors when I use template friends?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.16">FAQ:</a></b> If you have a class template <code>C</code> declaring a friend like <code>Foo&lt;T&gt; f()</code>, the compiler assumes that there&#39;s a global function <code>f()</code> returning <code>Foo&lt;T&gt;</code>. You probably meant a different thing, namely - there&#39;s a function template <code>template&lt;class T&gt; Foo&lt;T&gt; f()</code>, and you want its instantiation <code>f&lt;T&gt;()</code> to be a friend of your instantiation <code>C&lt;T&gt;</code>.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.16">FAQ:</a></b> If you have a class template <code>C</code> declaring a friend like <code>Foo&lt;T&gt; f()</code>, the compiler assumes that there&#39;s a global function <code>f()</code> returning <code>Foo&lt;T&gt;</code>. You probably meant a different thing, namely - there&#39;s a function template <code>template&lt;class T&gt; Foo&lt;T&gt; f()</code>, and you want its instantiation <code>f&lt;T&gt;()</code> to be a friend of your instantiation <code>C&lt;T&gt;</code>.
 </p>
 
 <p>
@@ -537,7 +537,7 @@ How is one supposed to navigate through this swamp of arbitrary syntax? <i>Of co
 <a id="fqa-35.17"></a>
 <h2>[35.17] How can any human hope to understand these overly verbose template-based error messages?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.17">FAQ:</a></b> There&#39;s a &quot;free tool&quot; converting compiler error messages to more human-readable ones. It works with many compilers.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.17">FAQ:</a></b> There&#39;s a &quot;free tool&quot; converting compiler error messages to more human-readable ones. It works with many compilers.
 </p>
 
 <p>
@@ -568,7 +568,7 @@ If you wish to implement a template library, don&#39;t forget to implement a too
 <a id="fqa-35.18"></a>
 <h2>[35.18] Why am I getting errors when my template-derived-class uses a nested type it inherits from its template-base-class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.18">FAQ:</a></b> This can hurt, sit down. The compiler doesn&#39;t look for &quot;non-dependent&quot; names (ones that don&#39;t mention the template parameters) in &quot;dependent&quot; base classes. So if you inherited a nested class or typedef <code>A</code> from your base class <code>B&lt;T&gt;</code>, you can only access it using a dependent name, like <code>B&lt;T&gt;::A</code>, but you can&#39;t use a non-dependent name, like plain <code>A</code>.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.18">FAQ:</a></b> This can hurt, sit down. The compiler doesn&#39;t look for &quot;non-dependent&quot; names (ones that don&#39;t mention the template parameters) in &quot;dependent&quot; base classes. So if you inherited a nested class or typedef <code>A</code> from your base class <code>B&lt;T&gt;</code>, you can only access it using a dependent name, like <code>B&lt;T&gt;::A</code>, but you can&#39;t use a non-dependent name, like plain <code>A</code>.
 </p>
 
 <p>
@@ -595,7 +595,7 @@ As to the possible reactions of users the FAQ attempts to anticipate: while <i>r
 <a id="fqa-35.19"></a>
 <h2>[35.19] Why am I getting errors when my template-derived-class uses a member it inherits from its template-base-class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.19">FAQ:</a></b> The reasons are identical to those in <a href="templates.html#fqa-35.18">the previous FAQ</a>. But the workarounds are <i>different</i> - convert <code>f()</code> to <code>this-&gt;f()</code> or add the statement <code>using B&lt;T&gt;::f()</code> to your class definition. Using the fully qualified name like it was done in the previous FAQ (<code>B&lt;T&gt;::f()</code>) will also work, except when the function is virtual, in which case the compiler will use static binding, not dynamic binding.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.19">FAQ:</a></b> The reasons are identical to those in <a href="templates.html#fqa-35.18">the previous FAQ</a>. But the workarounds are <i>different</i> - convert <code>f()</code> to <code>this-&gt;f()</code> or add the statement <code>using B&lt;T&gt;::f()</code> to your class definition. Using the fully qualified name like it was done in the previous FAQ (<code>B&lt;T&gt;::f()</code>) will also work, except when the function is virtual, in which case the compiler will use static binding, not dynamic binding.
 </p>
 
 <p>
@@ -610,7 +610,7 @@ The FAQ has a hilarious comment in the spirit of &quot;this doesn&#39;t mean tha
 <a id="fqa-35.20"></a>
 <h2>[35.20] Can the previous problem hurt me silently? Is it possible that the compiler will silently generate the wrong code?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.20">FAQ:</a></b> Yes - the compiler might call a function or use a type from the global namespace instead of what you meant, for example.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/templates.html#faq-35.20">FAQ:</a></b> Yes - the compiler might call a function or use a type from the global namespace instead of what you meant, for example.
 </p>
 
 <p>

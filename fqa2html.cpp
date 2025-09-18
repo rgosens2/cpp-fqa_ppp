@@ -34,8 +34,9 @@ std::string site = std::getenv("FQA_SITE") ? std::getenv("FQA_SITE") : "";
 
 // in October 2007, parashift.com disappeared from the DNS
 //std::string faq_site = "http://www.parashift.com/c++-faq-lite";
-std::string faq_site = "http://www.dietmar-kuehl.de/mirror/c++-faq";
-//std::string faq_site = "http://www.ensta.fr/~diam/c++/online/c++-faq-lite";
+//std::string faq_site = "http://www.dietmar-kuehl.de/mirror/c++-faq";
+// link to local copy of FAQ Lite
+std::string faq_site = "../www.dietmar-kuehl.de/mirror/c++-faq";
 
 std::string style2 = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">";
 

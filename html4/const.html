@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Const correctness</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This is about the <code>const</code> keyword, which makes you write your program twice (or more, depending on your luck).
@@ -36,7 +36,7 @@ This is about the <code>const</code> keyword, which makes you write your program
 <a id="fqa-18.1"></a>
 <h2>[18.1] What is &quot;<code>const</code> correctness&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.1">FAQ:</a></b> Oh, that&#39;s a great thing. You declare an object as <code>const</code> and prevent it from being modified.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.1">FAQ:</a></b> Oh, that&#39;s a great thing. You declare an object as <code>const</code> and prevent it from being modified.
 </p>
 
 <p>
@@ -74,7 +74,7 @@ language (no way to pass a temporary to a function that gets a non-const referen
 <a id="fqa-18.2"></a>
 <h2>[18.2] How is &quot;<code>const</code> correctness&quot; related to ordinary type safety?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.2">FAQ:</a></b> It&#39;s one form of type safety. You can think about <code>const std::string</code> as an <i>almost</i> separate type that lacks
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.2">FAQ:</a></b> It&#39;s one form of type safety. You can think about <code>const std::string</code> as an <i>almost</i> separate type that lacks
 certain operations of a string, like assignment. If you find type safety useful, you&#39;ll also like <code>const</code> correctness.
 </p>
 
@@ -106,7 +106,7 @@ better than having to do this yourself. Which also happens - <code>const_iterato
 <a id="fqa-18.3"></a>
 <h2>[18.3] Should I try to get things <code>const</code> correct &quot;sooner&quot; or &quot;later&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.3">FAQ:</a></b> As soon as possible, because when you add <code>const</code> to a piece of code, it triggers changes in every place
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.3">FAQ:</a></b> As soon as possible, because when you add <code>const</code> to a piece of code, it triggers changes in every place
 related to it.
 </p>
 
@@ -120,7 +120,7 @@ See also the advice <a href="const.html#fqa-18.1">above</a> about <i>not</i> avo
 <a id="fqa-18.4"></a>
 <h2>[18.4] What does &quot;<code>const Fred* p</code>&quot; mean?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.4">FAQ:</a></b> A pointer to a <code>const Fred</code> object. The object can&#39;t be changed, for example, you can&#39;t call methods not qualified
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.4">FAQ:</a></b> A pointer to a <code>const Fred</code> object. The object can&#39;t be changed, for example, you can&#39;t call methods not qualified
 as <code>const</code>.
 </p>
 
@@ -142,7 +142,7 @@ person who advocates declaring every local integer as <code>const</code>. See al
 <a id="fqa-18.5"></a>
 <h2>[18.5] What&#39;s the difference between &quot;<code>const Fred* p</code>&quot;, &quot;<code>Fred* const p</code>&quot; and &quot;<code>const Fred* const p</code>&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.5">FAQ:</a></b> In the first example, the object is immutable. In the second example, the pointer is immutable. In the third example,
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.5">FAQ:</a></b> In the first example, the object is immutable. In the second example, the pointer is immutable. In the third example,
 both are immutable.
 </p>
 
@@ -154,7 +154,7 @@ both are immutable.
 <a id="fqa-18.6"></a>
 <h2>[18.6] What does &quot;<code>const Fred&amp; x</code>&quot; mean?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.6">FAQ:</a></b> It&#39;s a reference to an immutable Fred object.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.6">FAQ:</a></b> It&#39;s a reference to an immutable Fred object.
 </p>
 
 <p>
@@ -167,7 +167,7 @@ in the <a href="const.html#fqa-18.4">answer</a> about the pointer case, replacin
 <a id="fqa-18.7"></a>
 <h2>[18.7] Does &quot;<code>Fred&amp; const x</code>&quot; make any sense?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.7">FAQ:</a></b> No. It says that you can change the object, but not the reference. But you can never change a reference anyway, it will
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.7">FAQ:</a></b> No. It says that you can change the object, but not the reference. But you can never change a reference anyway, it will
 always refer to a single object.
 </p>
 
@@ -185,7 +185,7 @@ would fail or anything like that - that&#39;s just another lame excuse as far as
 <a id="fqa-18.8"></a>
 <h2>[18.8] What does &quot;<code>Fred const&amp; x</code>&quot; mean?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.8">FAQ:</a></b> It&#39;s equivalent to &quot;<code>const Fred&amp; x</code>&quot;. The question is - which form should you use? Nobody can answer this for <i>your</i>
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.8">FAQ:</a></b> It&#39;s equivalent to &quot;<code>const Fred&amp; x</code>&quot;. The question is - which form should you use? Nobody can answer this for <i>your</i>
 organization without understanding <i>your</i> needs. The are lots of business scenarios, some producing the need for one
 form, others for the other. The discussion takes a full screen of text.
 </p>
@@ -204,7 +204,7 @@ C++ even if you somehow know for sure that in general they can program. C++ has 
 <a id="fqa-18.9"></a>
 <h2>[18.9] What does &quot;<code>Fred const* x</code>&quot; mean?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.9">FAQ:</a></b> The FAQ replicates the previous answer, replacing &quot;reference&quot; with &quot;pointer&quot;. Probably the same <a href="ref.html#fqa-8.6">religion</a> thing again.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.9">FAQ:</a></b> The FAQ replicates the previous answer, replacing &quot;reference&quot; with &quot;pointer&quot;. Probably the same <a href="ref.html#fqa-8.6">religion</a> thing again.
 </p>
 
 <p>
@@ -215,7 +215,7 @@ C++ even if you somehow know for sure that in general they can program. C++ has 
 <a id="fqa-18.10"></a>
 <h2>[18.10] What is a &quot;<code>const</code> member function&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.10">FAQ:</a></b> It&#39;s declared by appending <code>const</code> to the prototype of a class member function. Only this kind of methods may be
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.10">FAQ:</a></b> It&#39;s declared by appending <code>const</code> to the prototype of a class member function. Only this kind of methods may be
 called when you have a <code>const</code> object. Errors are caught at compile time, without any speed or space penalty.
 </p>
 
@@ -231,7 +231,7 @@ the functions having identical code except for extra <code>const</code> qualifie
 <a id="fqa-18.11"></a>
 <h2>[18.11] What&#39;s the relationship between a return-by-reference and a <code>const</code> member function?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.11">FAQ:</a></b> <code>const</code> member functions returning references to class members should use a <code>const</code> reference. Many times the compiler
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.11">FAQ:</a></b> <code>const</code> member functions returning references to class members should use a <code>const</code> reference. Many times the compiler
 will catch you when you violate this rule. Sometimes it won&#39;t. You have to think.
 </p>
 
@@ -250,7 +250,7 @@ lead to <code>const_cast</code>.
 <a id="fqa-18.12"></a>
 <h2>[18.12] What&#39;s the deal with &quot;<code>const</code>-overloading&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.12">FAQ:</a></b> You can have two member functions with a single difference in the prototype - the trailing <code>const</code>. The compiler
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.12">FAQ:</a></b> You can have two member functions with a single difference in the prototype - the trailing <code>const</code>. The compiler
 will select the function based on whether the <code>this</code> argument is <code>const</code> or not. For instance, a class with a subscript
 operator may have two versions: one returning mutable objects and one returning <code>const</code> objects - in the latter version,
 <code>this</code> is also qualified as <code>const</code>.
@@ -273,7 +273,7 @@ probably not unlike <code>std::vector</code>, so you&#39;ll end up with much mor
 <a id="fqa-18.13"></a>
 <h2>[18.13] What do I do if I want a <code>const</code> member function to make an &quot;invisible&quot; change to a data member?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.13">FAQ:</a></b> There are legitimate use cases for this - that would be when a user doesn&#39;t see the change using the interface
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.13">FAQ:</a></b> There are legitimate use cases for this - that would be when a user doesn&#39;t see the change using the interface
 of the class. For example, a set class may cache the last look-up to possibly speed up the next look-up.
 </p>
 
@@ -317,7 +317,7 @@ creates another source of uncertainty for the programmer.
 <a id="fqa-18.14"></a>
 <h2>[18.14] Does <code>const_cast</code> mean lost optimization opportunities?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.14">FAQ:</a></b> Theoretically, yes. In practice, no. If a compiler knows that a value used in a piece of code
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.14">FAQ:</a></b> Theoretically, yes. In practice, no. If a compiler knows that a value used in a piece of code
 is not modified, it can optimize the access to that value, for example, fetch it to a machine register.
 However, the compiler can&#39;t be sure that a value pointed by a <code>const</code> pointer is not modified because
 of the aliasing problem: there can be other pointers to the same object, not necessarily constant.
@@ -366,7 +366,7 @@ and everyone is happy - after a certain amount of clock cycles.
 <a id="fqa-18.15"></a>
 <h2>[18.15] Why does the compiler allow me to change an <code>int</code> after I&#39;ve pointed at it with a <code>const int*</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.15">FAQ:</a></b> Because when you point to something with a <code>const</code> pointer, this only means that you can&#39;t
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.15">FAQ:</a></b> Because when you point to something with a <code>const</code> pointer, this only means that you can&#39;t
 use that pointer to change the object. It doesn&#39;t mean the object can&#39;t be changed at
 all, because it can be accessible in other ways, not only through this pointer.
 </p>
@@ -383,7 +383,7 @@ work, because it could be done from many places in incompatible ways.
 <a id="fqa-18.16"></a>
 <h2>[18.16] Does &quot;<code>const Fred* p</code>&quot; mean that <code>*p</code> can&#39;t change?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.16">FAQ:</a></b> No, for example, it could change through a non-constant <code>Fred* q</code> pointing to the same object.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.16">FAQ:</a></b> No, for example, it could change through a non-constant <code>Fred* q</code> pointing to the same object.
 </p>
 
 <p>
@@ -394,7 +394,7 @@ work, because it could be done from many places in incompatible ways.
 <a id="fqa-18.17"></a>
 <h2>[18.17] Why am I getting an error converting a <code>Foo**</code> to <code>const Foo**</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.17">FAQ:</a></b> It would be &quot;invalid and dangerous&quot;! Suppose <code>Foo**</code> points to an array of pointers, which
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/const-correctness.html#faq-18.17">FAQ:</a></b> It would be &quot;invalid and dangerous&quot;! Suppose <code>Foo**</code> points to an array of pointers, which
 can be used to modify the pointed objects. Suppose C++ would allow to pass this array to a function
 which expects <code>const Foo**</code> - an array of pointers which <i>can&#39;t</i> be used to modify the pointed objects.
 </p>

@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Classes and objects</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 One of the stated goals of C++ is support for object-oriented programming. This page introduces C++ classes and outlines the tactics they use to defeat their purpose.
@@ -27,7 +27,7 @@ One of the stated goals of C++ is support for object-oriented programming. This 
 <a id="fqa-7.1"></a>
 <h2>[7.1] What is a class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.1">FAQ:</a></b> In OO software, &quot;the fundamental building block&quot;.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.1">FAQ:</a></b> In OO software, &quot;the fundamental building block&quot;.
 </p>
 
 <p>
@@ -66,7 +66,7 @@ I don&#39;t like C++ classes.
 <a id="fqa-7.2"></a>
 <h2>[7.2] What is an object?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.2">FAQ:</a></b> A chunk of memory with certain semantics. The semantics are defined by the class of the object.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.2">FAQ:</a></b> A chunk of memory with certain semantics. The semantics are defined by the class of the object.
 </p>
 
 <p>
@@ -101,7 +101,7 @@ Which is why you can&#39;t automatically collect the garbage of C++ programs.
 <a id="fqa-7.3"></a>
 <h2>[7.3] When is an interface &quot;good&quot;?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.3">FAQ:</a></b> It is good when it hides details, so that the users see a simpler picture. It should also speak the language
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.3">FAQ:</a></b> It is good when it hides details, so that the users see a simpler picture. It should also speak the language
 of the user (a developer, not the customer).
 </p>
 
@@ -130,7 +130,7 @@ doesn&#39;t make it easier to achieve anything useful.
 <a id="fqa-7.4"></a>
 <h2>[7.4] What is encapsulation?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.4">FAQ:</a></b> The prevention of &quot;unauthorized access&quot; to stuff.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.4">FAQ:</a></b> The prevention of &quot;unauthorized access&quot; to stuff.
 </p>
 
 <p>
@@ -169,7 +169,7 @@ If you want software that is &quot;easy to change&quot;, <a href="class.html#fqa
 <a id="fqa-7.5"></a>
 <h2>[7.5] How does C++ help with the tradeoff of safety vs. usability?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.5">FAQ:</a></b> In C, stuff is either stored in <code>struct</code>s (safety problem - no encapsulation), or it is declared <code>static</code> at the file
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.5">FAQ:</a></b> In C, stuff is either stored in <code>struct</code>s (safety problem - no encapsulation), or it is declared <code>static</code> at the file
 implementing an interface (usability problem - there is no way to have many instances of that data).
 </p>
 
@@ -216,7 +216,7 @@ Where&#39;s your tradeoff now, silly C programmers?
 <a id="fqa-7.6"></a>
 <h2>[7.6] How can I prevent other programmers from violating encapsulation by seeing the <code>private</code> parts of my class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.6">FAQ:</a></b> Don&#39;t bother. The fact that a programmer knows about the inner workings of your class isn&#39;t a problem. It&#39;s
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.6">FAQ:</a></b> Don&#39;t bother. The fact that a programmer knows about the inner workings of your class isn&#39;t a problem. It&#39;s
  a problem if <i>code</i> is written to depend on these inner workings.
 </p>
 
@@ -229,7 +229,7 @@ Where&#39;s your tradeoff now, silly C programmers?
 <a id="fqa-7.7"></a>
 <h2>[7.7] Is Encapsulation a Security device?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.7">FAQ:</a></b> No. Encapsulation is about error prevention. Security is about preventing purposeful attacks.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.7">FAQ:</a></b> No. Encapsulation is about error prevention. Security is about preventing purposeful attacks.
 </p>
 
 <p>
@@ -249,7 +249,7 @@ The capital E and S in the question are very amusing. I wonder whether they are 
 <a id="fqa-7.8"></a>
 <h2>[7.8] What&#39;s the difference between the keywords <code>struct</code> and <code>class</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.8">FAQ:</a></b> By default, <code>struct</code> members and base classes are <code>public</code>. With <code>class</code>, the default is <code>private</code>. Never rely
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/classes-and-objects.html#faq-7.8">FAQ:</a></b> By default, <code>struct</code> members and base classes are <code>public</code>. With <code>class</code>, the default is <code>private</code>. Never rely
   on these defaults! Otherwise, <code>class</code> and <code>struct</code> behave identically.
 </p>
 

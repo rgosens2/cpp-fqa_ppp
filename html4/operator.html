@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Operator overloading</h1>
-<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html">FAQ</a></b><small class="part"> links.</small><hr>
+<small class="part">Part of <a href="index.html">C++ FQA Lite</a>. To see the original answers, follow the </small><b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html">FAQ</a></b><small class="part"> links.</small><hr>
 
 <p>
 This section is about operator overloading - a way to make the code &quot;readable&quot; as long as the reader doesn&#39;t care what the code actually does.
@@ -34,7 +34,7 @@ This section is about operator overloading - a way to make the code &quot;readab
 <a id="fqa-13.1"></a>
 <h2>[13.1] What&#39;s the deal with <code>operator</code> overloading?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.1">FAQ:</a></b> Overloaded operators provide an &quot;intuitive interface&quot; for the users of your class. They also allow templates
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.1">FAQ:</a></b> Overloaded operators provide an &quot;intuitive interface&quot; for the users of your class. They also allow templates
 to work &quot;equally well&quot; with classes and built-in types.
 </p>
 
@@ -100,7 +100,7 @@ and easy-to-use automatic memory management. C++ offers none of those.
 <a id="fqa-13.2"></a>
 <h2>[13.2] What are the benefits of operator overloading?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.2">FAQ:</a></b> You can &quot;exploit the intuition&quot; of the users of your classes. Their code will speak in the language of the problem
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.2">FAQ:</a></b> You can &quot;exploit the intuition&quot; of the users of your classes. Their code will speak in the language of the problem
 instead of the language of the machine. They&#39;ll learn faster and make less errors.
 </p>
 
@@ -133,7 +133,7 @@ by making it the wrong tool for every job.
 <a id="fqa-13.3"></a>
 <h2>[13.3] What are some examples of operator overloading?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.3">FAQ:</a></b> Here are a few (some real, some hypothetical), there are many more.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.3">FAQ:</a></b> Here are a few (some real, some hypothetical), there are many more.
 </p>
 
 <ul>
@@ -195,7 +195,7 @@ However, it doesn&#39;t mean that operator overloading is never useful - that is
 <a id="fqa-13.4"></a>
 <h2>[13.4] But <code>operator</code> overloading makes my class look ugly; isn&#39;t it supposed to make my code clearer?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.4">FAQ:</a></b> No - it&#39;s supposed to make the code <i>using</i> your class clearer! For example, you may claim that <code>T&amp; operator[](int i)</code>
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.4">FAQ:</a></b> No - it&#39;s supposed to make the code <i>using</i> your class clearer! For example, you may claim that <code>T&amp; operator[](int i)</code>
 is less readable than <code>T&amp; getAt(int i)</code>, but surely <code>arr[i]</code> is more readable than <code>arr.getAt(i)</code>!
 </p>
 
@@ -232,7 +232,7 @@ Last but not least, <code>arr.getAt(i)</code> is <i>not that bad</i>.
 <a id="fqa-13.5"></a>
 <h2>[13.5] What operators can/cannot be overloaded?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.5">FAQ:</a></b> Most can be overloaded. You can&#39;t overload the C operators <code>.</code> and <code>?:</code> (and <code>sizeof</code>). And you can&#39;t overload the
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.5">FAQ:</a></b> Most can be overloaded. You can&#39;t overload the C operators <code>.</code> and <code>?:</code> (and <code>sizeof</code>). And you can&#39;t overload the
 C++ operators <code>::</code> and <code>.*</code>. You can overload everything else.
 </p>
 
@@ -245,7 +245,7 @@ this operator using a class member function. Which is not necessarily bad.
 <a id="fqa-13.6"></a>
 <h2>[13.6] Can I overload <code>operator==</code> so it lets me compare two <code>char[]</code> using a string comparison?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.6">FAQ:</a></b> No, at least one parameter of an overloaded operator must be a user-defined type.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.6">FAQ:</a></b> No, at least one parameter of an overloaded operator must be a user-defined type.
 </p>
 
 <p>
@@ -281,7 +281,7 @@ standard library would laugh quite bitterly.
 <a id="fqa-13.7"></a>
 <h2>[13.7] Can I create a <code>operator**</code> for &quot;to-the-power-of&quot; operations?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.7">FAQ:</a></b> You can&#39;t. You can only overload operators already in C++, without changing the number of arguments, the associativity
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.7">FAQ:</a></b> You can&#39;t. You can only overload operators already in C++, without changing the number of arguments, the associativity
 or the precedence. If you think it&#39;s wrong, consider the problem of <code>a**p</code>, which means &quot;a times the result of dereferencing p&quot;.
 If you could define <code>operator**</code>, you&#39;d make such expressions ambiguous.
 </p>
@@ -329,7 +329,7 @@ too... Oh well.
 <a id="fqa-13.8"></a>
 <h2>[13.8] Okay, that tells me the operators I <i>can</i> override; which operators <i>should</i> I override?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.8">FAQ:</a></b> You want to help your users, not confuse them. Overload operators if it makes the life of your users easier.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.8">FAQ:</a></b> You want to help your users, not confuse them. Overload operators if it makes the life of your users easier.
 </p>
 
 <p>
@@ -342,7 +342,7 @@ C++ <a href="exceptions.html#fqa-17.1">exceptions</a>, and you can&#39;t <a href
 <a id="fqa-13.9"></a>
 <h2>[13.9] What are some guidelines / &quot;rules of thumb&quot; for overloading operators?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.9">FAQ:</a></b> 22 (!!) &quot;rules of thumb&quot; are listed (actually 20, 2 just say &quot;use common sense&quot;). Basically, the rules are about
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.9">FAQ:</a></b> 22 (!!) &quot;rules of thumb&quot; are listed (actually 20, 2 just say &quot;use common sense&quot;). Basically, the rules are about
 making overloaded operators behave similarly to built-in operators - if you define +, make it associative and
 don&#39;t change the parameters, etc. The FAQ warns that the list is not exhaustive, nor should it be interpreted as
 strict rules that can&#39;t have exceptions.
@@ -363,7 +363,7 @@ ultimately care about, it&#39;s also much more fun.
 <a id="fqa-13.10"></a>
 <h2>[13.10] How do I create a subscript <code>operator</code> for a <code>Matrix</code> class?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.10">FAQ:</a></b> Use <code>operator()</code> which can get two indexes, i and j. Don&#39;t use <code>operator[]</code>, which can only get one index.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.10">FAQ:</a></b> Use <code>operator()</code> which can get two indexes, i and j. Don&#39;t use <code>operator[]</code>, which can only get one index.
 A code listing follows.
 </p>
 
@@ -383,7 +383,7 @@ instead of figuring out how <code>A+B*C</code> actually works?
 <a id="fqa-13.11"></a>
 <h2>[13.11] Why shouldn&#39;t my <code>Matrix</code> class&#39;s interface look like an array-of-array?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.11">FAQ:</a></b> The &quot;array-of-array&quot; alternative uses <code>operator[]</code> to return an array object, which in turn has an <code>operator[]</code>
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.11">FAQ:</a></b> The &quot;array-of-array&quot; alternative uses <code>operator[]</code> to return an array object, which in turn has an <code>operator[]</code>
 returning a single element.
 </p>
 
@@ -413,7 +413,7 @@ with all its overloaded operators out of your schedule. And it doesn&#39;t depen
 <a id="fqa-13.12"></a>
 <h2>[13.12] I still don&#39;t get it. Why shouldn&#39;t my <code>Matrix</code> class&#39;s interface look like an array-of-array?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.12">FAQ:</a></b> Because it makes checking the arguments or changing the data structure harder. The FAQ then explains how this
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.12">FAQ:</a></b> Because it makes checking the arguments or changing the data structure harder. The FAQ then explains how this
 can still be done, and claims that the compiler will optimize the temporaries out, but doesn&#39;t like the fact that
 it&#39;s a lot of work.
 </p>
@@ -436,7 +436,7 @@ sort of work. And this is where the FAQ and the FQA agree.
 <a id="fqa-13.13"></a>
 <h2>[13.13] Should I design my classes from the outside (interfaces first) or from the inside (data first)?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.13">FAQ:</a></b> Outside, of course.
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.13">FAQ:</a></b> Outside, of course.
 </p>
 
 <p>
@@ -476,7 +476,7 @@ breaking it into processes can save several tons of your bacon (of course you ha
 <a id="fqa-13.14"></a>
 <h2>[13.14] How can I overload the prefix and postfix forms of operators <code>++</code> and <code>--</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.14">FAQ:</a></b> Like this:
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.14">FAQ:</a></b> Like this:
 </p>
 
 <pre>
@@ -498,7 +498,7 @@ whole thing if we are lucky.
 <a id="fqa-13.15"></a>
 <h2>[13.15] Which is more efficient: <code>i++</code> or <code>++i</code>?</h2>
 <p>
-<b class="FAQ"><a href="http://www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.15">FAQ:</a></b> It&#39;s the same for built-in types. <code>++i</code> may be faster for user-defined types, because there&#39;s no need to create
+<b class="FAQ"><a href="../www.dietmar-kuehl.de/mirror/c++-faq/operator-overloading.html#faq-13.15">FAQ:</a></b> It&#39;s the same for built-in types. <code>++i</code> may be faster for user-defined types, because there&#39;s no need to create
 a copy that the compiler may fail to optimize out. Most likely the overhead is small, but why not pick the habit of
 using <code>++i</code>?
 </p>
