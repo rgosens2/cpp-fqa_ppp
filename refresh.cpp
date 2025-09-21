@@ -20,6 +20,18 @@
 
 namespace fs = std::filesystem;
 
+
+struct perf {
+    std::chrono::steady_clock::time_point start_;
+    perf() : start_(std::chrono::steady_clock::now()) {}
+    double elapsed() const {
+        auto stop = std::chrono::steady_clock::now();
+        std::chrono::duration<double> elapsed_seconds = stop - start_;
+        return elapsed_seconds.count();
+    }
+};
+
+
 void doit() {
     // zoek alle .fqa bestanden in de huidige directory
     std::vector<std::string> fqaFiles;
@@ -53,6 +65,10 @@ void doit() {
 }
 
 int main() {
+    // performance meten
+    perf p1;
+    std::cout << "Start...\n";
+
     // voer conversie uit
     doit();
 
@@ -71,6 +87,9 @@ int main() {
             fs::rename(entry.path(), html4Dir / entry.path().filename());
         }
     }
+
+    //performance meten
+    std::cout << "Done. Elapsed time: " << p1.elapsed() << "s" << std::endl;
 
     return 0;
 }

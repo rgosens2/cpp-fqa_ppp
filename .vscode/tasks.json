@@ -7,8 +7,8 @@
       "command": "g++",
       "args": [
         "-std=c++17",
-        "-O0",
         "-g",
+        "-O0",
         "refresh.cpp",
         "fqa2html.cpp",
         "toc.cpp",
