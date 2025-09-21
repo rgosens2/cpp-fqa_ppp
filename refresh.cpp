@@ -88,7 +88,7 @@ int main() {
         }
     }
 
-    //performance meten
+    // performance meten
     std::cout << "Done. Elapsed time: " << p1.elapsed() << "s" << std::endl;
 
     return 0;
